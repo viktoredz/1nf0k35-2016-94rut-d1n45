@@ -31,14 +31,15 @@
 		     	<div class="col-md-4" style="padding-top:5px;"><label> Puskesmas </label> </div>
 		     	<div class="col-md-8">
 		     		<select name="code_cl_phc" id="puskesmas" class="form-control">
+		     			<option value="all">All</option>
 						<?php foreach ($datapuskesmas as $row ) { ;?>
-							<option value="<?php echo $row->code; ?>" onchange="" ><?php echo $row->value; ?></option>
+						<?php $select = $stat->code == set_value('status') ? 'selected=selected' : '' ?>
+							<option value="<?php echo $row->code; ?>" <?php echo $select ?> ><?php echo $row->value; ?></option>
 						<?php	} ;?>
 			     	</select>
 			     </div>	
 	     	</div>
 		  </div>
-		</div>
 		</div>
         <div class="box-body">
 		    <div class="div-grid">
@@ -53,7 +54,7 @@
 
 <script type="text/javascript">
 	$(function () {	
-	    $("#menu_inventory").addClass("active");
+	    $("#menu_aset_tetap").addClass("active");
 	    $("#menu_inventory_pengadaanbarang").addClass("active");
 	});
 
@@ -218,4 +219,9 @@
 			window.location.href=response;
 		});
 	});
+	$("select[name='code_cl_phc']").change(function(){
+		$.post("<?php echo base_url().'inventory/pengadaanbarang/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
+			$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+		});
+    });
 </script>

@@ -186,6 +186,7 @@ var code_cl_phc = '<?php echo $code_cl_phc?>';
 		
 		$.post("<?php echo base_url()?>inventory/permohonanbarang/permohonan_detail_export",post  ,function(response){
 			window.location.href=response;
+			// alert(response);
 		});
 	});
 </script>

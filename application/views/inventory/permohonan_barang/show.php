@@ -28,8 +28,10 @@
 		     	<div class="col-md-4" style="padding-top:5px;"><label> Puskesmas </label> </div>
 		     	<div class="col-md-8">
 		     		<select name="code_cl_phc" id="puskesmas" class="form-control">
+		     				<option value="all" onchange="" >All</option>
 						<?php foreach ($datapuskesmas as $row ) { ;?>
-							<option value="<?php echo $row->code; ?>" onchange="" ><?php echo $row->value; ?></option>
+						<?php $select = $row->code == $this->session->userdata('filter_code_cl_phc') ? 'selected=selected' : '' ?>
+							<option value="<?php echo $row->code; ?>" <?php echo $select; ?> ><?php echo $row->value; ?></option>
 						<?php	} ;?>
 			     	</select>
 			     </div>	
@@ -49,8 +51,8 @@
 
 <script type="text/javascript">
 	$(function () {	
-	    $("#menu_inventory").addClass("active");
-	    $("#menu_inventory_permohonanbarang").addClass("active");
+	    $("#menu_aset_tetap").addClass("active");
+      $("#menu_inventory_permohonanbarang").addClass("active");
 	});
 
 	   var source = {
@@ -59,7 +61,7 @@
 			datafields: [
 			{ name: 'no', type: 'number'},
 			{ name: 'code_cl_phc', type: 'string'},
-			{ name: 'id_inv_permohonan_barang', type: 'number'},
+			{ name: 'id_inv_permohonan_barang', type: 'string'},
 			{ name: 'tanggal_permohonan', type: 'date'},
 			{ name: 'jumlah_unit', type: 'string'},
 			{ name: 'nama_ruangan', type: 'string'},
@@ -182,6 +184,7 @@
 		});
 
 	function detail(id,code_cl_phc){
+		//alert(id);
 		document.location.href="<?php echo base_url().'inventory/permohonanbarang/detail';?>/" + id + "/" + code_cl_phc;
 	}
 
@@ -248,6 +251,7 @@
 		
 		$.post("<?php echo base_url()?>inventory/permohonanbarang/permohonan_export",post,function(response	){
 			window.location.href=response;
+			// alert(response);
 		});
 	});
 </script>

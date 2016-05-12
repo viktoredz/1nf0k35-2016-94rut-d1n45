@@ -99,7 +99,7 @@ var code_cl_phc = '<?php echo $code_cl_phc?>';
 	function ambil_total()
 	{
 		$.ajax({
-		url: "<?php echo base_url().'inventory/permohonanbarang/total_permohonan/'.$kode ?>",
+		url: "<?php echo base_url().'inventory/permohonanbarang/total_permohonan/'.$kode.'/'.$code_cl_phc ?>",
 		dataType: "json",
 		success:function(data)
 		{ 

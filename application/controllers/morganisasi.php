@@ -24,23 +24,37 @@ class Morganisasi extends CI_Controller {
 		$bln = (int) date('m');
 		$thn = date('Y');
 		$data['j_asset'] = $this->admin_model->get_inv_barang();
+
 		$data['j_ruangan'] = $this->admin_model->get_inv_barang1();
 
 		$this->db->like('code','p'.substr($this->session->userdata('puskesmas'),0,7));
 		$data['j_puskesmas'] = count($this->inv_ruangan_model->get_data_puskesmas());
 
 		$bar = array();
-		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4');
+		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4','#000066');
 
 		//$this->db->like('code','p'.substr($this->session->userdata('puskesmas'),0,7));
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 	//	if(substr($kodepuskesmas, -2)=="01"){
 	//		$this->db->like('code','P'.substr($kodepuskesmas, 0,7));
 	//	}else {
-			$this->db->like('code','P'.$kodepuskesmas);
+			
 	//	}
-		$datapuskesmas = $this->inv_ruangan_model->get_data_puskesmas();
-		foreach ($datapuskesmas as $row) {
+		//$this->db->like('code','P'.$kodepuskesmas);
+		$data['kecamatan'] = $this->admin_model->get_data_kecamatan();
+
+		foreach ($data['kecamatan'] as $row) {
+			$bar[$row['code']]['puskesmas'] = $row['nama'];
+			$bar[$row['code']]['j_barang_baik'] = $this->admin_model->get_jum_aset($row['code']);
+			$bar[$row['code']]['j_barang_baik1'] = $this->admin_model->get_nilai_aset($row['code']);
+			$bar[$row['code']]['j_barang_rr'] = $this->admin_model->get_jum_aset1($row['code']);
+			$bar[$row['code']]['j_barang_rr1'] = $this->admin_model->get_nilai_aset1($row['code']);
+			$bar[$row['code']]['j_barang_rb'] = $this->admin_model->get_jum_aset2($row['code']);
+			$bar[$row['code']]['j_barang_rb1'] = $this->admin_model->get_nilai_aset2($row['code']);
+			$bar[$row['code']]['nilai_aset'] = $this->admin_model->get_jum_nilai_aset($row['code']);
+			$bar[$row['code']]['nilai_aset1'] = $this->admin_model->get_jum_nilai_aset2($row['code']);
+		}
+		/*foreach ($datapuskesmas as $row) {
 			$bar[$row->code]['puskesmas'] = $row->value;
 		}
 
@@ -86,7 +100,7 @@ class Morganisasi extends CI_Controller {
 		$nilai_aset1 = $this->admin_model->get_jum_nilai_aset2();
 		foreach ($nilai_aset1 as $row) {
 			$bar[$row->id_cl_phc]['nilai_aset1'] = $row->nilai;
-		}
+		}*/
 		$data['bar']	= $bar;
 		$data['color']	= $color;
 		$data['content']= $this->parser->parse("sik/show",$data,true);
