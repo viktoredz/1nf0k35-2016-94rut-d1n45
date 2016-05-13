@@ -8,9 +8,9 @@ if(isset($disable)){if($disable='disable'){?>
 <?php }} ?>
 <script type="text/javascript">
 
-function edit_barang(id_barang,barang_kembar_proc,id_inventaris_barang){
+function edit_barang(id_inventaris_barang,kodeproc){
     $("#popup_barang #popup_content").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
-    $.get("<?php echo base_url().'inventory/pengadaanbarang/edit_barang/'.$kode.'/';?>" + id_barang+'/'+barang_kembar_proc+'/'+id_inventaris_barang, function(data) {
+    $.get("<?php echo base_url().'inventory/pengadaanbarang/edit_barang/'.$kode.'/';?>"+id_inventaris_barang+'/'+kodeproc, function(data) {
       $("#popup_content").html(data);
     });
     $("#popup_barang").jqxWindow({
@@ -29,10 +29,20 @@ function edit_barang(id_barang,barang_kembar_proc,id_inventaris_barang){
     }
     return'Rp.\t'+e(d)+',00'
   }
-  
+  function kodeinventaris(kode){
+    if(kode==null){
+      document.getElementById("v_kode_invetaris").value = document.getElementById("kode_inventaris_").value;
+      document.getElementById("id_inventaris_barang").value ='';
+    }else{
+      document.getElementById("v_kode_invetaris").value = document.getElementById("kode_inventaris_").value;
+      document.getElementById("id_inventaris_barang").value =kode;
+    }
+    
+  }
   
 
     $(function(){
+      kodeinventaris();
       $('#btn-close').click(function(){
         close_popup();
       }); 
@@ -45,7 +55,8 @@ function edit_barang(id_barang,barang_kembar_proc,id_inventaris_barang){
             data.append('nama_barang', $('#v_nama_barang').val());
             data.append('jumlah', $('#jumlah').val());
             data.append('harga', $('#harga').val());
-            data.append('keterangan_pengadaan', $('#keterangan').val());
+            data.append('id_inventaris_barang', $('#v_kode_invetaris').val()+'.'+$('#id_inventaris_barang').val());
+            //data.append('keterangan_pengadaan', $('#keterangan').val());
             var id_pengadaan_ = '<?php echo $kode; ?>'; 
             var id_barang_    = $('#v_kode_barang').val();
             var kd_proc_      = 0;
@@ -64,10 +75,7 @@ function edit_barang(id_barang,barang_kembar_proc,id_inventaris_barang){
                       $('#notice').show();
                       $("#jqxgrid_barang").jqxGrid('updatebounddata', 'cells');
                       close_popup();
-                      var kode_          = res[1]; 
-                      var kd_proc_       = res[2];
-                      var id_barang_     = res[2].substring(0,10);
-                      edit_barang(id_barang_,kd_proc_,kode_); 
+                      edit_barang(res[1],res[2]); 
                   }
                   else if(res[0]=="Error"){
                       $('#notice').hide();
@@ -124,6 +132,7 @@ function edit_barang(id_barang,barang_kembar_proc,id_inventaris_barang){
             var res = codebarang.split(" | ");
             $("#v_nama_barang").val(res[1]);
             $("#v_kode_barang").val(res[0].replace(/\./g,""));
+            kodeinventaris(res[0]);
         });
         $("#harga").change(function(){
             var jumlah = document.getElementById("jumlah").value;
@@ -132,6 +141,13 @@ function edit_barang(id_barang,barang_kembar_proc,id_inventaris_barang){
             document.getElementById("subtotal").value = toRp(subtotal);
         });
         $("#jumlah").change(function(){
+            var idbarang = $("#id_inventaris_barang").val().split(".");
+            if ((idbarang[0]=='01')  || (idbarang[0]=='03')|| (idbarang[0]=='04')|| (idbarang[0]=='06')) {
+              if ($("#jumlah").val() > 1) {
+                alert('Maaf Jumlah KIB ini tidak boleh lebih dari satu');
+                $("#jumlah").val(1);
+              }
+            }
             var jumlah = document.getElementById("jumlah").value;
             var harga = document.getElementById("harga").value;
             var subtotal =jumlah*harga;
@@ -153,8 +169,36 @@ function edit_barang(id_barang,barang_kembar_proc,id_inventaris_barang){
 	<div class="row">
     <?php echo form_open(current_url(), 'id="form-ss"') ?>
           <div class="box-body">
+            <div class="continer">
+              <div class="row">           
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Kode Lokasi</label>
+                    <input type="text" class="form-control" id="v_kode_invetaris" name="v_kode_invetaris"  placeholder="Kode Inventaris Barang" value="<?php
+                    if(set_value('v_kode_invetaris')=="" && isset($id_inventaris_barang)){
+                        echo $id_inventaris_barang;
+                      }else{
+                        echo  set_value('v_kode_invetaris');
+                      }
+                      ?>">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Kode Barang</label>
+                    <input type="text" class="form-control" id="id_inventaris_barang" name="id_inventaris_barang"  placeholder="Kode Inventaris Barang" value="<?php
+                    if(set_value('id_inventaris_barang')=="" && isset($id_inventaris_barang)){
+                        echo $id_inventaris_barang;
+                      }else{
+                        echo  set_value('id_inventaris_barang');
+                      }
+                      ?>" readonly=''>
+                  </div>
+                </div>
+              </div>  
+            </div>
             <div class="form-group">
-              <label>Kode Barang</label>
+              <label>Jenis Barang</label>
               <input id="jqxinput" class="form-control" autocomplete="off" name="code_mst_inv" type="text" value="<?php 
                 if(set_value('code_mst_inv')=="" && isset($id_mst_inv_barang)){
                   $s = array();
@@ -224,16 +268,16 @@ function edit_barang(id_barang,barang_kembar_proc,id_inventaris_barang){
             ?>"></div>
             </div>
             <?php }} ?>
-            <div class="form-group">
+           <!-- <div class="form-group">
               <label>Keterangan</label>
               <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan"><?php 
-                  if(set_value('keterangan')=="" && isset($keterangan_pengadaan)){
+               /*   if(set_value('keterangan')=="" && isset($keterangan_pengadaan)){
                     echo $keterangan_pengadaan;
                   }else{
                     echo  set_value('keterangan');
-                  }
+                  }*/
                   ?></textarea>
-            </div>
+            </div>-->
         </div>
         <div class="box-footer">
             <button type="submit" class="btn btn-primary">Simpan</button>

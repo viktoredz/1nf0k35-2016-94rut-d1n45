@@ -105,7 +105,7 @@
 
 <script>
 	$(function () {	
-		$("#menu_inventory").addClass("active");
+		$("#menu_aset_tetap").addClass("active");
 		$("#menu_inventory_inv_ruangan").addClass("active");
 		
 		$('#code_cl_phc').change(function(){
@@ -243,6 +243,7 @@
 						success : function(data) {
 							if(data != ""){
 								location.href = data;
+								// alert(data);
 							}
 						}
 					});		          	

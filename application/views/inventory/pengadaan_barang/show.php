@@ -14,41 +14,41 @@
     <div class="col-md-12">
       <!-- general form elements -->
       <div class="box box-primary">
-        <div class="box-header">
-          <h3 class="box-title">{title_form}</h3>
-	    </div>
+	        <div class="box-header">
+	          <h3 class="box-title">{title_form}</h3>
+		    </div>
 
-      	<div class="box-footer">
-	      <div class="col-md-8">
-	      	<?php //if($unlock==1){ ?>
-		 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>inventory/pengadaanbarang/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Pengadaan Baru</button>
-			<?php //} ?>		 	
-		 	<button type="button" class="btn btn-success" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
-          <button type="button" id="btn-export" class="btn btn-warning"><i class='fa fa-save'></i> &nbsp; Export</button>
-	     </div>
-	      <div class="col-md-4">
-	     	<div class="row">
-		     	<div class="col-md-4" style="padding-top:5px;"><label> Puskesmas </label> </div>
-		     	<div class="col-md-8">
-		     		<select name="code_cl_phc" id="puskesmas" class="form-control">
-		     			<option value="all">All</option>
-						<?php foreach ($datapuskesmas as $row ) { ;?>
-						<?php $select = $stat->code == set_value('status') ? 'selected=selected' : '' ?>
-							<option value="<?php echo $row->code; ?>" <?php echo $select ?> ><?php echo $row->value; ?></option>
-						<?php	} ;?>
-			     	</select>
-			     </div>	
-	     	</div>
-		  </div>
-		</div>
+	      	<div class="box-footer">
+		      <div class="col-md-8">
+		      	<?php //if($unlock==1){ ?>
+			 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>inventory/pengadaanbarang/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Pengadaan Baru</button>
+				<?php //} ?>		 	
+			 	<button type="button" class="btn btn-success" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
+	          <button type="button" id="btn-export" class="btn btn-warning"><i class='fa fa-save'></i> &nbsp; Export</button>
+		     </div>
+		      <div class="col-md-4">
+		     	<div class="row">
+			     	<div class="col-md-4" style="padding-top:5px;"><label> Puskesmas </label> </div>
+			     	<div class="col-md-8">
+			     		<select name="code_cl_phc" id="puskesmas" class="form-control">
+			     				<option value="all" onchange="" >All</option>
+							<?php foreach ($datapuskesmas as $row ) { ;?>
+							<?php $select = $row->code == set_value('codepus') ? 'selected' : '' ?>
+								<option value="<?php echo $row->code; ?>" onchange="" ><?php echo $row->value; ?></option>
+							<?php	} ;?>
+				     	</select>
+				     </div>	
+		     	</div>
+			  </div>
+			</div>
         <div class="box-body">
 		    <div class="div-grid">
 		        <div id="jqxgrid"></div>
 			</div>
-	    </div>
-	  </div>
-	</div>
+    	</div>
+      </div>
   </div>
+</div>
 </form>
 </section>
 
@@ -62,7 +62,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_pengadaan', type: 'number'},
+			{ name: 'id_pengadaan', type: 'string'},
 			{ name: 'tgl_pengadaan', type: 'date'},
 			{ name: 'nomor_kontrak', type: 'string'},
 			{ name: 'pilihan_status_pengadaan', type: 'string'},
@@ -220,7 +220,7 @@
 		});
 	});
 	$("select[name='code_cl_phc']").change(function(){
-		$.post("<?php echo base_url().'inventory/pengadaanbarang/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
+		$.post("<?php echo base_url().'inventory/permohonanbarang/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
 			$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
 		});
     });

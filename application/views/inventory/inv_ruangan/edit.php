@@ -33,7 +33,7 @@
 					</div>
 					<div class="box-body">
 						<div class="form-group">
-							<label>Puskesmas<h1></h1></label>
+							<label>Puskesmas<h1></h1></label><br/>
 							<?php foreach($kodepuskesmas as $pus) : ?>
 								<?php echo $pus->code == $code_cl_phc ? $pus->value : '' ?>
 							<?php endforeach ?>
@@ -69,7 +69,7 @@
 
 <script>
 	$(function () {	
-		$("#menu_inventory").addClass("active");
+		$("#menu_aset_tetap").addClass("active");
 		$("#menu_inventory_inv_ruangan").addClass("active");
 	});
 </script>

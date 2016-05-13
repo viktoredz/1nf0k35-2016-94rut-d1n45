@@ -35,7 +35,10 @@ class Admin_model extends CI_Model {
     }
 	function get_inv_barang(){
 		$loginpuskesmas = $this->session->userdata('puskesmas');
-		$query = $this->db->query("SELECT SUM(jml) AS jml, SUM(nilai) AS nilai FROM ((SELECT COUNT(id_inventaris_barang) AS jml,SUM(harga) AS nilai FROM inv_inventaris_barang WHERE id_pengadaan=0 and code_cl_phc like ".'"%'.'P'.$loginpuskesmas.'%"'.")UNION(SELECT COUNT(id_inventaris_barang) AS jml,SUM(harga) AS nilai FROM inv_inventaris_barang INNER JOIN inv_pengadaan ON inv_pengadaan.id_pengadaan=inv_inventaris_barang.id_pengadaan and inv_inventaris_barang.code_cl_phc like ".'"%'.'P'.$loginpuskesmas.'%"'.")) AS aset");
+		$query = $this->db->query("SELECT SUM(jml) AS jml, SUM(nilai) AS nilai FROM ((SELECT COUNT(id_inventaris_barang) AS jml,SUM(harga) AS nilai FROM inv_inventaris_barang WHERE id_pengadaan=0 and code_cl_phc like ".'"%'.'P'.$loginpuskesmas.'%"'.")UNION(SELECT 
+        COUNT(inv_inventaris_barang.id_inventaris_barang) AS jml, SUM(inv_inventaris_barang.harga) AS nilai  FROM  inv_inventaris_barang
+		join inv_inventaris_distribusi on inv_inventaris_distribusi.id_inventaris_barang = inv_inventaris_barang.id_inventaris_barang and inv_inventaris_distribusi.status=1  INNER JOIN inv_pengadaan ON inv_pengadaan.id_pengadaan = inv_inventaris_barang.id_pengadaan
+        AND inv_inventaris_barang.code_cl_phc  like ".'"%'.'P'.$loginpuskesmas.'%"'.")) AS aset");
 
 		return $query->result();
 	}

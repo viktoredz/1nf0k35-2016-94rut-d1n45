@@ -6,7 +6,7 @@
 	<?php echo $this->session->flashdata('alert')?>
 </div>
 <?php } ?>
-
+<?php echo $this->session->userdata('code_cl_phc').'hai';?>
 <section class="content">
 <form action="<?php echo base_url()?>inventory/pengadaanbarang/dodel_multi" method="POST" name="">
   <div class="row">
@@ -20,9 +20,11 @@
 
       	<div class="box-footer">
 		  <div class="col-md-3">
-     		<select name="code_cl_phc" class="form-control" id="code_cl_phc">
+     		<select name="code_cl_phc" id="puskesmas" class="form-control">
+     				<option value="all" onchange="" >All</option>
 				<?php foreach ($datapuskesmas as $row ) { ;?>
-					<option value="<?php echo $row->code; ?>" onchange="" ><?php echo $row->value; ?></option>
+				<?php $select = $row->code == $this->session->userdata('code_cl_phc') ? 'selected=selected' : '' ?>
+					<option value="<?php echo $row->code; ?>" <?php echo $select; ?> ><?php echo $row->value; ?></option>
 				<?php	} ;?>
 	     	</select>
 		  </div>
@@ -50,7 +52,7 @@
 <script type="text/javascript">
 	$(function () {	
 		
-	    $("#menu_inventory").addClass("active");
+	    $("#menu_aset_tetap").addClass("active");
 	    $("#menu_inventory_distribusibarang").addClass("active");
 		
 		
@@ -202,7 +204,11 @@
 		});
 		$("#popup_barang").jqxWindow('open');
 	}
-	
+	$("select[name='code_cl_phc']").change(function(){
+		$.post("<?php echo base_url().'inventory/permohonanbarang/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
+			$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+		});
+    });
 	function doList(){				
 		var values = new Array();	
 		var	data_barang = "/";

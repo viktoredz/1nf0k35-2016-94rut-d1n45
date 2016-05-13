@@ -40,12 +40,16 @@ class Inv_ruangan extends CI_Controller {
 			}
 		}
 
-		/*if($this->session->userdata('filter_code_cl_phc') != '') {
-			$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
-		}*/
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('mst_inv_ruangan.code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if($this->session->userdata('filter_code_cl_phc') != '') {
+			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+				# code...
+			}else{
+				$this->db->where('mst_inv_ruangan.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
+			}
 		}
+		// if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
+		// 	$this->db->where('mst_inv_ruangan.code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		// }
 		$rows_all = $this->inv_ruangan_model->get_data();
 
 
@@ -65,12 +69,17 @@ class Inv_ruangan extends CI_Controller {
 			}
 		}
 
-		/*if($this->session->userdata('filter_code_cl_phc') != '') {
-			$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
-		}*/
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('mst_inv_ruangan.code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if($this->session->userdata('filter_code_cl_phc') != '') {
+			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+				# code...
+			}else{
+				$this->db->where('mst_inv_ruangan.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
+			}
+			
 		}
+		// if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
+		// 	$this->db->where('mst_inv_ruangan.code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		// }
 		$rows = $this->inv_ruangan_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
 
@@ -176,7 +185,7 @@ class Inv_ruangan extends CI_Controller {
 		$this->authentication->verify('inventory','edit');
 		$data['title_group'] 	= "Inventory";
 		$data['title_form'] 	= "Inventaris Ruangan";
-
+		
 		$this->db->like('code','p'.substr($this->session->userdata('puskesmas'),0,7));
 
 		$kodepuskesmas = $this->session->userdata('puskesmas');
@@ -244,7 +253,6 @@ class Inv_ruangan extends CI_Controller {
 		$data['barang'] = $this->parser->parse("inventory/inv_ruangan/barang",$data,true);
 		$data['content'] = $this->parser->parse("inventory/inv_ruangan/detail",$data,true);
 		$this->template->show($data,"home");
-		
 	}
 
 	function detail($kode=0,$id="")

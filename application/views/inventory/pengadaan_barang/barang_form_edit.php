@@ -1,6 +1,6 @@
 
 <script type="text/javascript">
-  <?php $kodebarang_ = substr($id_mst_inv_barang, 0,2);
+  <?php $kodebarang_ = substr($kode, -14,-12);
       if($kodebarang_=='01') {?>  
             $("#status_sertifikat_tanggal").jqxDateTimeInput({ width: '300px', height: '25px' })
 <?php  }else if($kodebarang_=='02') {?>
@@ -39,13 +39,14 @@ if(isset($disable)){if($disable='disable'){?>
             var data = new FormData();
             $('#notice-content').html('<div class="alert">Mohon tunggu, proses simpan data....</div>');
             $('#notice').show();
+            data.append('id_inventaris_barang', $('#id_inventaris_barang').val());
             data.append('id_mst_inv_barang', $('#v_kode_barang').val());
             data.append('tanggal_diterima', $('#dateInput').val());
             data.append('pilihan_status_invetaris', $('#status_invetaris').val());
             data.append('nama_barang', $('#v_nama_barang').val());
             data.append('jumlah', $('#jumlah').val());
             data.append('harga', $('#harga').val());
-            data.append('keterangan_pengadaan', $('#keterangan').val());
+            //data.append('keterangan_pengadaan', $('#keterangan').val());
             var kd_barang = $('#v_kode_barang').val().substring(0,2);
             if(kd_barang=="01"){
                 data.append('luas', $('#luas').val());
@@ -112,7 +113,7 @@ if(isset($disable)){if($disable='disable'){?>
                 contentType : false,
                 processData : false,
                 type : 'POST',
-                url : '<?php echo base_url()."inventory/pengadaanbarang/".$action."_barang/".$id_pengadaan."/".$id_barang."/".$kd_proc."/".$kode."/" ?>',
+                url : '<?php echo base_url()."inventory/pengadaanbarang/".$action."_barang/".$id_pengadaan."/".$kode."/".$kode_proc ?>',
                 data : data,
                 
                 success : function(response){
@@ -212,10 +213,41 @@ if(isset($disable)){if($disable='disable'){?>
     <div class="col-md-6">
     <div class="box box-primary">
           <div class="box-body">
+          <div class="form-group">
+              <label>Kode Lokasi</label>
+              <input type="text" class="form-control" id="id_inventaris_barang" name="id_inventaris_barang"  placeholder="Kode Inventaris Barang" value="<?php
+              if(set_value('id_inventaris_barang')=="" && isset($id_inventaris_barang)){
+                  $s = array();
+                  $s[0] = substr($id_inventaris_barang, 0,2);
+                  $s[1] = substr($id_inventaris_barang, 2,2);
+                  $s[2] = substr($id_inventaris_barang, 4,2);
+                  $s[3] = substr($id_inventaris_barang, 6,2);
+                  $s[4] = substr($id_inventaris_barang, 8,2);
+                  $s[5] = substr($id_inventaris_barang, 10,2);
+                  $s[6] = substr($id_inventaris_barang, 12,2);
+                  $s[7] = substr($id_inventaris_barang, 14,2);
+                  $s[8] = substr($id_inventaris_barang, 16,2);
+                  $s[9] = substr($id_inventaris_barang, 18,2);
+                  $s[10] = substr($id_inventaris_barang, 20,2);
+                  $s[11] = substr($id_inventaris_barang, 22,2);
+                  $s[12] = substr($id_inventaris_barang, 24,4);
+                  echo implode(".", $s);
+                }else{
+                  echo  set_value('id_inventaris_barang');
+                }
+                ?>" disabled>
+            </div>
             <div class="form-group"> 
-              <label>Kode Barang</label>
-              <input id="jqxinput" class="form-control" autocomplete="off" name="code_mst_inv" type="text" value="<?php 
-                if(set_value('code_mst_inv')=="" && isset($id_mst_inv_barang)){
+              <label>Register</label>
+              <input type="text" class="form-control" name="register" id="register" placeholder="Register" value="<?php 
+                if(set_value('register')=="" && isset($register)){
+                  echo $register.' s/d '.sprintf("%03s", $register+$jumlah);
+                }else{
+                  echo  set_value('register');
+                }
+                ?>" disabled>
+              <input id="jqxinput" class="form-control" autocomplete="off" name="code_mst_inv" type="hidden" value="<?php 
+                if(set_value('code_mst_inv')=="" && isset($id_mst_inv_barang)){ 
                   $s = array();
                   $s[0] = substr($id_mst_inv_barang, 0,2);
                   $s[1] = substr($id_mst_inv_barang, 2,2);
@@ -253,7 +285,7 @@ if(isset($disable)){if($disable='disable'){?>
                 }else{
                   echo  set_value('jumlah');
                 }
-                ?>">
+                ?>" disabled>
             </div>
             <div class="form-group">
               <label>Harga Satuan</label>
@@ -294,16 +326,16 @@ if(isset($disable)){if($disable='disable'){?>
             </select>
             </div>
             <?php }} ?>
-            <div class="form-group">
+            <!--<div class="form-group">
               <label>Keterangan</label>
               <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan"><?php 
-                  if(set_value('keterangan')=="" && isset($keterangan_pengadaan)){
+                /*  if(set_value('keterangan')=="" && isset($keterangan_pengadaan)){
                     echo $keterangan_pengadaan;
                   }else{
                     echo  set_value('keterangan');
-                  }
+                  }*/
                   ?></textarea>
-            </div>
+            </div>-->
         </div>
         </div>
         </div>
@@ -313,7 +345,7 @@ if(isset($disable)){if($disable='disable'){?>
 
     <!--body from edit-->
     <?php 
-    $kodebarang_ = substr($id_mst_inv_barang, 0,2);
+    $kodebarang_ = substr($kode, -14,-12);
     if($kodebarang_=='01') {?>
       <div class="form-group">
         <label>Luas</label>
@@ -616,7 +648,7 @@ if(isset($disable)){if($disable='disable'){?>
             </div>
       <div class="form-group">
         <label>Nomor Dokumen</label>
-        <input type="text" class="form-control" name="dokumen_nomor" id="dokumen_nomor1" placeholder="dokumen_nomor"  value="<?php
+        <input type="text" class="form-control" name="dokumen_nomor" id="dokumen_nomor1" placeholder="Nomor Dokumen"  value="<?php
         if(set_value('dokumen_nomor')=="" && isset($dokumen_nomor)){
             echo $dokumen_nomor;
           }else{

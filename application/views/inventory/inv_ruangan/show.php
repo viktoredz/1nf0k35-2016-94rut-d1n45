@@ -26,15 +26,16 @@
 	     	<div class="row">
 		     	<div class="col-md-4" style="padding-top:5px;"><label> Puskesmas </label> </div>
 		     	<div class="col-md-8">
-			     		<select name="code_cl_phc" class="form-control">
-							<?php foreach ($datapuskesmas as $row ) { ;?>
-							<option value="<?php echo $row->code; ?>" onchange="" ><?php echo $row->value; ?></option>
+			     		<select name="code_cl_phc" id="puskesmas" class="form-control">
+		     				<option value="all" onchange="" >All</option>
+						<?php foreach ($datapuskesmas as $row ) { ;?>
+						<?php $select = $row->code == $this->session->userdata('filter_code_cl_phc') ? 'selected=selected' : '' ?>
+							<option value="<?php echo $row->code; ?>" <?php echo $select; ?> ><?php echo $row->value; ?></option>
 						<?php	} ;?>
 			     	</select>
 			     	</div>	
 	     	</div>
 		  </div>
-		</div>
 		</div>
         <div class="box-body">
 		    <div class="div-grid">
@@ -49,7 +50,7 @@
 
 <script type="text/javascript">
 	$(function () {	
-		$("#menu_inventory").addClass("active");
+		$("#menu_aset_tetap").addClass("active");
 		$("#menu_inventory_inv_ruangan").addClass("active");
 	});
 
