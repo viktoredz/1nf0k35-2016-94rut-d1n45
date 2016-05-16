@@ -24,7 +24,7 @@ class Bhp_permintaan extends CI_Controller {
 		$this->authentication->verify('inventory','edit');
 		$data['title_group'] = "Bahan Habis Pakai";
 		$data['title_form'] = "Permintaan / Permohonan";
-
+		$this->session->set_userdata('filter_code_cl_phc','');
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		//$this->db->where('code','P'.$kodepuskesmas);
 

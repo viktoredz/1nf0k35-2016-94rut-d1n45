@@ -608,7 +608,7 @@ class Bhp_pengadaan extends CI_Controller {
 		$this->authentication->verify('inventory','edit');
 		$data['title_group'] = "Bahan Habis Pakai";
 		$data['title_form'] = "Penerimaan / Pengadaan";
-
+		$this->session->set_userdata('filter_code_cl_phc','');
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		//$this->db->where('code','P'.$kodepuskesmas);
 
