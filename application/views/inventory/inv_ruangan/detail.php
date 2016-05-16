@@ -107,7 +107,13 @@
 	$(function () {	
 		$("#menu_aset_tetap").addClass("active");
 		$("#menu_inventory_inv_ruangan").addClass("active");
+		var ceklis				= "<?php echo $this->session->userdata('filter_group');?>";
 		
+		if (ceklis==1) {
+			$("#filter_group").attr('checked', true);
+		}else{
+			$("#filter_group").attr('checked', false);
+		}
 		$('#code_cl_phc').change(function(){
 	      	var code_cl_phc = $(this).val();
 	      	var id_mst_inv_ruangan = "{id}";
@@ -187,6 +193,7 @@
 		var code_cl_phc 		= $("#code_cl_phc").val();
 		var id_mst_inv_ruangan 	= $("#code_ruangan").val();
 		var tanggal 			= $("#inputtgl").val();
+
 		if ($("#filter_group:checked").val()==1){
 			group = '1';
 		}else{

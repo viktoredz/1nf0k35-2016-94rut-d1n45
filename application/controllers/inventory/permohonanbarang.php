@@ -18,6 +18,7 @@ class Permohonanbarang extends CI_Controller {
 		$this->authentication->verify('inventory','edit');
 		$data['title_group'] = "Inventory";
 		$data['title_form'] = "Daftar Permohonan Barang";
+		$this->session->set_userdata('filter_code_cl_phc','');
 		$data['statusdata'] = $this->permohonanbarang_model->get_data_status();
 
 		$kodepuskesmas = $this->session->userdata('puskesmas');

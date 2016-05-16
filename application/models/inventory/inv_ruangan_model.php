@@ -62,13 +62,13 @@ class inv_ruangan_model extends CI_Model {
 			WHERE
 			tgl_distribusi <= ?
 			AND id_cl_phc = ?
-			AND id_ruangan = ?) as inv ";
+			AND id_ruangan = ?) as inv limit ?,?";
 
 		
 		$id_cl_phc 	= $this->session->userdata('filter_code_cl_phc');
 		$id_ruang 	= $this->session->userdata('filter_id_ruang');
 		$tgl 		= $this->tanggalterahir($id_cl_phc);//'2016-05-15';//$this->session->userdata('filter_tanggal');
-		$query 		= $this->db->query($txt, array($tgl['tgl_distribusi'], $id_ruang, $tgl['tgl_distribusi'], $tgl['tgl_distribusi'], $id_cl_phc,$id_ruang));
+		$query 		= $this->db->query($txt, array($tgl['tgl_distribusi'], $id_ruang, $tgl['tgl_distribusi'], $tgl['tgl_distribusi'], $id_cl_phc,$id_ruang,$start,$limit));
 		
 		$rows = array();
 		$data = $query->result_array();

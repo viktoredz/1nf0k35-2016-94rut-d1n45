@@ -57,7 +57,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'id_pengadaan', type: 'number' },
 			{ name: 'barang_kembar_proc', type: 'string' },
@@ -70,6 +70,7 @@
 			{ name: 'pilihan_status_invetaris', type: 'string' },
 			{ name: 'tanggal_pembelian', type: 'date' },
 			{ name: 'foto_barang', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'keterangan_inventory', type: 'string' },
 			{ name: 'tanggal_pengadaan', type: 'date' },
 			{ name: 'tanggal_diterima', type: 'date' },
@@ -134,16 +135,16 @@
 			<?php if(!isset($viewreadonly)){?>	{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_barang").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang_all(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang_all(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
 				{ text: 'Hapus', align: 'center', editable: false,filtertype: 'none', sortable: false, width: '5%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_barang").jqxGrid('getrowdata', row);
 				    if(dataRecord.delete==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/trash.png' onclick='hapus_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/trash.png' onclick='hapus_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
@@ -152,7 +153,7 @@
                 { text: 'IMG', align: 'center', editable: false,filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_barang").jqxGrid('getrowdata', row);
 				    if(dataRecord.delete==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/barcode.png' onclick='barcode_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/barcode.png' onclick='barcode_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
@@ -188,7 +189,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'id_pengadaan', type: 'number' },
 			{ name: 'barang_kembar_proc', type: 'string' },
@@ -198,6 +199,7 @@
 			{ name: 'pilihan_komponen', type: 'string' },
 			{ name: 'harga', type: 'double' },
 			{ name: 'keterangan_pengadaan', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'pilihan_status_invetaris', type: 'string' },
 			{ name: 'tanggal_pembelian', type: 'date' },
 			{ name: 'foto_barang', type: 'string' },
@@ -254,9 +256,9 @@
 			<?php if(!isset($viewreadonly)){?>	{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '5%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_DataHapus").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -289,7 +291,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'id_pengadaan', type: 'number' },
 			{ name: 'barang_kembar_proc', type: 'string' },
@@ -302,6 +304,7 @@
 			{ name: 'keterangan_pengadaan', type: 'text' },
 			{ name: 'register', type: 'string' },
 			{ name: 'id_ruangan', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'luas', type: 'double' },
 			{ name: 'jumlah', type: 'double' },
 			{ name: 'jumlah_satuan', type: 'string' },
@@ -354,9 +357,9 @@
 			{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_A").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -388,7 +391,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'id_pengadaan', type: 'number' },
 			{ name: 'barang_kembar_proc', type: 'string' },
@@ -403,6 +406,7 @@
 			{ name: 'id_ruangan', type: 'string' },
 			{ name: 'luas', type: 'double' },
 			{ name: 'jumlah', type: 'double' },
+			{ name: 'id_inventaris_distribusi', type: 'double' },
 			{ name: 'jumlah_satuan', type: 'string' },
 			{ name: 'harga', type: 'string' },
 			{ name: 'alamat', type: 'text' },
@@ -453,9 +457,9 @@
 			{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_A_hapus").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -488,13 +492,14 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'uraian', type: 'string' },
 			{ name: 'id_pengadaan', type: 'number' },
 			{ name: 'barang_kembar_proc', type: 'string' },
 			{ name: 'merek_type', type: 'text' },
 			{ name: 'id_pl_phc', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'penggunaan', type: 'string' },
 			{ name: 'id_pl_phc', type: 'string' },
 			{ name: 'register', type: 'string' },
@@ -556,9 +561,9 @@
 			<?php if(!isset($viewreadonly)){?>	{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_B").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },<?php } ?>
@@ -595,7 +600,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'uraian', type: 'string' },
 			{ name: 'id_pengadaan', type: 'number' },
@@ -612,6 +617,7 @@
 			{ name: 'keterangan_pengadaan', type: 'string' },
 			{ name: 'identitas_barang', type: 'text' },
 			{ name: 'bahan', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'satuan', type: 'string' },
 			{ name: 'pilihan_bahan', type: 'string' },
 			{ name: 'ukuran_barang', type: 'string' },
@@ -663,9 +669,9 @@
 			<?php if(!isset($viewreadonly)){?>	{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_B_hapus").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },<?php } ?>
@@ -701,7 +707,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'uraian', type: 'string' },
 			{ name: 'id_pengadaan', type: 'number' },
@@ -713,6 +719,7 @@
 			{ name: 'keterangan_pengadaan', type: 'string' },
 			{ name: 'asal_usul', type: 'string' },
 			{ name: 'id_ruangan', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'tingkat', type: 'string' },
 			{ name: 'harga', type: 'string' },
 			{ name: 'beton', type: 'string' },
@@ -765,9 +772,9 @@
 			{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_C").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -799,7 +806,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'uraian', type: 'string' },
 			{ name: 'id_pengadaan', type: 'number' },
@@ -814,6 +821,7 @@
 			{ name: 'tingkat', type: 'string' },
 			{ name: 'harga', type: 'string' },
 			{ name: 'beton', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'letak_lokasi_alamat', type: 'text' },
 			{ name: 'pillihan_status_hak', type: 'string' },
 			{ name: 'nomor_kode_tanah', type: 'string' },
@@ -863,9 +871,9 @@
 			{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_C_hapus").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -898,7 +906,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'uraian', type: 'string' },
 			{ name: 'konstruksi', type: 'string' },
@@ -910,6 +918,7 @@
 			{ name: 'asal_usul', type: 'string' },
 			{ name: 'harga', type: 'string' },
 			{ name: 'barang_kembar_proc', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'panjang', type: 'double' },
 			{ name: 'lebar', type: 'string' },
 			{ name: 'luas', type: 'string' },
@@ -961,9 +970,9 @@
 			{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_D").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -995,7 +1004,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'uraian', type: 'string' },
 			{ name: 'konstruksi', type: 'string' },
@@ -1009,6 +1018,7 @@
 			{ name: 'barang_kembar_proc', type: 'string' },
 			{ name: 'panjang', type: 'double' },
 			{ name: 'lebar', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'luas', type: 'string' },
 			{ name: 'tanah', type: 'tanah' },
 			{ name: 'letak_lokasi_alamat', type: 'text' },
@@ -1058,9 +1068,9 @@
 			{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_D_hapus").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -1093,7 +1103,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'uraian', type: 'string' },
 			{ name: 'satuan', type: 'string' },
@@ -1107,6 +1117,7 @@
 			{ name: 'keterangan_pengadaan', type: 'text' },
 			{ name: 'asal_usul', type: 'string' },
 			{ name: 'harga', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'buku_judul_pencipta', type: 'string' },
 			{ name: 'buku_spesifikasi', type: 'double' },
 			{ name: 'budaya_asal_daerah', type: 'string' },
@@ -1158,9 +1169,9 @@
 			{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_E").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -1196,7 +1207,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'uraian', type: 'string' },
 			{ name: 'satuan', type: 'string' },
@@ -1210,6 +1221,7 @@
 			{ name: 'keterangan_pengadaan', type: 'text' },
 			{ name: 'asal_usul', type: 'string' },
 			{ name: 'harga', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'buku_judul_pencipta', type: 'string' },
 			{ name: 'buku_spesifikasi', type: 'double' },
 			{ name: 'budaya_asal_daerah', type: 'string' },
@@ -1261,9 +1273,9 @@
 			{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_E_hapus").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\";'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -1299,7 +1311,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'uraian', type: 'string' },
 			{ name: 'bangunan', type: 'string' },
@@ -1313,6 +1325,7 @@
 			{ name: 'harga', type: 'string' },
 			{ name: 'tanah', type: 'string' },
 			{ name: 'id_pengadaan', type: 'number' },
+			{ name: 'id_inventaris_distribusi', type: 'number' },
 			{ name: 'barang_kembar_proc', type: 'string' },
 			{ name: 'beton', type: 'string' },
 			{ name: 'tingkat', type: 'string' },
@@ -1363,9 +1376,9 @@
 			{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_F").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -1399,7 +1412,7 @@
 			datatype: "json",
 			type	: "POST",
 			datafields: [
-			{ name: 'id_inventaris_barang', type: 'number' },
+			{ name: 'id_inventaris_barang', type: 'string' },
 			{ name: 'id_mst_inv_barang', type: 'string' },
 			{ name: 'uraian', type: 'string' },
 			{ name: 'bangunan', type: 'string' },
@@ -1416,6 +1429,7 @@
 			{ name: 'barang_kembar_proc', type: 'string' },
 			{ name: 'beton', type: 'string' },
 			{ name: 'tingkat', type: 'string' },
+			{ name: 'id_inventaris_distribusi', type: 'string' },
 			{ name: 'lokasi', type: 'string' },
 			{ name: 'dokumen_tanggal', type: 'date' },
 			{ name: 'dokumen_nomor', type: 'string' },
@@ -1463,9 +1477,9 @@
 				{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false,editable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_Golongan_F_hapus").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_barang(\""+dataRecord.id_mst_inv_barang+"\",\""+dataRecord.barang_kembar_proc+"\",\""+dataRecord.id_inventaris_barang+"\",\""+dataRecord.id_pengadaan+"\",\""+dataRecord.id_inventaris_distribusi+"\");'></a></div>";
 					}
                  }
                 },
@@ -1526,7 +1540,7 @@
 		});
 	}
 
-	function edit_barang(id_barang,barang_kembar_proc,id_inventaris_barang,id_pengadaan){
+	function edit_barang(id_barang,barang_kembar_proc,id_inventaris_barang,id_pengadaan,id_distribusi){
 		$("#popup_barang #popup_content").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
 		$("#popup_barang").jqxWindow({
 			theme: theme, resizable: false,
@@ -1535,11 +1549,11 @@
 			isModal: true, autoOpen: false, modalOpacity: 0.2
 		});
 		$("#popup_barang").jqxWindow('open');
-		$.get("<?php echo base_url().'inventory/inv_barang/edit_barang/';?>" + id_barang+'/'+barang_kembar_proc+'/'+id_inventaris_barang+'/'+id_pengadaan, function(data) {
+		$.get("<?php echo base_url().'inventory/inv_barang/edit_barang/';?>" + id_barang+'/'+barang_kembar_proc+'/'+id_inventaris_barang+'/'+id_pengadaan+'/'+id_distribusi, function(data) {
 			$("#popup_barang #popup_content").html(data);
 		});
 	}
-	function barcode_barang(id_barang,barang_kembar_proc,id_inventaris_barang,id_pengadaan){
+	function edit_barang_all(id_barang,barang_kembar_proc,id_inventaris_barang,id_pengadaan,id_distribusi){
 		$("#popup_barang #popup_content").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
 		$("#popup_barang").jqxWindow({
 			theme: theme, resizable: false,
@@ -1548,12 +1562,25 @@
 			isModal: true, autoOpen: false, modalOpacity: 0.2
 		});
 		$("#popup_barang").jqxWindow('open');
-		$.get("<?php echo base_url().'inventory/inv_barang/edit_barang/';?>" + id_barang+'/'+barang_kembar_proc+'/'+id_inventaris_barang+'/'+"barcode", function(data) {
+		$.get("<?php echo base_url().'inventory/inv_barang/edit_barang_all/';?>" + id_barang+'/'+barang_kembar_proc+'/'+id_inventaris_barang+'/'+id_pengadaan+'/'+id_distribusi, function(data) {
+			$("#popup_barang #popup_content").html(data);
+		});
+	}
+	function barcode_barang(id_barang,barang_kembar_proc,id_inventaris_barang,id_pengadaan,id_inventaris_distribusi){
+		$("#popup_barang #popup_content").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
+		$("#popup_barang").jqxWindow({
+			theme: theme, resizable: false,
+			width: 1000,
+			height: 600,
+			isModal: true, autoOpen: false, modalOpacity: 0.2
+		});
+		$("#popup_barang").jqxWindow('open');
+		$.get("<?php echo base_url().'inventory/inv_barang/edit_barcode/';?>" + id_barang+'/'+barang_kembar_proc+'/'+id_inventaris_barang+'/'+id_pengadaan+'/'+id_inventaris_distribusi, function(data) {
 			$("#popup_barang #popup_content").html(data);
 		});
 	}
 
-	function hapus_barang(id_barang,barang_kembar_proc,id_inventaris_barang){
+	function hapus_barang(id_barang,barang_kembar_proc,id_inventaris_barang,id_distribusi){
 		$("#popup_barang2 #popup_content2").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
 		$("#popup_barang2").jqxWindow({
 			theme: theme, resizable: false,
@@ -1562,7 +1589,7 @@
 			isModal: true, autoOpen: false, modalOpacity: 0.2
 		});
 		$("#popup_barang2").jqxWindow('open');
-		$.get("<?php echo base_url().'inventory/inv_barang/hapus_barang/';?>" + id_barang+'/'+barang_kembar_proc+'/'+id_inventaris_barang, function(data) {
+		$.get("<?php echo base_url().'inventory/inv_barang/hapus_barang/';?>" + id_barang+'/'+barang_kembar_proc+'/'+id_inventaris_barang+'/'+id_distribusi, function(data) {
 			$("#popup_barang2 #popup_content2").html(data);
 		});
 	}
@@ -1617,9 +1644,9 @@
 	      <div class="col-md-9">
 			<button class="btn btn-primary" id='btn_add_barang' type='button'><i class='fa fa-plus-square-o'></i> &nbsp;Tambah Barang</button>
 			<button type="button " class="btn btn-warning" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
-			<?php 	if(!empty($filter_golongan_invetaris) || $filter_golongan_invetaris !=''){  ?>
+			<?php  //	if(!empty($filter_golongan_invetaris) || $filter_golongan_invetaris !=''){  ?>
 			<button type="button" class="btn btn-success" id="btn-export"><i class='fa fa-file-excel-o'></i> &nbsp; Export</button>	
-			<?php } ?>
+			<?php // } ?>
 		  </div>
 		</div>
 		<div class="box-header">
@@ -1639,8 +1666,10 @@
 		  </div>
 		  <div class="col-md-3">
 	     		<select name="code_cl_phc" class="form-control" id="code_cl_phc">
+	     			<option value="all">All</option>
 					<?php foreach ($datapuskesmas as $row ) { ;?>
-					<option value="<?php echo $row->code; ?>" onchange="" ><?php echo $row->value; ?></option>
+					<?php $select = $row->code == $this->session->userdata('filter_cl_phc') ? 'selected=selected' : '' ?>
+					<option value="<?php echo $row->code; ?>" <?php echo $select ?> ><?php echo $row->value; ?></option>
 				<?php	} ;?>
 	     	</select>
 		  </div>
@@ -1657,8 +1686,9 @@
 	    <div class="div-grid">
 	      <div id='jqxtabs'>
 	      	<ul style='margin-left: 20px;'>
-	    <?php 	if(!isset($filter_golongan_invetaris) || $filter_golongan_invetaris ==''){ ?>	
-	     	
+	    <?php 	if(!isset($filter_golongan_invetaris) || $filter_golongan_invetaris ==''){ 
+	    	?>	
+	     		
 	            <li id="inventaris_">Inventaris</li>
 	            <li id="barang_hapus">Barang Dihapuskan</li>
 
@@ -1696,7 +1726,9 @@
 	    <?php		}	 
 				} ?> 
 	        </ul>
-	     <?php 		if(!isset($filter_golongan_invetaris) || $filter_golongan_invetaris ==''){ ?>	
+	     <?php 		if(!isset($filter_golongan_invetaris) || $filter_golongan_invetaris ==''){ 
+	     	?>	
+
 			        		<div><div id="jqxgrid_barang"></div></div>
 			        		<div><div id="jqxgrid_DataHapus"></div></div>
 
@@ -1752,7 +1784,7 @@
         });
 
     $("#menu_inventory_inv_barang").addClass("active");
-    $("#menu_inventory").addClass("active");
+    $("#menu_aset_tetap").addClass("active");
 
     $('#code_cl_phc').change(function(){
       var code_cl_phc = $(this).val();
@@ -1939,7 +1971,18 @@
 			var condition	= fltr.filter.getfilters()[0].condition;
 			var filteroperation	= fltr.filter.getfilters()[0].operation;
 			var filterdatafield	= fltr.filtercolumn;
-	<?php  if(isset($filter_golongan_invetaris)){
+	<?php
+	if(!isset($filter_golongan_invetaris) || $filter_golongan_invetaris ==''){
+	?>
+			if(filterdatafield=="tanggal_diterima"){
+					var d = new Date(value);
+					var day = d.getDate();
+					var month = d.getMonth()+1;
+					var year = d.getFullYear();
+					value =  year+'-'+month+'-'+day;
+			}
+
+	<?php }else if(isset($filter_golongan_invetaris)){
 	if($filter_golongan_invetaris=='0100000000'){ ?> 
 				if(filterdatafield=="status_sertifikat_tanggal"){
 					var d = new Date(value);
@@ -2011,10 +2054,11 @@
 		post = post+'&puskes='+$("#code_cl_phc option:selected").val();
 		post = post+'&namepuskes='+$("#code_cl_phc option:selected").text();
 		post = post+'&ruang='+$("#code_ruangan option:selected").text();
-
 		<?php 	if(!isset($filter_golongan_invetaris) || $filter_golongan_invetaris ==''){ ?>
+			
 					$.post("<?php echo base_url()?>inventory/export/permohonan_export_inventori",post,function(response	){
 						window.location.href=response;
+						// alert(response);
 					});
 		<?php	}else  if(isset($filter_golongan_invetaris)){
 			    		if($filter_golongan_invetaris=='0100000000'){ ?> 

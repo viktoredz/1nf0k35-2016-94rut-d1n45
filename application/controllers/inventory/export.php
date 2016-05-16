@@ -47,11 +47,18 @@ class Export extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		if($this->session->userdata('filterHAPUS') != '') {
@@ -61,7 +68,7 @@ class Export extends CI_Controller {
 		if (($this->session->userdata('filterHAPUS') == '') ||($this->session->userdata('filterGIB') != '')) {
 				$this->db->where("pilihan_status_invetaris !=","3");
 			}
-		$rows_all = $this->inv_barang_model->get_data();
+		$rows_all = $this->inv_barang_model->get_data_laporan();
 
 
 		if($_POST) {
@@ -92,11 +99,18 @@ class Export extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		if($this->session->userdata('filterHAPUS') != '') {
@@ -105,27 +119,43 @@ class Export extends CI_Controller {
 		if (($this->session->userdata('filterHAPUS') == '') ||($this->session->userdata('filterGIB') != '')) {
 				$this->db->where("pilihan_status_invetaris !=","3");
 			}
-		$rows = $this->inv_barang_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
+		$rows = $this->inv_barang_model->get_data_laporan();
+		$no=1;
 
-		$data = array();
+		$data_tabel = array();
 		foreach($rows as $act) {
-			$data[] = array(
+			if($act->tanggal_pembelian == null){
+				$date="00-00-0000";
+			}else{
+				$date = date("d-m-Y",strtotime($act->tanggal_pembelian));
+			}
+			$asal = $this->inv_barang_model->get_pilihan($act->pilihan_asal,"asal_usul");
+			$keadaan = $this->inv_barang_model->get_pilihan($act->pilihan_keadaan_barang,"keadaan_barang");
+			$data_tabel[] = array(
+				'no'   							=> $no++,
 				'id_inventaris_barang'   		=> $act->id_inventaris_barang,
 				'id_mst_inv_barang'   			=> $act->id_mst_inv_barang,
 				'id_pengadaan'		   			=> $act->id_pengadaan,
 				'barang_kembar_proc'		   	=> $act->barang_kembar_proc,
 				'nama_barang'					=> $act->nama_barang,
-				
+				'register'		   				=> $act->register,
+				'pilihan_keadaan_barang'		=> $act->keadaan,
+				'tanggal_pembelian'		   		=> $date,
+				'merk'		   					=> $act->merk,
+				'nobukti'				   		=> $act->nobukti,
+				'bahan'		   					=> $act->bahan,
+				'ukuran'		   				=> $act->ukuran,
+				'satuan'		   				=> $act->satuan,
 				'jumlah'						=> $act->jumlah,
+				'pilihan_asal'				   	=> $act->asal,
 				'harga'							=> number_format($act->harga,2),
-				'totalharga'					=> number_format($act->totalharga,2),
+				'totalharga'					=> number_format($act->harga*$act->jumlah,2),
 				'keterangan_pengadaan'			=> $act->keterangan_pengadaan,
 				'pilihan_status_invetaris'		=> $act->pilihan_status_invetaris,
 				'barang_kembar_proc'			=> $act->barang_kembar_proc,
 				'tanggal_diterima'				=> $act->tanggal_diterima,
 				'waktu_dibuat'					=> $act->waktu_dibuat,
 				'terakhir_diubah'				=> $act->terakhir_diubah,
-				'value'							=> $act->value,
 				'edit'		=> 1,
 				'delete'	=> 1
 			);
@@ -143,7 +173,17 @@ class Export extends CI_Controller {
 		}else{
 			$namaruang = $this->input->post('ruang');
 		}
-		$data_puskesmas[] = array('nama_puskesmas' => $namapus,'nama_puskesmas' => $namaruang);
+		$kode_sess=$this->session->userdata('puskesmas');
+		$kd_prov = $this->inv_barang_model->get_nama('value','cl_province','code',substr($kode_sess, 0,2));
+		$kd_kab  = $this->inv_barang_model->get_nama('value','cl_district','code',substr($kode_sess, 0,4));
+		$kd_kec  = 'KEC. '.$this->inv_barang_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
+		$kd_upb  = $this->input->post('namepuskes');
+		$bidang = 'Bidang Kesehatan';
+		$unit = 'Bidang Kesehatan';
+		$subunit = 'Bidang Kesehatan';
+		$upb = 'Bidang Kesehatan';
+
+		$data_puskesmas[] = array('nama_puskesmas' => $namapus,'kd_prov' => $kd_prov,'kd_kab' => $kd_kab,'bidang' => $bidang,'unit' => $unit,'subunit' => $subunit,'upb' => $upb);
 		$dir = getcwd().'/';
 		$template = $dir.'public/files/template/inventory/kibinventaris.xlsx';		
 		$TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
@@ -153,7 +193,7 @@ class Export extends CI_Controller {
 		$TBS->MergeBlock('b', $data_puskesmas);
 		
 		$code = uniqid();
-		$output_file_name = 'public/files/hasil/hasil_export_Inventaris_'.$code.'.xlsx';
+		$output_file_name = 'public/files/hasil/hasil_export_KibInventaris_'.$code.'.xlsx';
 		$output = $dir.$output_file_name;
 		$TBS->Show(OPENTBS_FILE, $output); // Also merges all [onshow] automatic fields.
 		
@@ -195,10 +235,20 @@ class Export extends CI_Controller {
 			$this->db->where("id_ruangan",$filter);
 		}
 
-		if($this->input->post('code_cl_phc') != '') {
-			$this->db->where("id_cl_phc",$this->input->post('code_cl_phc'));
-		}else{
-			$this->db->where("id_cl_phc",$this->session->userdata('filter_cl_phc'));
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_cl_phc') != ''){
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);
+				}
+			}
+		}else {
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows_all = $this->inv_barang_model->get_data_golongan_A();
@@ -229,10 +279,20 @@ class Export extends CI_Controller {
 			$this->db->where("id_ruangan",$filter);
 		}
 
-		if($this->input->post('puskes') != '') {
-			$this->db->where("id_cl_phc",$this->input->post('puskes'));
-		}else{
-			$this->db->where("id_cl_phc",$this->session->userdata('filter_cl_phc'));
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_cl_phc') != ''){
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);
+				}
+			}
+		}else {
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows = $this->inv_barang_model->get_data_golongan_A();
@@ -350,10 +410,21 @@ class Export extends CI_Controller {
 			$this->db->where("id_ruangan",$filter);
 		}
 
-		if($this->input->post('puskes') != '') {
-			$this->db->where("id_cl_phc",$this->input->post('puskes'));
-		}else{
-			$this->db->where("id_cl_phc",$this->session->userdata('filter_cl_phc'));
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_cl_phc') != ''){
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
+			}
+		}else {
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows_all = $this->inv_barang_model->get_data_golongan_B();
@@ -383,10 +454,21 @@ class Export extends CI_Controller {
 			$this->db->where("id_ruangan",$filter);
 		}
 
-		if($this->input->post('puskes') != '') {
-			$this->db->where("id_cl_phc",$this->input->post('puskes'));
-		}else{
-			$this->db->where("id_cl_phc",$this->session->userdata('filter_cl_phc'));
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_cl_phc') != ''){
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
+			}
+		}else {
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows = $this->inv_barang_model->get_data_golongan_B();
@@ -503,11 +585,23 @@ class Export extends CI_Controller {
 			$this->db->where("id_ruangan",$filter);
 		}
 
-		if($this->input->post('puskes') != '') {
-			$this->db->where("id_cl_phc",$this->input->post('puskes'));
-		}else{
-			$this->db->where("id_cl_phc",$this->session->userdata('filter_cl_phc'));
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_cl_phc') != ''){
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
+			}
+		}else {
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
+
 		$rows_all = $this->inv_barang_model->get_data_golongan_C();
 
 
@@ -537,11 +631,23 @@ class Export extends CI_Controller {
 			$this->db->where("id_ruangan",$filter);
 		}
 
-		if($this->input->post('puskes') != '') {
-			$this->db->where("id_cl_phc",$this->input->post('puskes'));
-		}else{
-			$this->db->where("id_cl_phc",$this->session->userdata('filter_cl_phc'));
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_cl_phc') != ''){
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
+			}
+		}else {
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
+
 		$rows = $this->inv_barang_model->get_data_golongan_C();
 		$no=1;
 		$data_tabel = array();
@@ -657,11 +763,23 @@ class Export extends CI_Controller {
 			$this->db->where("id_ruangan",$filter);
 		}
 
-		if($this->input->post('puskes') != '') {
-			$this->db->where("id_cl_phc",$this->input->post('puskes'));
-		}else{
-			$this->db->where("id_cl_phc",$this->session->userdata('filter_cl_phc'));
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_cl_phc') != ''){
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
+			}
+		}else {
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
+
 		$rows_all = $this->inv_barang_model->get_data_golongan_D();
 
 
@@ -690,11 +808,23 @@ class Export extends CI_Controller {
 			$this->db->where("id_ruangan",$filter);
 		}
 
-		if($this->input->post('puskes') != '') {
-			$this->db->where("id_cl_phc",$this->input->post('puskes'));
-		}else{
-			$this->db->where("id_cl_phc",$this->session->userdata('filter_cl_phc'));
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_cl_phc') != ''){
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
+			}
+		}else {
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
+
 		$rows = $this->inv_barang_model->get_data_golongan_D();
 		$no=1;
 		$data_tabel = array();
@@ -960,11 +1090,23 @@ class Export extends CI_Controller {
 			$this->db->where("id_ruangan",$filter);
 		}
 
-		if($this->input->post('puskes') != '') {
-			$this->db->where("id_cl_phc",$this->input->post('puskes'));
-		}else{
-			$this->db->where("id_cl_phc",$this->session->userdata('filter_cl_phc'));
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_cl_phc') != ''){
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);
+				}
+
+			}
+		}else {
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
+
 		$rows_all = $this->inv_barang_model->get_data_golongan_F();
 		
 
@@ -994,11 +1136,23 @@ class Export extends CI_Controller {
 			$this->db->where("id_ruangan",$filter);
 		}
 
-		if($this->input->post('puskes') != '') {
-			$this->db->where("id_cl_phc",$this->input->post('puskes'));
-		}else{
-			$this->db->where("id_cl_phc",$this->session->userdata('filter_cl_phc'));
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_cl_phc') != ''){
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);
+				}
+
+			}
+		}else {
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
+
 		$rows = $this->inv_barang_model->get_data_golongan_F();
 		$no=1;
 		$data_tabel = array();

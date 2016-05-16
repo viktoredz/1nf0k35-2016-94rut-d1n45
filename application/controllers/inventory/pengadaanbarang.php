@@ -49,7 +49,7 @@ class Pengadaanbarang extends CI_Controller {
 			}
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
-			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+			if ($this->session->userdata('filter_code_cl_phc')=='all' || $this->session->userdata('filter_code_cl_phc')=='') {
 				# code...
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
@@ -81,7 +81,7 @@ class Pengadaanbarang extends CI_Controller {
 			}
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
-			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+			if ($this->session->userdata('filter_code_cl_phc')=='all' || $this->session->userdata('filter_code_cl_phc')=='') {
 				# code...
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
@@ -276,7 +276,7 @@ class Pengadaanbarang extends CI_Controller {
 			}
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
-			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+			if ($this->session->userdata('filter_code_cl_phc')=='all' || $this->session->userdata('filter_code_cl_phc')=='') {
 				# code...
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
@@ -308,7 +308,7 @@ class Pengadaanbarang extends CI_Controller {
 			}
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
-			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+			if ($this->session->userdata('filter_code_cl_phc')=='all' || $this->session->userdata('filter_code_cl_phc')=='') {
 				# code...
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
@@ -356,7 +356,7 @@ class Pengadaanbarang extends CI_Controller {
 		$this->authentication->verify('inventory','edit');
 		$data['title_group'] = "Inventory";
 		$data['title_form'] = "Daftar Pengadaan Barang";
-
+		$this->session->set_userdata('filter_code_cl_phc','');
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			$data['unlock'] = 1;

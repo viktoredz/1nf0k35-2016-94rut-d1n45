@@ -43,11 +43,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 
@@ -89,11 +96,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		if($this->session->userdata('filterHAPUS') != '') {
@@ -118,6 +132,7 @@ class Json extends CI_Controller {
 				'totalharga'					=> number_format($act->totalharga,2),
 				'keterangan_pengadaan'			=> $act->keterangan_pengadaan,
 				'pilihan_status_invetaris'		=> $act->pilihan_status_invetaris,
+				'id_inventaris_distribusi'		=> $act->id_inventaris_distribusi,
 				'barang_kembar_proc'			=> $act->barang_kembar_proc,
 				'tanggal_diterima'				=> $act->tanggal_diterima,
 				'tanggal_dihapus'				=> $act->tanggal_dihapus,
@@ -177,11 +192,17 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);
+				}
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows_all = $this->inv_barang_model->get_data_golongan_A();
@@ -215,11 +236,17 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);
+				}
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows = $this->inv_barang_model->get_data_golongan_A($this->input->post('recordstartindex'), $this->input->post('pagesize'));
@@ -240,6 +267,8 @@ class Json extends CI_Controller {
 				'asal_usul'					=> $act->asal_usul,
 				'keterangan_pengadaan'		=> $act->keterangan_pengadaan,
 				'harga'						=> number_format($act->harga,2),
+				'id_inventaris_distribusi'	=> $act->id_inventaris_distribusi,
+				'tanggal_diterima'			=> $act->tanggal_diterima,
 				'jumlah'					=> $act->jumlah,
 				'jumlah_satuan'				=> $act->jumlah.' '.$act->satuan,
 				'penggunaan'				=> $act->penggunaan,
@@ -298,11 +327,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows_all = $this->inv_barang_model->get_data_golongan_B();
@@ -335,11 +371,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows = $this->inv_barang_model->get_data_golongan_B($this->input->post('recordstartindex'), $this->input->post('pagesize'));
@@ -354,6 +397,7 @@ class Json extends CI_Controller {
 				'barang_kembar_proc'	=> $act->barang_kembar_proc,
 				'merek_type' 			=> $act->merek_type,
 				'keterangan_pengadaan'		=> $act->keterangan_pengadaan,
+				'id_inventaris_distribusi'	=> $act->id_inventaris_distribusi,
 				'bahan'		 			=> $act->bahan,
 				'asal_usul'				=> $act->asal_usul,
 				'id_cl_phc'				=> $act->id_cl_phc,
@@ -419,11 +463,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows_all = $this->inv_barang_model->get_data_golongan_C();
@@ -458,11 +509,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows = $this->inv_barang_model->get_data_golongan_C($this->input->post('recordstartindex'), $this->input->post('pagesize'));
@@ -481,6 +539,8 @@ class Json extends CI_Controller {
 				'keterangan_pengadaan'		=> $act->keterangan_pengadaan,
 				'asal_usul'				=> $act->asal_usul,
 				'tingkat' 				=> $act->tingkat,
+				'id_inventaris_distribusi'	=> $act->id_inventaris_distribusi,
+				'tanggal_diterima'			=> $act->tanggal_diterima,
 				'beton' 				=> $act->beton,
 				'id_cl_phc'				=> $act->id_cl_phc,
 				'register'				=> $act->register,
@@ -541,11 +601,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows_all = $this->inv_barang_model->get_data_golongan_D();
@@ -579,11 +646,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows = $this->inv_barang_model->get_data_golongan_D($this->input->post('recordstartindex'), $this->input->post('pagesize'));
@@ -599,6 +673,8 @@ class Json extends CI_Controller {
 				'register'				=> $act->register,
 				'harga'					=> number_format($act->harga,2),
 				'keterangan_pengadaan'		=> $act->keterangan_pengadaan,
+				'id_inventaris_distribusi'	=> $act->id_inventaris_distribusi,
+				'tanggal_diterima'			=> $act->tanggal_diterima,
 				'asal_usul'				=> $act->asal_usul,
 				'id_pengadaan'		   	=> $act->id_pengadaan,
 				'barang_kembar_proc'	=> $act->barang_kembar_proc,
@@ -658,11 +734,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows_all = $this->inv_barang_model->get_data_golongan_E();
@@ -697,11 +780,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);	
+				}
+				
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows = $this->inv_barang_model->get_data_golongan_E($this->input->post('recordstartindex'), $this->input->post('pagesize'));
@@ -723,6 +813,9 @@ class Json extends CI_Controller {
 				'asal_usul'				=> $act->asal_usul,
 				'barang_kembar_proc'	=> $act->barang_kembar_proc,
 				'buku_judul_pencipta' 	=> $act->buku_judul_pencipta,
+
+				'id_inventaris_distribusi'	=> $act->id_inventaris_distribusi,
+				'tanggal_diterima'			=> $act->tanggal_diterima,
 				'buku_spesifikasi' 		=> $act->buku_spesifikasi,
 				'budaya_asal_daerah' 	=> $act->budaya_asal_daerah,
 				'budaya_pencipta' 		=> $act->budaya_pencipta,
@@ -780,11 +873,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);
+				}
+
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows_all = $this->inv_barang_model->get_data_golongan_F();
@@ -819,11 +919,18 @@ class Json extends CI_Controller {
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_cl_phc') != ''){
-				$kodeplch = $this->session->userdata('filter_cl_phc');
-				$this->db->where("id_cl_phc",$kodeplch);
+				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+				}else{
+					$kodeplch = $this->session->userdata('filter_cl_phc');
+					$this->db->where("id_cl_phc",$kodeplch);
+				}
+
 			}
 		}else {
-			$this->db->where('id_cl_phc',"P".$this->session->userdata('puskesmas'));
+			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
+			}else{
+				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+			}
 		}
 
 		$rows = $this->inv_barang_model->get_data_golongan_F($this->input->post('recordstartindex'), $this->input->post('pagesize'));
@@ -841,6 +948,8 @@ class Json extends CI_Controller {
 				'id_cl_phc'				=> $act->id_cl_phc,
 				'register'				=> $act->register,
 				'harga'					=> number_format($act->harga,2),
+				'id_inventaris_distribusi'	=> $act->id_inventaris_distribusi,
+				'tanggal_diterima'			=> $act->tanggal_diterima,
 				'keterangan_pengadaan'	=> $act->keterangan_pengadaan,
 				'asal_usul'				=> $act->asal_usul,
 				'jumlah'				=> $act->jumlah,

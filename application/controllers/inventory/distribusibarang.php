@@ -159,7 +159,7 @@ class Distribusibarang extends CI_Controller {
 			$all = $this->distribusibarang_model->get_count($code_cl_phc);
 			echo '<option value="all">-- Seluruh Ruangan '.$all.' --</option>';
 			//if(substr($code_cl_phc, -2)=="01"){
-				$none = $this->distribusibarang_model->get_count();
+				$none = $this->distribusibarang_model->get_count($code_cl_phc,'belum');
 				echo '<option value="none">-- Belum Distribusi '.$none.' --</option>';
 			//}
 			foreach($kode as $kode) :

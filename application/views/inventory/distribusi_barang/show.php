@@ -6,7 +6,7 @@
 	<?php echo $this->session->flashdata('alert')?>
 </div>
 <?php } ?>
-<?php echo $this->session->userdata('code_cl_phc').'hai';?>
+
 <section class="content">
 <form action="<?php echo base_url()?>inventory/pengadaanbarang/dodel_multi" method="POST" name="">
   <div class="row">
@@ -20,7 +20,7 @@
 
       	<div class="box-footer">
 		  <div class="col-md-3">
-     		<select name="code_cl_phc" id="puskesmas" class="form-control">
+     		<select name="code_cl_phc" id="code_cl_phc" class="form-control">
      				<option value="all" onchange="" >All</option>
 				<?php foreach ($datapuskesmas as $row ) { ;?>
 				<?php $select = $row->code == $this->session->userdata('code_cl_phc') ? 'selected=selected' : '' ?>
@@ -204,11 +204,6 @@
 		});
 		$("#popup_barang").jqxWindow('open');
 	}
-	$("select[name='code_cl_phc']").change(function(){
-		$.post("<?php echo base_url().'inventory/permohonanbarang/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
-			$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
-		});
-    });
 	function doList(){				
 		var values = new Array();	
 		var	data_barang = "/";

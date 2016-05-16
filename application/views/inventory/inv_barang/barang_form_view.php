@@ -2,7 +2,7 @@
 <script type="text/javascript">
 
   <?php $kodebarang_ = substr($id_mst_inv_barang, 0,2);
-  if($id_pengadaan!="barcode"){
+  if($action!="barcode"){
       if($kodebarang_=='01') {?>  
             $("#status_sertifikat_tanggal").jqxDateTimeInput({ width: '300px', height: '25px' })
 <?php  }else if($kodebarang_=='02') {?>
@@ -98,13 +98,23 @@
             <div class="form-group"> 
               <label>Kode Barang</label>
               <br><?php 
+                  $S = array();
                   $s = array();
-                  $s[0] = substr($id_mst_inv_barang, 0,2);
-                  $s[1] = substr($id_mst_inv_barang, 2,2);
-                  $s[2] = substr($id_mst_inv_barang, 4,2);
-                  $s[3] = substr($id_mst_inv_barang, 6,2);
-                  $s[4] = substr($id_mst_inv_barang, 8,2);
-                  echo implode(".", $s).' - '.$nama_barang;
+                  $S[0] = substr($id_inventaris_barang, 0,2);
+                  $S[1] = substr($id_inventaris_barang, 2,2);
+                  $S[2] = substr($id_inventaris_barang, 4,2);
+                  $S[3] = substr($id_inventaris_barang, 6,2);
+                  $S[4] = substr($id_inventaris_barang, 8,2);
+                  $S[5] = substr($id_inventaris_barang, 10,2);
+                  $S[6] = substr($id_inventaris_barang, 12,3);
+                  $s[7] = substr($id_inventaris_barang, 15,2);
+                  $s[8] = substr($id_inventaris_barang, 17,2);
+                  $s[9] = substr($id_inventaris_barang, 19,2);
+                  $s[10] = substr($id_inventaris_barang, 21,2);
+                  $s[11] = substr($id_inventaris_barang, 23,2);
+                  $s[12] = substr($id_inventaris_barang, 25,4);
+                 // $s[13] = substr($id_inventaris_barang, 26,2);
+                  echo implode(".", $S).' - '.implode(".", $s);
                 ?><br><br>
             </div>
             <div class="form-group">
@@ -188,14 +198,112 @@
     <div class="box-body">
 
     <!--body from edit-->
-    <?php 
-      if($id_pengadaan=="barcode"){
-        ?>      
+    <?php  
+      if($action=="barcode"){
+        ?>   
+        <script type="text/javascript">
+
+        function print1(strid)
+        {
+          if(confirm("Do you want to print?"))
+          {
+            var values = document.getElementById(strid);
+            var printing =
+            window.open('','','left=0,top=0,width=500,height=350,toolbar=0,scrollbars=0,sta­?tus=0');
+            printing.document.write(values.innerHTML);
+            printing.document.close();
+            printing.focus();
+            printing.print();
+          }
+        }
+        </script>
+<style type="text/css">
+  #myModal-header{
+    background-color: #3498db;
+  }
+  #myModal-title{
+      color: white;
+  }
+</style>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+  
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Print Barcode</h4>
+      </div>
+      <div class="modal-body">
+      <div id="print2">   
+          <table width="100%" cellpadding='2' cellspacing='2' border="0">
+              <tr> 
+                <th  align="center" colspan="1">
+                  <h4 align="center">
+                    <img src="<?php echo base_url()?>public/themes/sik/dist/img/logo.gif" width="50px" height="50px">
+                  </h4>
+                </th>
+                <th colspan="3" align="center"><h4>BARANG MILIK DINAS KESEHATAN <BR> KABUPATEN<?php echo $ditrict; ?></h4></th>
+              </tr>
+          </table>
+          <table width="100%" cellpadding='2' cellspacing='2' border="0">
+              <tr>
+                  <th rowspan="4" width="30%">
+                    <img src="<?php echo base_url()?>inventory/qrcodes/draw/<?php echo $kd_proc.'/'.$id_barang.'/'.$kode; ?>">
+                  </th>
+                  <th align="left" width="20%">Kode Lokasi</th>
+                  <th align="left" width="2%">:&nbsp;</th>
+                  <th align="left" width="48%"><?php $kodelokasi= substr($kode,0,14);
+                  $s = array();
+                  $s[0] = substr($kodelokasi, 0,2);
+                  $s[1] = substr($kodelokasi, 2,2);
+                  $s[2] = substr($kodelokasi, 4,2);
+                  $s[3] = substr($kodelokasi, 6,2);
+                  $s[4] = substr($kodelokasi, 8,2);
+                  $s[5] = substr($kodelokasi, 10,2);
+                  $s[6] = substr($kodelokasi, 12,2);
+                  echo implode(".", $s);
+                ?></th>
+              </tr>
+              <tr  align="left"> 
+                  <th>Kode Barang</th>
+                  <th>:&nbsp;</th>
+                  <th><?php $rest = substr ($kode,14,28);
+                  $s = array();
+                  $s[0] = substr($rest, 0,2);
+                  $s[1] = substr($rest, 2,2);
+                  $s[2] = substr($rest, 4,2);
+                  $s[3] = substr($rest, 6,2);
+                  $s[4] = substr($rest, 8,2);
+                  $s[5] = substr($rest, 10,4);
+                  echo implode(".", $s);
+                ?></th>
+              </tr>
+              <tr  align="left">
+                  <th colspan="3"><?php echo $nama_barang; ?></th>
+              </tr>
+              <tr>
+                  <th colspan="4" align="right"><img src="<?php echo base_url()?>inventory/barcode/draw/<?php echo $kode; ?>"></th>
+              </tr>
+          </table>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="return print1('print2')" > <i class="glyphicon glyphicon-print"></i> Print Barcode</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
                 <div class="form-group">
                   <label>QR Code / Barcode</label>
                   <br>
-                  <img src="<?php echo base_url()?>inventory/qrcodes/draw/<?php echo $id_barang.'/'.$kode; ?>" >
-                  <img src="<?php echo base_url()?>inventory/barcode/draw/<?php echo substr($kd_proc, 1); ?>" style="padding-left:10%">
+                  <img src="<?php echo base_url()?>inventory/qrcodes/draw/<?php echo $kd_proc.'/'.$id_barang.'/'.$kode.'/'.$id_distribusi; ?>" ><br><br>
+                  <img src="<?php echo base_url()?>inventory/barcode/draw/<?php echo $kode; ?>" >
+                  <button type="button" class="btn btn-info btn-sl" data-toggle="modal" data-target="#myModal" style="float:right;">Print</button>
                 </div>
                 <div class="box-footer">
                   <div class="form-group">

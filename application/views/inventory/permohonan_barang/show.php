@@ -53,6 +53,11 @@
 	$(function () {	
 	    $("#menu_aset_tetap").addClass("active");
       $("#menu_inventory_permohonanbarang").addClass("active");
+      $("select[name='code_cl_phc']").change(function(){
+			$.post("<?php echo base_url().'inventory/permohonanbarang/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
+				$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+			});
+	    });
 	});
 
 	   var source = {
@@ -206,11 +211,7 @@
 			});
 		}
 	}
-	$("select[name='code_cl_phc']").change(function(){
-		$.post("<?php echo base_url().'inventory/permohonanbarang/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
-			$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
-		});
-    });
+	
 			
 	$("#btn-export").click(function(){
 		
