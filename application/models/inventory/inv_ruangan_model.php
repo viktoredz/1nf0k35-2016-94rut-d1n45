@@ -164,6 +164,7 @@ class inv_ruangan_model extends CI_Model {
 			$detail = $this->get_detail_inventaris($row['id_inventaris_barang']);
 			$row = array_merge($row,$detail);
 			$row['jml'] = $jml;
+			$jml = 0;
 			$rows[] = $row;
 		}
 

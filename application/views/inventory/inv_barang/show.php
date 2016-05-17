@@ -1782,7 +1782,14 @@
         $("#jqxtabs").on('selected', function (event) {
             $.jqx.cookie.cookie("jqxTabs_jqxWidget__", event.args.item);
         });
-
+         $.ajax({
+        url : '<?php echo site_url('inventory/inv_barang/get_ruangan') ?>',
+        type : 'POST',
+        data : 'code_cl_phc=' + $('#code_cl_phc').val(),
+        success : function(data) {
+          $('#code_ruangan').html(data);
+			filter_jqxgrid_inv_barang();
+        } });
     $("#menu_inventory_inv_barang").addClass("active");
     $("#menu_aset_tetap").addClass("active");
 
