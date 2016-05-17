@@ -99,7 +99,7 @@ var code_cl_phc = '<?php echo $code_cl_phc?>';
 	function ambil_total()
 	{
 		$.ajax({
-		url: "<?php echo base_url().'inventory/permohonanbarang/total_permohonan/'.$kode.'/'.$code_cl_phc ?>",
+		url: "<?php echo base_url().'inventory/permohonanbarang/total_permohonan/'.$kode ?>",
 		dataType: "json",
 		success:function(data)
 		{ 
@@ -139,7 +139,7 @@ var code_cl_phc = '<?php echo $code_cl_phc?>';
 		$("#popup_barang").jqxWindow({
 			theme: theme, resizable: false,
 			width: 700,
-			height: 460,
+			height: 700,
 			isModal: true, autoOpen: false, modalOpacity: 0.2
 		});
 		$("#popup_barang").jqxWindow('open');
@@ -167,7 +167,7 @@ var code_cl_phc = '<?php echo $code_cl_phc?>';
 <div>
 	<div style="width:100%;">
 		<div style="padding:5px" class="pull-right">
-			<button class="btn btn-success" id='btn_add_barang' type='button'><i class='icon-copy'></i> Tambah Barang</button>
+			<button class="btn btn-success" id='btn_add_barang' type='button'><i class='fa fa-plus-square'></i> Tambah Barang</button>
 		</div>
         <div id="jqxgrid_barang"></div>
 	</div>

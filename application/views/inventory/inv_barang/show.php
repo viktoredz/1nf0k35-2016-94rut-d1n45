@@ -1642,7 +1642,7 @@
     </div>
 		<div class="box-footer">
 	      <div class="col-md-9">
-			<button class="btn btn-primary" id='btn_add_barang' type='button'><i class='fa fa-plus-square-o'></i> &nbsp;Tambah Barang</button>
+			<!--<button class="btn btn-primary" id='btn_add_barang' type='button'><i class='fa fa-plus-square-o'></i> &nbsp;Tambah Barang</button>-->
 			<button type="button " class="btn btn-warning" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
 			<?php  //	if(!empty($filter_golongan_invetaris) || $filter_golongan_invetaris !=''){  ?>
 			<button type="button" class="btn btn-success" id="btn-export"><i class='fa fa-file-excel-o'></i> &nbsp; Export</button>	

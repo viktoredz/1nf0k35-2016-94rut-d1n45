@@ -28,11 +28,11 @@
 		     	<div class="col-md-4" style="padding-top:5px;"><label> Puskesmas </label> </div>
 		     	<div class="col-md-8">
 		     		<select name="code_cl_phc" id="puskesmas" class="form-control">
-		     				<option value="all" onchange="" >All</option>
-						<?php foreach ($datapuskesmas as $row ) { ;?>
-						<?php $select = $row->code == $this->session->userdata('filter_code_cl_phc') ? 'selected=selected' : '' ?>
-							<option value="<?php echo $row->code; ?>" <?php echo $select; ?> ><?php echo $row->value; ?></option>
-						<?php	} ;?>
+						<option value="all" onchange="" >All</option>
+							<?php foreach ($datapuskesmas as $row ) { ;?>
+							<?php $select = $row->code == set_value('codepus') ? 'selected' : '' ?>
+								<option value="<?php echo $row->code; ?>" onchange="" ><?php echo $row->value; ?></option>
+							<?php	} ;?>
 			     	</select>
 			     </div>	
 	     	</div>
@@ -52,12 +52,7 @@
 <script type="text/javascript">
 	$(function () {	
 	    $("#menu_aset_tetap").addClass("active");
-      $("#menu_inventory_permohonanbarang").addClass("active");
-      $("select[name='code_cl_phc']").change(function(){
-			$.post("<?php echo base_url().'inventory/permohonanbarang/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
-				$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
-			});
-	    });
+	    $("#menu_inventory_permohonanbarang").addClass("active");
 	});
 
 	   var source = {
@@ -87,7 +82,7 @@
 			
             commit(true);
 			var arr = $.map(rowData, function(el) { return el });
-		//	alert(arr[7]);		//6 status
+			//alert(arr);		//6 status
 
 			//cek tipe inputan 
 			//object -> input
@@ -95,8 +90,8 @@
 			//if(typeof(arr[2]) === 'object'){
 				//var arr2 = $.map(arr[8], function(el) { return el });
 				//input data
-
-				$.post( '<?php echo base_url()?>inventory/permohonanbarang/updatestatus', {pilihan_status_pengadaan:arr[7],inv_permohonan_barang:arr[2]},function( data ) {
+//alert(arr);
+				$.post( '<?php echo base_url()?>inventory/permohonanbarang/updatestatus', {pilihan_status_pengadaan:arr[6],inv_permohonan_barang:arr[2]},function( data ) {
 						$("#jqxgrid").jqxGrid('updateBoundData');
 						
 				 });
@@ -168,7 +163,7 @@
 				{ text: 'Tgl. Permohonan', align: 'center', cellsalign: 'center', editable:false , datafield: 'tanggal_permohonan', columntype: 'date', filtertype: 'date', cellsformat: 'dd-MM-yyyy', width: '12%' },
 				{ text: 'Lokasi / Ruangan', editable:false ,datafield: 'nama_ruangan', columntype: 'textbox', filtertype: 'textbox', width: '17%' },
 				{ text: 'Jumlah Barang', align: 'center', cellsalign: 'center', editable:false ,datafield: 'jumlah_unit', columntype: 'textbox', filtertype: 'textbox', width: '12%' },
-				{ text: 'Total Harga (Rp.)', align: 'center', cellsalign: 'center', editable:false ,datafield: 'totalharga', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
+				{ text: 'Total Harga (Rp.)', align: 'center', cellsalign: 'center', editable:false ,datafield: 'totalharga', columntype: 'textbox', filtertype: 'none', width: '16%' },
 				{
 	                text: '<b><i class="fa fa-pencil-square-o"></i> Status </b>', align: 'center', cellsalign: 'center', datafield: 'value', width: '12%', columntype: 'dropdownlist',
 	                createeditor: function (row, column, editor) {
@@ -189,7 +184,6 @@
 		});
 
 	function detail(id,code_cl_phc){
-		//alert(id);
 		document.location.href="<?php echo base_url().'inventory/permohonanbarang/detail';?>/" + id + "/" + code_cl_phc;
 	}
 
@@ -211,7 +205,11 @@
 			});
 		}
 	}
-	
+	$("select[name='code_cl_phc']").change(function(){
+		$.post("<?php echo base_url().'inventory/permohonanbarang/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
+			$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+		});
+    });
 			
 	$("#btn-export").click(function(){
 		
@@ -252,7 +250,6 @@
 		
 		$.post("<?php echo base_url()?>inventory/permohonanbarang/permohonan_export",post,function(response	){
 			window.location.href=response;
-			// alert(response);
 		});
 	});
 </script>

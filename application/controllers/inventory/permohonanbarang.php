@@ -13,12 +13,20 @@ class Permohonanbarang extends CI_Controller {
 		$this->load->model('inventory/inv_ruangan_model');
 		$this->load->model('mst/invbarang_model');
 	}
-
+	public function kodePermohonan($id=0){
+		$this->db->where('code',$id);
+		$query = $this->db->get('cl_phc')->result();
+		foreach ($query as $q) {
+			$kode[] = array(
+				'kodeper' => $q->cd_kompemilikbarang.'.'.$q->cd_propinsi.'.'.$q->cd_kabkota.'.'.$q->cd_bidang.'.'.$q->cd_unitbidang.'.'.$q->cd_satuankerja, 
+			);
+			echo json_encode($kode);
+		}
+	}
 	function index(){
 		$this->authentication->verify('inventory','edit');
 		$data['title_group'] = "Inventory";
 		$data['title_form'] = "Daftar Permohonan Barang";
-		$this->session->set_userdata('filter_code_cl_phc','');
 		$data['statusdata'] = $this->permohonanbarang_model->get_data_status();
 
 		$kodepuskesmas = $this->session->userdata('puskesmas');
@@ -27,7 +35,7 @@ class Permohonanbarang extends CI_Controller {
 		}else {
 			$this->db->where('code','P'.$kodepuskesmas);
 		}
-
+		$this->session->set_userdata('filter_code_cl_phc','');
 		$data['datapuskesmas'] 	= $this->inv_ruangan_model->get_data_puskesmas();
 		$data['content'] = $this->parser->parse("inventory/permohonan_barang/show",$data,true);
 
@@ -65,17 +73,16 @@ class Permohonanbarang extends CI_Controller {
 			}
 		}
 
-		if($this->session->userdata('filter_code_cl_phc') != '') {
+		/*if($this->session->userdata('filter_code_cl_phc') != '') {
+			$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+		}*/
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
 				# code...
 			}else{
-				$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
+				$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
 			}
-			
 		}
-		// if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-		// 	$this->db->where('inv_permohonan_barang.code_cl_phc','P'.$this->session->userdata('puskesmas'));
-		// }
 		$rows_all = $this->permohonanbarang_model->get_data();
 		
 
@@ -99,17 +106,16 @@ class Permohonanbarang extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if($this->session->userdata('filter_code_cl_phc') != '') {
+		/*if($this->session->userdata('filter_code_cl_phc') != '') {
+			$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+		}*/
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
 				# code...
 			}else{
-				$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
+				$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
 			}
-			
 		}
-		// if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-		// 	$this->db->where('inv_permohonan_barang.code_cl_phc','P'.$this->session->userdata('puskesmas'));
-		// }
 		#$rows = $this->permohonanbarang_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$rows = $this->permohonanbarang_model->get_data();
 		$data = array();
@@ -148,7 +154,8 @@ class Permohonanbarang extends CI_Controller {
 		$dir = getcwd().'/';
 		$template = $dir.'public/files/template/inventory/permohonan_barang.xlsx';		
 		$TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
-
+		//print_r($data_tabel);
+		//die();
 		// Merge data in the first sheet
 		$TBS->MergeBlock('a', $data_tabel);
 		$TBS->MergeBlock('b', $data_puskesmas);
@@ -221,7 +228,7 @@ class Permohonanbarang extends CI_Controller {
 		$keterangan = $this->input->post('keterangan');
 		$ruang = $this->input->post('ruang');
 		$puskesmas = $nama;
-		$jumlahtotal= $this->permohonanbarang_model->totalharga($this->input->post('kode'),$this->input->post('code_cl_phc'));
+		$jumlahtotal= $this->permohonanbarang_model->totalharga($this->input->post('kode'));
 		#$data_puskesmas[] = array('nama_puskesmas' => $nama, 'tanggal'=> $tanggal, 'keterangan'=>$keterangan, 'ruang'=>$ruang);
 		$data_puskesmas['nama_puskesmas'] = $nama;
 		$data_puskesmas['tanggal'] = $tanggal;
@@ -334,20 +341,19 @@ class Permohonanbarang extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		// if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-		// 	$this->db->where('inv_permohonan_barang.code_cl_phc','P'.$this->session->userdata('puskesmas'));
-		// }
-		/*$kodepuskesmas = $this->session->userdata('puskesmas');
-		if(substr($kodepuskesmas, -2)=="01"){*/
-		if($this->session->userdata('filter_code_cl_phc') != '') {
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
 				# code...
 			}else{
-				$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
+				$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
 			}
-			
 		}
-		/*}else {
+		/*$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			if($this->session->userdata('filter_code_cl_phc') != '') {
+				$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
+		}else {
 				$this->db->where('inv_permohonan_barang.code_cl_phc',"P".$this->session->userdata('puskesmas'));
 		}*/
 
@@ -378,21 +384,20 @@ class Permohonanbarang extends CI_Controller {
 			}
 		}
 		/*$kodepuskesmas = $this->session->userdata('puskesmas');
-		if(substr($kodepuskesmas, -2)=="01"){*/
+		if(substr($kodepuskesmas, -2)=="01"){
 			if($this->session->userdata('filter_code_cl_phc') != '') {
-				if ($this->session->userdata('filter_code_cl_phc')=='all') {
-					# code...
-				}else{
-					$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
-				}
-				
+				$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
 			}
-		/*}else {
+		}else {
 			$this->db->where('inv_permohonan_barang.code_cl_phc',"P".$this->session->userdata('puskesmas'));
 		}*/
-		// if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-		// 	$this->db->where('inv_permohonan_barang.code_cl_phc','P'.$this->session->userdata('puskesmas'));
-		// }
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+				# code...
+			}else{
+				$this->db->where('inv_permohonan_barang.code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
+		}
 		$rows = $this->permohonanbarang_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
 		$no=1;
@@ -431,8 +436,8 @@ class Permohonanbarang extends CI_Controller {
 		}
 	}
 	
-	public function total_permohonan($id=0,$kode=0){
-		$this->db->where('code_cl_phc',$kode);
+	public function total_permohonan($id){
+		//$this->db->where('code_cl_phc',"P".$this->session->userdata('puskesmas'));
 		$this->db->where('id_inv_permohonan_barang',$id);
 		$this->db->select('sum(jumlah) as totaljumlah,sum(jumlah*harga) as totalharga');
 		$query = $this->db->get('inv_permohonan_barang_item')->result();
@@ -482,8 +487,9 @@ class Permohonanbarang extends CI_Controller {
 	function add(){
 		$this->authentication->verify('inventory','add');
 
+		$this->form_validation->set_rules('id_inv_permohonan_barang', 'Kode Lokasi', 'trim|required');
         $this->form_validation->set_rules('tgl', 'Tanggal Permohonan', 'trim|required');
-        $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
+        $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
         $this->form_validation->set_rules('codepus', 'Puskesmas', 'trim|required');
 
 		if($this->form_validation->run()== FALSE){
@@ -518,7 +524,8 @@ class Permohonanbarang extends CI_Controller {
         $this->form_validation->set_rules('tgl', 'Tanggal Permohonan', 'trim|required');
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
         $this->form_validation->set_rules('codepus', 'Puskesmas', 'trim|required');
-        $this->form_validation->set_rules('ruangan', 'Ruangan', 'trim|required');
+        $this->form_validation->set_rules('ruangan', 'Ruangan', 'trim');
+        $this->form_validation->set_rules('statuspengadaan', 'Status Permohonan', 'trim|required');
 
 		if($this->form_validation->run()== FALSE){
 			$data 	= $this->permohonanbarang_model->get_data_row($code_cl_phc,$kode); 
@@ -531,6 +538,7 @@ class Permohonanbarang extends CI_Controller {
 
 			$this->db->where('code',$code_cl_phc);
 			$data['kodepuskesmas'] 	= $this->puskesmas_model->get_data();
+			$data['statusdata'] = $this->permohonanbarang_model->get_data_status();
 
 			$data['barang']	  	= $this->parser->parse('inventory/permohonan_barang/barang', $data, TRUE);
 			$data['content'] 	= $this->parser->parse("inventory/permohonan_barang/edit",$data,true);
@@ -671,8 +679,14 @@ class Permohonanbarang extends CI_Controller {
         $this->form_validation->set_rules('nama_barang', 'Nama Barang', 'trim|required');
         $this->form_validation->set_rules('jumlah', 'Jumlah', 'trim|required');
         $this->form_validation->set_rules('harga', 'Harga', 'trim|required');
-        $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
+        $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
         $this->form_validation->set_rules('pilihan_satuan_barang', 'Pilihan Satuan Barang', 'trim|required');
+        $this->form_validation->set_rules('rekening', 'Rekening', 'trim');
+        $this->form_validation->set_rules('merk_tipe', 'Merek Tipe', 'trim');
+        $this->form_validation->set_rules('jqxinput', 'jqxinput Tipe', 'trim');
+
+        $this->form_validation->set_rules('v_kode_barang', 'v_kode_barang', 'trim');
+        $this->form_validation->set_rules('code_mst_inv', 'code_mst_inv', 'trim');
 
 		if($this->form_validation->run()== FALSE){
 			$data['kodebarang']		= $this->permohonanbarang_model->get_databarang();
@@ -681,7 +695,7 @@ class Permohonanbarang extends CI_Controller {
 			die($this->parser->parse('inventory/permohonan_barang/barang_form', $data));
 		}else{
 			$values = array(
-				'id_inv_permohonan_barang_item'=>$this->permohonanbarang_model->get_permohonanbarangitem_id(),
+				'id_inv_permohonan_barang_item'=>$this->permohonanbarang_model->get_permohonanbarangitem_id($kode),
 				'code_mst_inv_barang' => $this->input->post('code_mst_inv_barang'),
 				'nama_barang' => $this->input->post('nama_barang'),
 				'jumlah' => $this->input->post('jumlah'),
@@ -714,11 +728,11 @@ class Permohonanbarang extends CI_Controller {
         $this->form_validation->set_rules('nama_barang', 'Nama Barang', 'trim|required');
         $this->form_validation->set_rules('jumlah', 'Jumlah', 'trim|required');
         $this->form_validation->set_rules('harga', 'Harga', 'trim|required');
-        $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
+        $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
         $this->form_validation->set_rules('pilihan_satuan_barang', 'Pilihan Satuan Barang', 'trim|required');
 
 		if($this->form_validation->run()== FALSE){
-			$data = $this->permohonanbarang_model->get_data_barang_edit($code_cl_phc, $kode, $id_inv_permohonan_barang_item); 
+			$data 					= $this->permohonanbarang_model->get_data_barang_edit($code_cl_phc, $kode, $id_inv_permohonan_barang_item); 
 			$data['kodebarang']		= $this->permohonanbarang_model->get_databarang();
 			$data['notice']			= validation_errors();
 			$data['action']			= "edit";

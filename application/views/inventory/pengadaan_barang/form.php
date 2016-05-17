@@ -131,7 +131,9 @@ $(function(){
         kodeInvetaris(document.getElementById("tgl").value);
     };
   });
-  
+  $("#puskesmas").change(function(){
+    kodeInvetaris();
+  });
   function kodeInvetaris(tahun)
     {
       if (tahun==null) {
@@ -141,7 +143,7 @@ $(function(){
       }
       
       $.ajax({
-      url: "<?php echo base_url().'inventory/pengadaanbarang/kodeInvetaris';?>",
+      url: "<?php echo base_url().'inventory/pengadaanbarang/kodeInvetaris/';?>"+$("#puskesmas").val(),
       dataType: "json",
       success:function(data)
       { 

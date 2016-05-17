@@ -104,16 +104,16 @@
 				{ text: 'Kode Barang', align: 'center',cellsalign: 'center',editable: false, datafield: 'id_mst_inv_barang', columntype: 'textbox', filtertype: 'textbox', width: '10%' },
 				{ text: 'Register ', editable: false,datafield: 'register_sampai', columntype: 'textbox', filtertype: 'none', width: '10%'},
 				{ text: 'Nama Barang ', editable: false,datafield: 'nama_barang', columntype: 'textbox', filtertype: 'textbox', width: '26%'},
-				{ text: 'Jumlah ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jumlah', columntype: 'textbox', filtertype: 'textbox', width: '6%'},
+				{ text: 'Jumlah ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jumlah', columntype: 'textbox', filtertype: 'none', width: '6%'},
 				{ text: 'Harga Satuan (Rp.)', align: 'center',cellsalign: 'right',editable: false, datafield: 'harga', columntype: 'textbox', filtertype: 'textbox', width: '11%'},
-				{ text: 'Sub Total (Rp.)', align: 'center',cellsalign: 'right',editable: false,datafield: 'totalharga', columntype: 'textbox', filtertype: 'textbox', width: '12%'},
+				{ text: 'Sub Total (Rp.)', align: 'center',cellsalign: 'right',editable: false,datafield: 'totalharga', columntype: 'textbox', filtertype: 'none', width: '12%'},
             <?php }else{ ?>
 				{ text: 'Kode Barang', align: 'center',cellsalign: 'center',editable: false, datafield: 'id_mst_inv_barang', columntype: 'textbox', filtertype: 'textbox', width: '10%' },
 				{ text: 'Register ', editable: false,datafield: 'register_sampai', columntype: 'textbox', filtertype: 'none', width: '10%'},
 				{ text: 'Nama Barang ', editable: false,datafield: 'nama_barang', columntype: 'textbox', filtertype: 'textbox', width: '31%'},
-				{ text: 'Jumlah ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jumlah', columntype: 'textbox', filtertype: 'textbox', width: '8%'},
+				{ text: 'Jumlah ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jumlah', columntype: 'textbox', filtertype: 'none', width: '8%'},
 				{ text: 'Harga Satuan (Rp.)', align: 'center',cellsalign: 'right',editable: false, datafield: 'harga', columntype: 'textbox', filtertype: 'textbox', width: '12%'},
-				{ text: 'Sub Total (Rp.)', align: 'center',cellsalign: 'right',editable: false,datafield: 'totalharga', columntype: 'textbox', filtertype: 'textbox', width: '12%'},
+				{ text: 'Sub Total (Rp.)', align: 'center',cellsalign: 'right',editable: false,datafield: 'totalharga', columntype: 'textbox', filtertype: 'none', width: '12%'},
             <?php } ?>
 				{
                         text: '<b><i class="fa fa-pencil-square-o"></i> Status</b>', align: 'center',cellsalign: 'center', datafield: 'value', width: '8%', columntype: 'dropdownlist',
@@ -209,7 +209,7 @@
 	function add_barang(){
 		
 		$("#popup_barang #popup_content").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
-		$.get("<?php echo base_url().'inventory/pengadaanbarang/add_barang/'.$kode.'/'; ?>" , function(data) {
+		$.get("<?php echo base_url().'inventory/pengadaanbarang/add_barang/'.$kode.'/'.$code_cl_phc; ?>" , function(data) {
 			$("#popup_content").html(data);
 		});
 		$("#popup_barang").jqxWindow({

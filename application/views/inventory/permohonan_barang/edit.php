@@ -19,13 +19,31 @@
     <div class="box box-primary">
       <div class="box-body">
         <div class="form-group">
-          <label>Tanggal Permohonan</label>
+          <label>Kode Lokasi</label>
+          <input type="text" id="id_inv_permohonan_barang" name="id_inv_permohonan_barang" placeholder="Kode Lokasi"  class="form-control" value="<?php  
+            if(set_value('id_inv_permohonan_barang')=="" && isset($id_inv_permohonan_barang)){
+                    $s = array();
+                  $s[0] = substr($id_inv_permohonan_barang, 0,2);
+                  $s[1] = substr($id_inv_permohonan_barang, 2,2);
+                  $s[2] = substr($id_inv_permohonan_barang, 4,2);
+                  $s[3] = substr($id_inv_permohonan_barang, 6,2);
+                  $s[4] = substr($id_inv_permohonan_barang, 8,2);
+                  $s[5] = substr($id_inv_permohonan_barang, 10,2);
+                  $s[6] = substr($id_inv_permohonan_barang, 12,3);
+                  echo implode(".", $s);
+            }else{
+              echo  set_value('id_inv_permohonan_barang');
+            }
+          ?>" readonly='' />
+        </div>
+        <div class="form-group">
+          <label>Tanggal Pengajuan</label>
           <div id='tgl' name="tgl" value="<?php
               echo date("Y-m-d",strtotime($tanggal_permohonan));
             ?>"></div>
         </div>
         <div class="form-group">
-          <label>Puskesmas</label>
+          <label>Puskesmas Pemohon</label>
           <select  name="codepus" id="puskesmas" class="form-control">
               <?php foreach($kodepuskesmas as $pus) : ?>
                 <option value="<?php echo $pus->code ?>" ><?php echo $pus->value ?></option>
@@ -33,7 +51,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label>Ruangan</label>
+          <label>Ruangan</label> <i>optional</i>
           <select name="ruangan" id="ruangan"  class="form-control">
               <option value="">Pilih Ruangan</option>
           </select>
@@ -45,6 +63,15 @@
   <div class="col-md-6">
     <div class="box box-warning">
       <div class="box-body">
+        <div class="form-group">
+          <label>Status Permohonan</label>
+          <select  name="statuspengadaan" id="statuspengadaan" class="form-control">
+              <?php foreach($statusdata as $stat) : ?>
+                <?php $select = $stat['code']  == $pilihan_status_pengadaan ? 'selected=selected' : '' ?>
+                <option value="<?php echo $stat['code'] ?>"<?php echo $select ?> ><?php echo $stat['value'] ?></option>
+              <?php endforeach ?>
+          </select>
+        </div>
         <div class="form-group">
           <label>Keterangan</label>
           <textarea class="form-control" name="keterangan" placeholder="Keterangan"><?php 
@@ -69,8 +96,8 @@
         </table>
       </div>
       <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Simpan</button>
-        <button type="button" id="btn-kembali" class="btn btn-warning">Kembali</button>
+        <button type="submit" class="btn btn-primary"><i class='fa fa-save'></i> &nbsp; Simpan</button>
+        <button type="button" id="btn-kembali" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
       </div>
       </div>
     </form>        
@@ -92,8 +119,8 @@ $(function(){
         window.location.href="<?php echo base_url()?>inventory/permohonanbarang";
     });
 
+    $("#menu_inventory_permohonanbarang").addClass("active");
     $("#menu_aset_tetap").addClass("active");
-      $("#menu_inventory_permohonanbarang").addClass("active");
 
     $("#tgl").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme});
 
@@ -104,8 +131,31 @@ $(function(){
       success : function(data) {
         $('#ruangan').html(data);
       }
-    });
-
+    }); 
+    document.getElementById("tgl").onchange = function() {
+        kodeInvetaris(document.getElementById("tgl").value);
+    };
   });
+  function kodeInvetaris(tahun)
+    {
+      if (tahun==null) {
+        var tahun = <?php echo date("y");?>;  
+      }else{
+        var tahun = tahun.substr(-2);
+      }
+      
+      $.ajax({
+      url: "<?php echo base_url().'inventory/permohonanbarang/kodePermohonan';?>",
+      dataType: "json",
+      success:function(data)
+      { 
+        $.each(data,function(index,elemet){
+          var lokasi = elemet.kodeper.split(".")
+          $("#id_inv_permohonan_barang").val(lokasi[0]+"."+lokasi[1]+"."+lokasi[2]+"."+lokasi[3]+"."+lokasi[4]+"."+tahun+'.'+lokasi[5]);
+        });
+      }
+      });
 
+      return false;
+    }
 </script>

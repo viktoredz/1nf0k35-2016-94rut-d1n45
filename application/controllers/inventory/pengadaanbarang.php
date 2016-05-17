@@ -463,6 +463,7 @@ class Pengadaanbarang extends CI_Controller {
 			$data['title_form']		= "Ubah Pengadaan Barang";
 			$data['action']			= "edit";
 			$data['kode']			= $id_pengadaan;
+			$data['code_cl_phc']	= $data['code_cl_phc'];
 			$kodepuskesmas = $this->session->userdata('puskesmas');
 			if(strlen($kodepuskesmas) == 4){
 				$this->db->like('code','P'.substr($kodepuskesmas, 0,4));
@@ -595,7 +596,7 @@ class Pengadaanbarang extends CI_Controller {
 		echo json_encode(array($json));
 	}
 	public function kodeInvetaris($id=0){
-		$this->db->where('code',"P".$this->session->userdata('puskesmas'));
+		$this->db->where('code',$id);
 		$query = $this->db->get('cl_phc')->result();
 		foreach ($query as $q) {
 			$kode[] = array(
@@ -604,7 +605,7 @@ class Pengadaanbarang extends CI_Controller {
 			echo json_encode($kode);
 		}
 	}
-	public function add_barang($kode=0)
+	public function add_barang($kode=0,$code_cl_phc=0)
 	{	
 		$data['action']			= "add";
 		$data['kode']			= $kode;
@@ -618,14 +619,15 @@ class Pengadaanbarang extends CI_Controller {
 		if($this->form_validation->run()== FALSE){
 			$data['kodebarang']		= $this->pengadaanbarang_model->get_databarang();
 			$data['notice']			= validation_errors();
-
+			$data['kode']			= $kode;
+			$data['code_cl_phc']	= $code_cl_phc;
 			die($this->parser->parse('inventory/pengadaan_barang/barang_form', $data));
 		}else{
 			$jumlah =$this->input->post('jumlah');
 			$id_barang = $this->input->post('id_mst_inv_barang');
 			$kode_proc = $this->pengadaanbarang_model->barang_kembar_proc_($this->input->post('id_inventaris_barang'));
 			$id_= $this->pengadaanbarang_model->kode_invetaris($this->input->post('id_inventaris_barang'));
-			$kodepuskesmas = 'P'.$this->session->userdata('puskesmas');
+			$kodepuskesmas = $code_cl_phc;//'P'.$this->session->userdata('puskesmas');
 			$id_inventaris = $this->pengadaanbarang_model->kode_invetaris($this->input->post('id_inventaris_barang'));
 			$register = substr($id_inventaris, 24,28);
 			for($i=1;$i<=$jumlah;$i++){

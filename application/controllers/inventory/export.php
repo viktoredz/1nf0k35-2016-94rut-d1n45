@@ -50,14 +50,14 @@ class Export extends CI_Controller {
 				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 				}else{
 					$kodeplch = $this->session->userdata('filter_cl_phc');
-					$this->db->where("id_cl_phc",$kodeplch);	
+					$this->db->where("code_cl_phc",$kodeplch);	
 				}
 				
 			}
 		}else {
 			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 			}else{
-				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_cl_phc'));
 			}
 		}
 
@@ -102,14 +102,14 @@ class Export extends CI_Controller {
 				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 				}else{
 					$kodeplch = $this->session->userdata('filter_cl_phc');
-					$this->db->where("id_cl_phc",$kodeplch);	
+					$this->db->where("code_cl_phc",$kodeplch);	
 				}
 				
 			}
 		}else {
 			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 			}else{
-				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_cl_phc'));
 			}
 		}
 
@@ -241,13 +241,13 @@ class Export extends CI_Controller {
 				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 				}else{
 					$kodeplch = $this->session->userdata('filter_cl_phc');
-					$this->db->where("id_cl_phc",$kodeplch);
+					$this->db->where("code_cl_phc",$kodeplch);
 				}
 			}
 		}else {
 			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 			}else{
-				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_cl_phc'));
 			}
 		}
 
@@ -285,13 +285,13 @@ class Export extends CI_Controller {
 				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 				}else{
 					$kodeplch = $this->session->userdata('filter_cl_phc');
-					$this->db->where("id_cl_phc",$kodeplch);
+					$this->db->where("code_cl_phc",$kodeplch);
 				}
 			}
 		}else {
 			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 			}else{
-				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_cl_phc'));
 			}
 		}
 
@@ -416,14 +416,14 @@ class Export extends CI_Controller {
 				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 				}else{
 					$kodeplch = $this->session->userdata('filter_cl_phc');
-					$this->db->where("id_cl_phc",$kodeplch);	
+					$this->db->where("code_cl_phc",$kodeplch);	
 				}
 				
 			}
 		}else {
 			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 			}else{
-				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_cl_phc'));
 			}
 		}
 
@@ -460,14 +460,14 @@ class Export extends CI_Controller {
 				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 				}else{
 					$kodeplch = $this->session->userdata('filter_cl_phc');
-					$this->db->where("id_cl_phc",$kodeplch);	
+					$this->db->where("code_cl_phc",$kodeplch);	
 				}
 				
 			}
 		}else {
 			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 			}else{
-				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_cl_phc'));
 			}
 		}
 
@@ -591,14 +591,14 @@ class Export extends CI_Controller {
 				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 				}else{
 					$kodeplch = $this->session->userdata('filter_cl_phc');
-					$this->db->where("id_cl_phc",$kodeplch);	
+					$this->db->where("code_cl_phc",$kodeplch);	
 				}
 				
 			}
 		}else {
 			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 			}else{
-				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_cl_phc'));
 			}
 		}
 
@@ -637,14 +637,14 @@ class Export extends CI_Controller {
 				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 				}else{
 					$kodeplch = $this->session->userdata('filter_cl_phc');
-					$this->db->where("id_cl_phc",$kodeplch);	
+					$this->db->where("code_cl_phc",$kodeplch);	
 				}
 				
 			}
 		}else {
 			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 			}else{
-				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_cl_phc'));
 			}
 		}
 
@@ -769,14 +769,14 @@ class Export extends CI_Controller {
 				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 				}else{
 					$kodeplch = $this->session->userdata('filter_cl_phc');
-					$this->db->where("id_cl_phc",$kodeplch);	
+					$this->db->where("code_cl_phc",$kodeplch);	
 				}
 				
 			}
 		}else {
 			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 			}else{
-				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_cl_phc'));
 			}
 		}
 
@@ -814,14 +814,14 @@ class Export extends CI_Controller {
 				if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 				}else{
 					$kodeplch = $this->session->userdata('filter_cl_phc');
-					$this->db->where("id_cl_phc",$kodeplch);	
+					$this->db->where("code_cl_phc",$kodeplch);	
 				}
 				
 			}
 		}else {
 			if(($this->session->userdata('filter_cl_phc') == 'all')||(($this->session->userdata('filter_cl_phc')) == '')){
 			}else{
-				$this->db->where('id_cl_phc',$this->session->userdata('filter_cl_phc'));
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_cl_phc'));
 			}
 		}
 

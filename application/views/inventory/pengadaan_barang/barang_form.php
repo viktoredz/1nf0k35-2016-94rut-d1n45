@@ -65,7 +65,7 @@ function edit_barang(id_inventaris_barang,kodeproc){
                 contentType : false,
                 processData : false,
                 type : 'POST',
-                url : '<?php echo base_url()."inventory/pengadaanbarang/".$action."_barang/".$kode."/" ?>',
+                url : '<?php echo base_url()."inventory/pengadaanbarang/".$action."_barang/".$kode."/".$code_cl_phc ?>',
                 data : data,
                 success : function(response){
                   var res  = response.split("|");

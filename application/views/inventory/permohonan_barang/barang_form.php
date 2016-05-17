@@ -1,7 +1,7 @@
 </style>
 <script type="text/javascript">
     $(function(){
-
+    
       $('#btn-close').click(function(){
         close_popup();
       });
@@ -18,16 +18,17 @@
           });
 
           return false;
-        });*/      
+        });*/ 
+             
         $('#form-ss').submit(function(){
             var data = new FormData();
             $('#notice-content').html('<div class="alert">Mohon tunggu, proses simpan data....</div>');
             $('#notice').show();
-
             data.append('id_inv_permohonan_barang', $('input[name="id_inv_permohonan_barang"]').val());
             data.append('jumlah', $('input[name="jumlah"]').val());
             data.append('nama_barang', $('input[name="nama_barang"]').val());
             data.append('code_mst_inv_barang', $('#v_kode_barang').val());
+            data.append('jqxinput', $('#jqxinput').val());
             data.append('harga', $('#harga').val());
             data.append('merk_tipe', $('#merk_tipe').val());
             data.append('rekening', $('#rekening').val());
@@ -105,6 +106,7 @@
             var res = codebarang.split(" | ");
             $("#v_nama_barang").val(res[1]);
             $("#v_kode_barang").val(res[0].replace(/\./g,""));
+           
         });
 
         $("#harga").change(function(){
@@ -125,13 +127,15 @@
         });
             document.getElementById("subtotal").value = document.getElementById("jumlah").value * document.getElementById("harga").value;
     });
-function toRp(a,b,c,d,e){
-    e=function(f){return f.split('').reverse().join('')};b=e(parseInt(a,10).toString());
-    for(c=0,d='';c<b.length;c++){
-      d+=b[c];if((c+1)%3===0&&c!==(b.length-1)){d+='.';}
+    function toRp(a,b,c,d,e){
+      e=function(f){return f.split('').reverse().join('')};b=e(parseInt(a,10).toString());
+      for(c=0,d='';c<b.length;c++){
+        d+=b[c];if((c+1)%3===0&&c!==(b.length-1)){d+='.';}
+      }
+      return'Rp.\t'+e(d)+',00'
     }
-    return'Rp.\t'+e(d)+',00'
-  }
+    
+    
      </script>
 
 <div style="padding:15px">
@@ -147,9 +151,9 @@ function toRp(a,b,c,d,e){
     <?php echo form_open(current_url(), 'id="form-ss"') ?>
           <div class="box-body">
             <div class="form-group">
-              <label>Kode Barang</label>
-              <input id="jqxinput" class="form-control" autocomplete="off" name="code_mst_inv" type="text" value="<?php 
-                if(set_value('code_mst_inv')=="" && isset($code_mst_inv_barang)){
+              <label>Pilih Jenis Barang</label>
+              <input id="jqxinput" class="form-control" autocomplete="off" name="jqxinput" type="text" value="<?php 
+                if(set_value('jqxinput')=="" && isset($code_mst_inv_barang)){
                   $s = array();
                   $s[0] = substr($code_mst_inv_barang, 0,2);
                   $s[1] = substr($code_mst_inv_barang, 2,2);
@@ -158,7 +162,7 @@ function toRp(a,b,c,d,e){
                   $s[4] = substr($code_mst_inv_barang, 8,2);
                   echo implode(".", $s).' | '.$nama_barang;
                 }else{
-                  echo  set_value('code_mst_inv');
+                  echo  set_value('jqxinput');
                 }
                 ?>" <?php if(isset($disable)){if($disable='disable'){echo "readonly";}} ?>/>
               <input id="v_kode_barang" class="form-control" name="code_mst_inv_barang" type="hidden" value="<?php 
