@@ -6,15 +6,16 @@
 </div>
 <?php } ?>
 
-<?php if($this->session->flashdata('alert_form')!=""){ ?>
-<div class="alert alert-success alert-dismissable">
-  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-  <h4>  <i class="icon fa fa-check"></i> Information!</h4>
-  <?php echo $this->session->flashdata('alert_form')?>
-</div>
+<?php if($alert_form!=""){ ?>
+  <div class="alert alert-success alert-dismissable">
+    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+    <h4>  <i class="icon fa fa-check"></i> Information!</h4>
+    <?php echo $alert_form?>
+  </div>
 <?php } ?>
+<section class="content">
 <div class="row">
-  <form action="<?php echo base_url()?>inventory/bhp_distribusi/add" method="post">
+  <form action="" method="post" id="form-ss">
   <div class="col-md-6">
     <div class="box box-primary">
       <div class="box-body">
@@ -27,47 +28,26 @@
         </div>
 
         <div class="row" style="margin: 5px">
-          <div class="col-md-4" style="padding: 5px">Tanggal Distribusi</div>
+          <div class="col-md-4" style="padding: 5px">Tanggal Opname</div>
           <div class="col-md-8">
-            <div id='tgl_distribusi' name="tgl_distribusi" value="<?php
-              echo (set_value('tgl_distribusi')!="") ? date("Y-m-d",strtotime(set_value('tgl_distribusi'))) : "";
+            <div id='tgl_opname' name="tgl_opname" value="<?php
+              echo (set_value('tgl_opname')!="") ? date("Y-m-d",strtotime(set_value('tgl_opname'))) : "";
             ?>"></div>
           </div>
         </div>
 
         <div class="row" style="margin: 5px">
-          <div class="col-md-4" style="padding: 5px">Nomor Dokumen</div>
+          <div class="col-md-4" style="padding: 5px">Nomor Opname</div>
           <div class="col-md-8">
-            <input type="text" class="form-control" name="nomor_dokumen" id="nomor_dokumen" placeholder="Nomor Dokumen" value="<?php 
-                if(set_value('nomor_dokumen')=="" && isset($nomor_dokumen)){
-                  echo $nomor_dokumen;
+            <input type="text" class="form-control" name="nomor_opname" id="nomor_opname" placeholder="Nomor Dokumen" value="<?php 
+                if(set_value('nomor_opname')=="" && isset($nomor_opname)){
+                  echo $nomor_opname;
                 }else{
-                  echo  set_value('nomor_dokumen');
+                  echo  set_value('nomor_opname');
                 }
                 ?>">
           </div>
         </div>
-
-        <div class="row" style="margin: 5px">
-          <div class="col-md-4" style="padding: 5px">Periode</div>
-          <div class="col-md-4 col-xs-6">
-            <select  name="thn_periode" type="text" class="form-control">
-              <?php for($i=date('Y');$i>=2000;$i--){ ?>
-                <?php $select = $i == set_value('thn_periode') ? 'selected' : '' ?>
-                <option value="<?php echo $i ?>" <?php echo $select ?>><?php echo $i ?></option>
-              <?php } ?>
-            </select>
-          </div>
-          <div class="col-md-4 col-xs-6">
-            <select  name="bln_periode" type="text" class="form-control">
-              <?php foreach($bulan as $x=>$y){ ?>
-                <?php $select = $x == set_value('bln_periode') ? 'selected' : '' ?>
-                <option value="<?php echo $x ?>" <?php echo $select ?>><?php echo $y ?></option>
-              <?php } ?>
-            </select>
-          </div>
-        </div>
-
         <div class="row" style="margin: 5px">
           <div class="col-md-4" style="padding: 5px">Kategori Barang</div>
           <div class="col-md-8">
@@ -90,7 +70,7 @@
         <div class="row" style="margin: 5px">
           <div class="col-md-4" style="padding: 5px">Puskesmas</div>
           <div class="col-md-8">
-          <select  name="codepus" id="puskesmas" class="form-control">
+          <select   id="puskesmastambah" name="puskesmastambah" class="form-control">
               <?php foreach($kodepuskesmas as $pus) : ?>
                 <?php $select = $pus->code == set_value('codepus') ? 'selected' : '' ?>
                 <option value="<?php echo $pus->code ?>" <?php echo $select ?>><?php echo $pus->value ?></option>
@@ -108,8 +88,8 @@
 
       <div class="box-body">
         <div class="row" style="margin: 5px">
-          <div class="col-md-4" style="padding: 5px">Nama Penerima</div>
-          <div class="col-md-8">
+          <div class="col-md-5" style="padding: 5px">Nama Penanggungjawab</div>
+          <div class="col-md-7">
             <input type="text" class="form-control" name="penerima_nama" id="penerima_nama" placeholder="Nama Penerima" value="<?php 
                 if(set_value('penerima_nama')=="" && isset($penerima_nama)){
                   echo $penerima_nama;
@@ -121,9 +101,9 @@
         </div>
 
         <div class="row" style="margin: 5px">
-          <div class="col-md-4" style="padding: 5px">NIP Penerima</div>
-          <div class="col-md-8">
-            <input type="text" class="form-control" name="penerima_nip" id="penerima_nip" placeholder="NIP   Penerima" value="<?php 
+          <div class="col-md-5" style="padding: 5px">NIP Penanggungjawab</div>
+          <div class="col-md-7">
+            <input type="text" class="form-control" name="penerima_nip" id="penerima_nip" placeholder="NIP Penerima" value="<?php 
                 if(set_value('penerima_nip')=="" && isset($penerima_nip)){
                   echo $penerima_nip;
                 }else{
@@ -134,15 +114,16 @@
         </div>
 
         <div class="row" style="margin: 5px">
-          <div class="col-md-4" style="padding: 5px">Keterangan</div>
-          <div class="col-md-8">
-          <textarea class="form-control" name="keterangan" id="keterangan" placeholder="Keterangan / Keperluan"><?php 
-              if(set_value('keterangan')=="" && isset($keterangan)){
-                echo $keterangan;
+          <div class="col-md-5" style="padding: 5px">Catatan</div>
+          <div class="col-md-7">
+          <textarea class="form-control" name="catatan" id="catatan" placeholder="Catatan / Keperluan"><?php 
+              if(set_value('catatan')=="" && isset($catatan)){
+                echo $catatan;
               }else{
-                echo  set_value('keterangan');
+                echo  set_value('catatan');
               }
               ?></textarea>
+              <input type="hidden" id="last_opname" name="last_opname" />
           </div>  
         </div>
 
@@ -152,26 +133,80 @@
         <button type="button" id="btn-kembali" class="btn btn-warning"><i class='fa fa-arrow-circle-left'></i> &nbsp;Kembali</button>
       </div>
       </div>
-    </form>        
+          
 
   </div><!-- /.form-box -->
+  </form>  
 </div><!-- /.register-box -->
-
+</section>
 <script type="text/javascript">
 $(function(){
+  cekopname($('#tgl_opname').val(),$('#jenis_bhp').val());
+    $('#form-ss').submit(function(){
+      var tglper1 = $('#tgl_opname').val().split('-');
+      var tglper2 = $('#last_opname').val().split('-');
+      if (tglper2[2]+'-'+tglper2[1]+'-'+tglper2[0] >= tglper1[2]+'-'+tglper1[1]+'-'+tglper1[0]) {
+      alert("Maaf! Kategori barang "+$('#jenis_bhp').val()+" sudah di opname pada "+$('#last_opname').val()+','+'\n'+"Silahkan ganti ke tanggal berikutnya");
+
+      }else{
+            var data = new FormData();
+            data.append('kode_distribusi_', $('#kode_distribusi_').val());
+            data.append('tgl_opname', $('#tgl_opname').val());
+            data.append('nomor_opname', $('#nomor_opname').val());
+            data.append('jenis_bhp', $('#jenis_bhp').val());
+            data.append('puskesmastambah', $('#puskesmastambah').val());
+            data.append('penerima_nama', $('#penerima_nama').val());
+            data.append('penerima_nip', $('#penerima_nip').val());
+            data.append('catatan', $('#catatan').val());
+            $.ajax({
+                cache : false,
+                contentType : false,
+                processData : false,
+                type : 'POST',
+                url : "<?php echo base_url()?>inventory/bhp_opname/{action}_opname",
+                data : data,
+                success : function(response){
+                  $('#content2').html(response);
+                }
+            });
+            return false;
+      }
+            return false;
+        });
     kodedistribusi();
     $('#btn-kembali').click(function(){
-        window.location.href="<?php echo base_url()?>inventory/bhp_distribusi";
+       $.ajax({
+          url : '<?php echo site_url('inventory/bhp_opname/daftar_opname/') ?>',
+          type : 'POST',
+          success : function(data) {
+              $('#content2').html(data);
+          }
+      });
+
+      return false;
     });
 
-    $("#menu_bahan_habis_pakai").addClass("active");
-    $("#menu_inventory_bhp_distribusi").addClass("active");
-
-    $("#tgl_distribusi").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme , height: '30px'});
-    $("#tgl_distribusi").change(function() {
-        kodedistribusi($("#tgl_distribusi").val());
+    $("#tgl_opname").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme , height: '30px'});
+    $("#tgl_opname").change(function() {
+        kodedistribusi($("#tgl_opname").val());
+        
     });
-    $("#puskesmas").change(function(){
+    $("#jenis_bhp").change(function(){
+        cekopname($('#tgl_opname').val(),$(this).val());
+    });
+    function cekopname(tgl,bhp){
+     
+      $.ajax({
+          url : "<?php echo base_url().'inventory/bhp_opname/lastopname/';?>"+bhp,
+          success : function(data) {
+             tglop = data.split('-');
+              $("#last_opname").val(tglop[2]+'-'+tglop[1]+'-'+tglop[0]);
+          }
+      });
+
+      return false;
+    }
+    $("#puskesmastambah").change(function(){
       kodedistribusi();
     });
     function kodedistribusi(tahun)
@@ -183,7 +218,7 @@ $(function(){
       }
       
       $.ajax({
-      url: "<?php echo base_url().'inventory/bhp_distribusi/kodedistribusi/';?>"+$("#puskesmas").val(),
+      url: "<?php echo base_url().'inventory/bhp_opname/kodedistribusi/';?>"+$("#puskesmastambah").val(),
       dataType: "json",
       success:function(data)
       { 
@@ -198,7 +233,7 @@ $(function(){
     }
     $("#penerima_nama").autocomplete({
       minLength: 0,
-      source:'<?php echo base_url().'inventory/bhp_distribusi/autocomplite_nama/'; ?>'+$("#id_mst_inv_barang_habispakai_jenis").val(),
+      source:'<?php echo base_url().'inventory/bhp_opname/autocomplite_nama/'; ?>',
       focus: function( event, ui ) {
         $("#penerima_nama" ).val( ui.item.value );
         return false;
@@ -211,7 +246,7 @@ $(function(){
     });
     $("#penerima_nip").autocomplete({
       minLength: 0,
-      source:'<?php echo base_url().'inventory/bhp_distribusi/autocomplite_nip/'; ?>'+$("#id_mst_inv_barang_habispakai_jenis").val(),
+      source:'<?php echo base_url().'inventory/bhp_opname/autocomplite_nip/'; ?>',
       focus: function( event, ui ) {
         $("#penerima_nip" ).val( ui.item.value );
         return false;

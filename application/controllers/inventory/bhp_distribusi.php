@@ -179,8 +179,12 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+				# code...
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 
 		$rows_all = $this->bhp_distribusi_model->get_data();
@@ -206,8 +210,12 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+				# code...
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		$rows = $this->bhp_distribusi_model->get_data();
 		$data_tabel = array();
@@ -288,8 +296,12 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+				# code...
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 
 		$rows_all = $this->bhp_distribusi_model->get_data();
@@ -315,8 +327,12 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+				# code...
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		$rows = $this->bhp_distribusi_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
@@ -382,8 +398,12 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+				# code...
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		if ($id=='8') {
 			$this->db->where('id_mst_inv_barang_habispakai_jenis',$id);
@@ -415,8 +435,12 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all') {
+				# code...
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		if ($id=='8') {
 			$this->db->where('id_mst_inv_barang_habispakai_jenis',$id);
@@ -571,7 +595,7 @@ class Bhp_distribusi extends CI_Controller {
 		$this->authentication->verify('inventory','edit');
 		$data['title_group'] = "Bahan Habis Pakai";
 		$data['title_form'] = "Distribusi";
-
+		$this->session->set_userdata('filter_code_cl_phc','');
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		//$this->db->where('code','P'.$kodepuskesmas);
 
@@ -599,7 +623,7 @@ class Bhp_distribusi extends CI_Controller {
 			$data['bulan']			= array('01'=>'Januari', '02'=>'Februari', '03'=>'Maret', '04'=>'April', '05'=>'Mei', '06'=>'Juni', '07'=>'Juli', '08'=>'Agustus', '09'=>'September', '10'=>'Oktober', '11'=>'November', '12'=>'Desember');
 
 			$kodepuskesmas = $this->session->userdata('puskesmas');
-			$this->db->where('code','P'.$kodepuskesmas);
+			//$this->db->where('code','P'.$kodepuskesmas);
 			$data['kodepuskesmas'] = $this->puskesmas_model->get_data();
 
 			$data['kodestatus'] = $this->bhp_distribusi_model->get_data_status();
@@ -643,7 +667,7 @@ class Bhp_distribusi extends CI_Controller {
 
 			
 			$kodepuskesmas = $this->session->userdata('puskesmas');
-			$this->db->where('code','P'.$kodepuskesmas);
+			//$this->db->where('code','P'.$kodepuskesmas);
 			
 			$data['kodepuskesmas'] = $this->puskesmas_model->get_data();
 			$data['kodestatus'] = $this->bhp_distribusi_model->get_data_status();
@@ -673,7 +697,7 @@ class Bhp_distribusi extends CI_Controller {
 			$data['action']			= "view";
 			$data['kode']			= $id_distribusi;
 			$data['viewreadonly']	= "readonly=''";
-			$data['code_cl_phc']	= 'P'.$this->session->userdata('puskesmas');
+			//$data['code_cl_phc']	= 'P'.$this->session->userdata('puskesmas');
 
 			$data['jenis_bhp']		= $jenis_bhp;
 			$data['unlock'] = 1;
@@ -712,7 +736,7 @@ class Bhp_distribusi extends CI_Controller {
 
 
 	public function kodedistribusi($id=0){
-		$this->db->where('code',"P".$this->session->userdata('puskesmas'));
+		$this->db->where('code',$id);
 		$query = $this->db->get('cl_phc')->result();
 		foreach ($query as $q) {
 			$kode[] = array(
