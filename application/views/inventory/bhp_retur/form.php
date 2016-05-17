@@ -347,6 +347,9 @@ $(function(){
 
       return false;
     }
+    $("#puskesmas").change(function(){
+      kodedistribusi();
+    });
     function kodedistribusi(tahun)
     {
       if (tahun==null) {
@@ -356,7 +359,7 @@ $(function(){
       }
       
       $.ajax({
-      url: "<?php echo base_url().'inventory/bhp_retur/kodedistribusi';?>",
+      url: "<?php echo base_url().'inventory/bhp_retur/kodedistribusi/';?>"+$("#puskesmas").val(),
       dataType: "json",
       success:function(data)
       { 

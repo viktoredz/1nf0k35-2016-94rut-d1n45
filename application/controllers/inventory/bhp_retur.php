@@ -12,6 +12,13 @@ class Bhp_retur extends CI_Controller {
 		$this->load->model('inventory/bhp_retur_model');
 		$this->load->model('mst/invbarang_model');
 	}
+	function filter(){
+		if($_POST) {
+			if($this->input->post('code_cl_phc') != '') {
+				$this->session->set_userdata('filter_code_cl_phc',$this->input->post('code_cl_phc'));
+			}
+		}
+	}
 	function laporan_opname_barang_retur($id=0){
 		$TBS = new clsTinyButStrong;		
 		$TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
@@ -76,8 +83,12 @@ class Bhp_retur extends CI_Controller {
 		}else{
 			$this->db->where("YEAR(tgl_opname)",date("Y"));
 		}
-		if ($this->session->userdata('puskesmas')!='' or !empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all'){
+
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		$rows_all_activity = $this->bhp_retur_model->getitemopname_retur();
 
@@ -138,8 +149,12 @@ class Bhp_retur extends CI_Controller {
 		}else{
 			$this->db->where("YEAR(tgl_opname)",date("Y"));
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all'){
+
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		$activity = $this->bhp_retur_model->getitemopname_retur();
 		$data_tabel = array();
@@ -261,8 +276,12 @@ class Bhp_retur extends CI_Controller {
 		}else{
 			$this->db->where("YEAR(tgl_pembelian_terakhir)",date("Y"));
 		}
-		if ($this->session->userdata('puskesmas')!='' or !empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all'){
+
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		$rows_all_activity = $this->bhp_retur_model->getitemopname();
 
@@ -323,8 +342,12 @@ class Bhp_retur extends CI_Controller {
 		}else{
 			$this->db->where("YEAR(tgl_pembelian_terakhir)",date("Y"));
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all'){
+
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		$activity = $this->bhp_retur_model->getitemopname();
 		$data_tabel = array();
@@ -463,8 +486,12 @@ class Bhp_retur extends CI_Controller {
 		}else{
 			$this->db->where("YEAR(tgl_pembelian_terakhir)",date("Y"));
 		}
-		if ($this->session->userdata('puskesmas')!='' or !empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all'){
+
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		$rows_all_activity = $this->bhp_retur_model->getitemopname();
 
@@ -525,8 +552,12 @@ class Bhp_retur extends CI_Controller {
 		}else{
 			$this->db->where("YEAR(tgl_pembelian_terakhir)",date("Y"));
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all'){
+
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		$activity = $this->bhp_retur_model->getitemopname($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
@@ -626,8 +657,12 @@ class Bhp_retur extends CI_Controller {
 		}else{
 			$this->db->where("YEAR(tgl_opname)",date("Y"));
 		}
-		if ($this->session->userdata('puskesmas')!='' or !empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all'){
+
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		$rows_all_activity = $this->bhp_retur_model->getitemopname_retur();
 
@@ -688,8 +723,12 @@ class Bhp_retur extends CI_Controller {
 		}else{
 			$this->db->where("YEAR(tgl_opname)",date("Y"));
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
+			if ($this->session->userdata('filter_code_cl_phc')=='all'){
+
+			}else{
+				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+			}
 		}
 		$activity = $this->bhp_retur_model->getitemopname_retur($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
@@ -763,7 +802,7 @@ class Bhp_retur extends CI_Controller {
 		$data['kode']			= "";
 		$data['alert_form']="";
 		$kodepuskesmas = $this->session->userdata('puskesmas');
-		$this->db->where('code','P'.$kodepuskesmas);
+		//$this->db->where('code','P'.$kodepuskesmas);
 		$data['kodepuskesmas'] = $this->puskesmas_model->get_data();
 		if($this->form_validation->run()== FALSE){
 			die($this->parser->parse("inventory/bhp_retur/form",$data,true));
@@ -807,7 +846,7 @@ class Bhp_retur extends CI_Controller {
 		$data['action']			= "edit";
 		$data['kode']			= $id_opname;
 		$kodepuskesmas = $this->session->userdata('puskesmas');
-		$this->db->where('code','P'.$kodepuskesmas);
+		//$this->db->where('code','P'.$kodepuskesmas);
 		$data['kodepuskesmas'] = $this->puskesmas_model->get_data();
 		$data['kodestatus_inv'] = $this->bhp_retur_model->pilih_data_status('status_pembelian');
 		$data['alert_form'] ='';
@@ -837,7 +876,7 @@ class Bhp_retur extends CI_Controller {
 		else $this->daftar_barangretur();
 	}
 	public function kodedistribusi($id=0){
-		$this->db->where('code',"P".$this->session->userdata('puskesmas'));
+		$this->db->where('code',$id);
 		$query = $this->db->get('cl_phc')->result();
 		foreach ($query as $q) {
 			$kode[] = array(
@@ -858,7 +897,7 @@ class Bhp_retur extends CI_Controller {
 	}
 	function daftar_barangretur(){
 		$kodepuskesmas = $this->session->userdata('puskesmas');
-		$this->db->where('code','P'.$kodepuskesmas);
+		//$this->db->where('code','P'.$kodepuskesmas);
 		$this->session->set_userdata('filter_jenisbarang','');
 		$data['datapuskesmas'] 	= $this->bhp_retur_model->get_data_puskesmas();
 		$data['jenisbaranghabis'] = array('8'=>'Obat','umum'=>'Umum');
@@ -871,7 +910,7 @@ class Bhp_retur extends CI_Controller {
 
 	function daftar_retur(){
 		$kodepuskesmas = $this->session->userdata('puskesmas');
-		$this->db->where('code','P'.$kodepuskesmas);
+		//$this->db->where('code','P'.$kodepuskesmas);
 		$data['datapuskesmas'] 	= $this->bhp_retur_model->get_data_puskesmas();
 		$data['jenisbaranghabis'] = array('8'=>'Obat','umum'=>'Umum');
 		$data['msg_opname'] = "";

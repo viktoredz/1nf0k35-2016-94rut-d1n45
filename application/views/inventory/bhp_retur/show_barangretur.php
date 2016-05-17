@@ -27,9 +27,11 @@
 				     	<div class="col-md-4" style="padding-top:5px;"><label> Puskesmas </label> </div>
 				     	<div class="col-md-8">
 					     	<select name="code_cl_phc" id="puskesmas" class="form-control">
-								<?php foreach ($datapuskesmas as $row ) { ;?>
-									<option value="<?php echo $row->code; ?>" onchange="" ><?php echo $row->value; ?></option>
-								<?php	} ;?>
+								<option value="all" onchange="" >All</option>
+							<?php foreach ($datapuskesmas as $row ) { ;?>
+							<?php $select = $row->code == $this->session->userdata('filter_code_cl_phc') ? 'selected=selected' : '' ?>
+								<option value="<?php echo $row->code; ?>" <?php echo $select; ?> ><?php echo $row->value; ?></option>
+							<?php	} ;?>
 					     	</select>
 					     </div>	
 			     	</div>
@@ -227,4 +229,9 @@
 			window.location.href=response;
 		});
 	});
+	$("select[name='code_cl_phc']").change(function(){
+		$.post("<?php echo base_url().'inventory/bhp_retur/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
+			$("#jqxgridBRetur").jqxGrid('updatebounddata', 'cells');
+		});
+    })
 </script>
