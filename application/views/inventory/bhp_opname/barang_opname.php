@@ -54,17 +54,19 @@
 
 			columns: [
 			<?php if ($jenis_bhp=="8") { ?>
-				{ text: 'Nama Barang ', editable: false,datafield: 'uraian', columntype: 'textbox', filtertype: 'textbox', width: '40%'},
+				{ text: 'Nama Barang ', editable: false,datafield: 'uraian', columntype: 'textbox', filtertype: 'textbox', width: '35%'},
 				{ text: 'Batch ',datafield: 'batch' ,align: 'center', editable: false, columntype: 'textbox', filtertype: 'textbox', width: '20%'},
+				{ text: 'Jumlah Awal ', align: 'center',cellsalign: 'right',editable: false,datafield: 'jml_awal', columntype: 'textbox', filtertype: 'textbox', width: '15%'},
 				{ text: 'Jumlah Akhir ', align: 'center',cellsalign: 'right',editable: false,datafield: 'jml_akhir', columntype: 'textbox', filtertype: 'textbox', width: '15%'},
 				{ text: 'Selisih ', align: 'center',cellsalign: 'right',editable: false,datafield: 'selisih', columntype: 'textbox', filtertype: 'textbox', width: '15%'},
 			<?php }else{
 				?>
-				{ text: 'Nama Barang ', editable: false,datafield: 'uraian', columntype: 'textbox', filtertype: 'textbox', width: '50%'},
-				{ text: 'Jumlah Akhir ', align: 'center',cellsalign: 'right',editable: false,datafield: 'jml_akhir', columntype: 'textbox', filtertype: 'textbox', width: '20%'},
-				{ text: 'Selisih ', align: 'center',cellsalign: 'right',editable: false,datafield: 'selisih', columntype: 'textbox', filtertype: 'textbox', width: '20%'},
+				{ text: 'Nama Barang ', editable: false,datafield: 'uraian', columntype: 'textbox', filtertype: 'textbox', width: '55%'},
+				{ text: 'Jumlah Awal ', align: 'center',cellsalign: 'right',editable: false,datafield: 'jml_awal', columntype: 'textbox', filtertype: 'textbox', width: '15%'},
+				{ text: 'Jumlah Akhir ', align: 'center',cellsalign: 'right',editable: false,datafield: 'jml_akhir', columntype: 'textbox', filtertype: 'textbox', width: '15%'},
+				{ text: 'Selisih ', align: 'center',cellsalign: 'right',editable: false,datafield: 'selisih', columntype: 'textbox', filtertype: 'textbox', width: '15%'},
 				<?php } ?>
-				{ text: 'Hapus', align: 'center', editable: false,filtertype: 'none', sortable: false, width: '10%', cellsrenderer: function (row) {
+				/*{ text: 'Hapus', align: 'center', editable: false,filtertype: 'none', sortable: false, width: '10%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_barang_opname").jqxGrid('getrowdata', row);
 				    if (dataRecord.edit==1){
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif' onclick='del_barang(\""+dataRecord.id_mst_inv_barang_habispakai+"\",\""+dataRecord.batch+"\");'></a></div>";
@@ -72,7 +74,7 @@
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
                  }
-                },
+                },*/
            ]
 		});
         
@@ -133,7 +135,7 @@
 
 <div>
 	<div align="right">
-	<button type="button" id="btn-masteropname" class="btn btn-success"><i class='fa fa-plus-square'></i> &nbsp;Tambah</button>
+	<!--<button type="button" id="btn-masteropname" class="btn btn-success"><i class='fa fa-plus-square'></i> &nbsp;Tambah</button>-->
 	</div>
 	<div class="box-body">
 		<div style="width:100%;">

@@ -888,8 +888,8 @@ class Bhp_opname extends CI_Controller {
 				'merek_tipe'								=> $act->merek_tipe,
 				'tgl_opname'								=> date("d-m-Y",strtotime($act->tgl_opname)),
 				'jml_selisih'								=> $act->jml_akhir-$act->jml_awal,
-				'edit'		=> 1,
-				'delete'	=> 1
+				'edit'		=> 0,
+				'delete'	=> 0
 			);
 		}
 
