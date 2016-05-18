@@ -52,7 +52,7 @@
 			},
 
 			columns: [
-				{ text: 'Pilih', align: 'center', editable: false,filtertype: 'none', sortable: false, width: '10%', cellsrenderer: function (row) {
+				/*{ text: 'Pilih', align: 'center', editable: false,filtertype: 'none', sortable: false, width: '10%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_barang_rusak_kanan").jqxGrid('getrowdata', row);
 				    if (dataRecord.edit==1) {
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_add.gif' onclick='pilih_rusak(\""+dataRecord.id_mst_inv_barang_habispakai+"\",\""+dataRecord.batch+"\");'></a></div>";
@@ -60,10 +60,10 @@
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
                  }
-                },
-				{ text: 'Nama Barang ', editable: false,datafield: 'uraian', columntype: 'textbox', filtertype: 'textbox', width: '50%'},
-				{ text: 'Batch ',datafield: 'batch' ,align: 'center', editable: false, columntype: 'textbox', filtertype: 'textbox', width: '20%'},
-				{ text: 'Jumlah ', align: 'center',cellsalign: 'right',editable: false,datafield: 'jumlahrusak', columntype: 'textbox', filtertype: 'textbox', width: '20%'}
+                },*/
+				{ text: 'Nama Barang ', editable: false,datafield: 'uraian', columntype: 'textbox', filtertype: 'textbox', width: '53%'},
+				{ text: 'Batch ',datafield: 'batch' ,align: 'center', editable: false, columntype: 'textbox', filtertype: 'textbox', width: '24%'},
+				{ text: 'Jumlah ', align: 'center',cellsalign: 'right',editable: false,datafield: 'jumlahrusak', columntype: 'textbox', filtertype: 'textbox', width: '23%'}
            ]
 		});
         

@@ -170,7 +170,7 @@
       </div>
       <div class="box-footer">
         <?php if(!isset($viewreadonly)){?>
-          <button type="submit" class="btn btn-primary" id="btn-submit"><i class='fa fa-floppy-o'></i> &nbsp; Simpan</button>
+          <!--<button type="submit" class="btn btn-primary" id="btn-submit"><i class='fa fa-floppy-o'></i> &nbsp; Simpan</button>-->
         <?php }else{ ?>
           <button type="button" id="btn-export-rusak" class="btn btn-primary"><i class='fa fa-save'></i> &nbsp; Export</button>
           <?php if($unlock==1){ ?>
@@ -276,7 +276,7 @@ $(function(){
       }
 
       $.ajax({
-      url: "<?php echo base_url().'inventory/bhp_pemusnahan/kodedistribusi/';?>"+$("#namapuskesmas_rusak").val(),
+      url: "<?php echo base_url().'inventory/bhp_pemusnahan/kodedistribusi/';?>"+$("#puskesmas_rusak").val(),
       dataType: "json",
       success:function(data)
       { 

@@ -145,10 +145,10 @@
 				return obj.data;    
 			},
 			columns: [
-				{ text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '5%', cellsrenderer: function (row) {
+				{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '5%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit(\""+dataRecord.id_mst_inv_barang_habispakai+"\",\""+dataRecord.batch+"\",\""+dataRecord.code_cl_phc+"\",\""+dataRecord.tgl_update+"\",\""+dataRecord.id_inv_inventaris_habispakai_opname+"\");'></a></div>";
+				    if(dataRecord.edit==0){
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit(\""+dataRecord.id_mst_inv_barang_habispakai+"\",\""+dataRecord.batch+"\",\""+dataRecord.code_cl_phc+"\",\""+dataRecord.tgl_update+"\",\""+dataRecord.id_inv_inventaris_habispakai_opname+"\");'></a></div>";
 					}else{
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}

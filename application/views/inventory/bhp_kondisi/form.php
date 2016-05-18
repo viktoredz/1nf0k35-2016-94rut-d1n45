@@ -168,7 +168,7 @@
           <div class="row" style="margin: 5px">
             <div class="col-md-4" style="padding: 5px">Jumlah Rusak</div>
             <div class="col-md-8">
-              <input type="number" class="form-control" name="jml_rusak" id="jml_rusak" placeholder="Jumlah Rusak" value="<?php 
+              <input type="number" class="form-control" name="jml_rusak" readonly="readonly" id="jml_rusak" placeholder="Jumlah Rusak" value="<?php 
                 if(set_value('jml_rusak')=="" && isset($jml_rusak)){
                   echo $jml_rusak;
                 }else{
@@ -180,7 +180,7 @@
           <div class="row" style="margin: 5px">
             <div class="col-md-4" style="padding: 5px">Jumlah Tidak Dipakai</div>
             <div class="col-md-8">
-              <input type="number" class="form-control" name="jml_tdkdipakai" id="jml_tdkdipakai" placeholder="Jumlah Tidak Dipakai" value="<?php 
+              <input type="number" class="form-control" readonly="readonly" name="jml_tdkdipakai" id="jml_tdkdipakai" placeholder="Jumlah Tidak Dipakai" value="<?php 
                 if(set_value('jml_tdkdipakai')=="" && isset($jml_tdkdipakai)){
                   echo $jml_tdkdipakai;
                 }else{
@@ -191,7 +191,7 @@
           </div>
         </div>
         <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <!--<button type="submit" class="btn btn-primary">Simpan</button>-->
             <button type="button" id="btn-close-opname" class="btn btn-warning">Batal</button>
         </div>
     </div>

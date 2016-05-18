@@ -111,7 +111,7 @@
 					}
                  }
                 },
-				{ text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
+				/*{ text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit(\""+dataRecord.id_inv_hasbispakai_permintaan+"\");'></a></div>";
@@ -128,13 +128,13 @@
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
                  }
-                },
+                },*/
 				{ text: 'Tgl. Permintaan',editable:false , align: 'center', cellsalign: 'center', datafield: 'tgl_permintaan', columntype: 'date', filtertype: 'date', cellsformat: 'dd-MM-yyyy', width: '11%' },
 				{ text: 'Status Permintaan', editable:false ,align: 'center', cellsalign: 'center', datafield: 'status_permintaan', columntype: 'textbox', filtertype: 'textbox', width: '12%' },
-				{ text: 'Kategori Barang', editable:false ,align: 'center', cellsalign: 'center', datafield:'uraian', columntype: 'textbox', filtertype: 'textbox', width: '14%' },
-				{ text: 'Jumlah Unit', editable:false ,align: 'center', cellsalign: 'right', datafield: 'jumlah_unit', columntype: 'textbox', filtertype: 'textbox', width: '10%' },
-				{ text: 'Total Harga (Rp.)', editable:false ,align: 'center', cellsalign: 'right', datafield: 'nilai_pembelian', columntype: 'textbox', filtertype: 'textbox', width: '15%' },
-				{ text: 'Keterangan', editable:false ,datafield: 'keterangan', columntype: 'textbox', filtertype: 'textbox', width: '25%' }
+				{ text: 'Kategori Barang', editable:false ,align: 'center', cellsalign: 'center', datafield:'uraian', columntype: 'textbox', filtertype: 'textbox', width: '17%' },
+				{ text: 'Jumlah Unit', editable:false ,align: 'center', cellsalign: 'right', datafield: 'jumlah_unit', columntype: 'textbox', filtertype: 'textbox', width: '13%' },
+				{ text: 'Total Harga (Rp.)', editable:false ,align: 'center', cellsalign: 'right', datafield: 'nilai_pembelian', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
+				{ text: 'Keterangan', editable:false ,datafield: 'keterangan', columntype: 'textbox', filtertype: 'textbox', width: '27%' }
             ]
 		});
 

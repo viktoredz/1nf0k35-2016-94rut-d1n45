@@ -167,21 +167,21 @@
 				return obj.data;    
 			},
 			columns: [
-				{ text: 'Retur', align: 'center', filtertype: 'none', sortable: false, width: '5%', cellsrenderer: function (row) {
+				/*{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '5%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgridRetur").jqxGrid('getrowdata', row)
-				    if((dataRecord.edit==1)&&(dataRecord.tgl_opname!="<?php echo date('Y-m-d');?>")){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/return.png' onclick='add(\""+dataRecord.id_mst_inv_barang_habispakai_jenis+"\",\""+dataRecord.id_mst_inv_barang_habispakai+"\",\""+dataRecord.batch+"\");'></a></div>";
+				    if((dataRecord.edit==0)&&(dataRecord.tgl_opname!="<?php echo date('Y-m-d');?>")){
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='add(\""+dataRecord.id_mst_inv_barang_habispakai_jenis+"\",\""+dataRecord.id_mst_inv_barang_habispakai+"\",\""+dataRecord.batch+"\");'></a></div>";
 					}else{
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
                  }
-                },
-				{ text: 'Nama Barang', align: 'center', editable:false ,datafield: 'uraian', columntype: 'textbox', filtertype: 'textbox', width: '31%' },
-				{ text: 'Merek', align: 'center', editable:false ,datafield: 'merek_tipe', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
+                },*/
+				{ text: 'Nama Barang', align: 'center', editable:false ,datafield: 'uraian', columntype: 'textbox', filtertype: 'textbox', width: '32%' },
+				{ text: 'Merek', align: 'center', editable:false ,datafield: 'merek_tipe', columntype: 'textbox', filtertype: 'textbox', width: '17%' },
 				{ text: 'Instansi / PBF', align: 'center', cellsalign: 'center', columngroup: 'update',editable: false, columntype: 'date', filtertype: 'none', cellsformat: 'dd-MM-yyyy', width: '20%',datafield: 'nama'},
-				{ text: 'Tgl Terima',datafield: 'tgl_pembelian_terakhir', align: 'center', cellsalign: 'center', columngroup: 'update',editable: false, columntype: 'date', filtertype: 'none', cellsformat: 'dd-MM-yyyy', width: '10%'},
-				{ text: 'Jml Terima',sortable: true,editable:false ,align: 'center', cellsalign: 'right', datafield: 'total_penerimaan', columntype: 'textbox', filtertype: 'none', width: '9%' },
-				{ text: 'Jml Rusak',sortable: false,editable:false ,datafield: 'jml_rusakakhir', columntype: 'textbox', filtertype: 'none', width: '9%' ,align: 'center', cellsalign: 'right'}
+				{ text: 'Tgl Terima',datafield: 'tgl_pembelian_terakhir', align: 'center', cellsalign: 'center', columngroup: 'update',editable: false, columntype: 'date', filtertype: 'none', cellsformat: 'dd-MM-yyyy', width: '11%'},
+				{ text: 'Jml Terima',sortable: true,editable:false ,align: 'center', cellsalign: 'right', datafield: 'total_penerimaan', columntype: 'textbox', filtertype: 'none', width: '10%' },
+				{ text: 'Jml Rusak',sortable: false,editable:false ,datafield: 'jml_rusakakhir', columntype: 'textbox', filtertype: 'none', width: '10%' ,align: 'center', cellsalign: 'right'}
             ]
 		});
 
