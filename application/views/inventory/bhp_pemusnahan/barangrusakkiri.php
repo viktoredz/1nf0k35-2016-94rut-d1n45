@@ -13,7 +13,7 @@
 			{ name: 'batch', type: 'string' },
 			{ name: 'jenis_bhp', type: 'string' },
 			{ name: 'harga', type: 'string' },
-			{ name: 'jml_akhir', type: 'string' },
+			{ name: 'jml_awal', type: 'string' },
 			{ name: 'jml_akhir', type: 'string' },
 			{ name: 'jml_selisih', type: 'string' },
 			{ name: 'edit', type: 'number' },
@@ -55,9 +55,11 @@
 			},
 
 			columns: [
-				{ text: 'Nama Barang ', editable: false,datafield: 'uraian', columntype: 'textbox', filtertype: 'textbox', width: '53%'},
-				{ text: 'Batch ',datafield: 'batch' ,align: 'center', editable: false, columntype: 'textbox', filtertype: 'textbox', width: '24%'},
-				{ text: 'Jumlah Musnah', align: 'center',cellsalign: 'right',editable: false,datafield: 'jml_selisih', columntype: 'textbox', filtertype: 'textbox', width: '23%'},
+				{ text: 'Nama Barang ', editable: false,datafield: 'uraian', columntype: 'textbox', filtertype: 'textbox', width: '50%'},
+				{ text: 'Batch ',datafield: 'batch' ,align: 'center', editable: false, columntype: 'textbox', filtertype: 'textbox', width: '20%'},
+				{ text: 'Jumlah Awal',datafield: 'jml_awal' ,align: 'center',cellsalign: 'right', editable: false, columntype: 'textbox', filtertype: 'textbox', width: '10%'},
+				{ text: 'Jumlah Akhir',datafield: 'jml_akhir' ,align: 'center',cellsalign: 'right', editable: false, columntype: 'textbox', filtertype: 'textbox', width: '10%'},
+				{ text: 'Jumlah Musnah', align: 'center',cellsalign: 'right',editable: false,datafield: 'jml_selisih', columntype: 'textbox', filtertype: 'textbox', width: '10%'},
 				/*{ text: 'Hapus', align: 'center', editable: false,filtertype: 'none', sortable: false, width: '10%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_barang_rusak_kiri").jqxGrid('getrowdata', row);
 				    if (dataRecord.edit==1){

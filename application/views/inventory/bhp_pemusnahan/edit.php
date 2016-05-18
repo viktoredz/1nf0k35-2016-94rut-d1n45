@@ -184,10 +184,11 @@
 </div><!-- /.register-box -->    
  </form>
  </section>
+ <section class="content">
 <div class="row">
 
 <?php if(!isset($viewreadonly)){?>
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="box box-success">
       <div class="box-body">
         <label>Barang Pemusnahan Expired</label>
@@ -200,13 +201,13 @@
     </div>
   </div>  
 
-  <div class="col-md-6">
+ <!-- <div class="col-md-6">
     <div class="box box-danger">
       <div class="box-body">
       <label>Daftar Barang Expired</label>
         <div class="div-grid">
             <div id="jqxTabs">
-              <?php echo $barang;?>
+              <?php /* echo $barang;?>
             </div>
         </div>
       </div>
@@ -225,9 +226,10 @@
       </div>
     </div>
   </div>  
-<?php } ?>
-
+<?php */} ?>
+-->
 </div>
+</section>
 <script type="text/javascript">
 
 $(function(){

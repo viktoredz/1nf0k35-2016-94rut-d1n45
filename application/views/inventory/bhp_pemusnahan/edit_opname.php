@@ -184,9 +184,10 @@
 </div><!-- /.register-box -->    
  </form>
  </section>
+ <section class="content">
 <div class="row">
 
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="box box-success">
       <div class="box-body">
         <label>Barang Pemusnahan Opname</label>
@@ -199,7 +200,7 @@
     </div>
   </div>  
 
-  <div class="col-md-6">
+<!--  <div class="col-md-6">
     <div class="box box-danger">
       <div class="box-body">
       <label>Daftar Barang Rusak & Tidak Dipakai Opname </label>
@@ -211,8 +212,9 @@
       </div>
     </div>
   </div>
-
+-->
 </div>
+</section>
 <script type="text/javascript">
 
 $(function(){
