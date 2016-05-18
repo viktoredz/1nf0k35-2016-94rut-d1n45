@@ -65,7 +65,7 @@
 		var t = tanggal.split('-');
 		var tgl = t[2]+'-'+t[1]+'-'+t[0];
 		$.ajax({
-		        url : '<?php echo site_url('inventory/export/permohonan_export_kibd') ?>',
+		        url : '<?php echo site_url('inventory/lap_kibd/permohonan_export_kibd') ?>',
 		        type : 'POST',
 		        data : 'namepuskes='+namepuskes+'&puskes=' + puskes+'&ruang=' + ruang +'&filter_tanggal='+tgl,
 		        success : function(data) {
