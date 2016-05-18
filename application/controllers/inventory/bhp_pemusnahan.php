@@ -1481,7 +1481,7 @@ class Bhp_pemusnahan extends CI_Controller {
 
 		echo json_encode(array($json));
 	}
-	function json_opnamekiri($id=0,$tgl_opname='0000-00-00'){
+	function json_opnamekiri($id=0,$tgl_opname='0000-00-00',$code_cl_phc=''){
 		$this->authentication->verify('inventory','show');
 
 
@@ -1508,11 +1508,13 @@ class Bhp_pemusnahan extends CI_Controller {
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
-				# code...
+				$this->db->where('code_cl_phc',$code_cl_phc);	
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
 			}
 			
+		}else{
+			$this->db->where('code_cl_phc',$code_cl_phc);	
 		}
 		$this->db->where('inv_inventaris_habispakai_opname.id_inv_inventaris_habispakai_opname',$id);
 		$rows_all_activity = $this->bhp_pemusnahan_model->getitemopnamekiri();
@@ -1541,11 +1543,13 @@ class Bhp_pemusnahan extends CI_Controller {
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
-				# code...
+				$this->db->where('code_cl_phc',$code_cl_phc);	
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
 			}
 			
+		}else{
+			$this->db->where('code_cl_phc',$code_cl_phc);	
 		}
 		$this->db->where('inv_inventaris_habispakai_opname.id_inv_inventaris_habispakai_opname',$id);
 		$activity = $this->bhp_pemusnahan_model->getitemopnamekiri($this->input->post('recordstartindex'), $this->input->post('pagesize'));
