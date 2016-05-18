@@ -206,7 +206,7 @@
       </div>
       <div class="box-footer">
         <?php if($tgl_opname >= $tgl_opnameterakhir){?>
-        <button id="deletedata" class="btn btn-danger"><i class='fa fa-ban'></i> &nbsp; Batal & Hapus </button>
+        <!--<button id="deletedata" class="btn btn-danger"><i class='fa fa-ban'></i> &nbsp; Batal & Hapus </button>-->
         <?php }?>
         <button type="button" id="btn-kembali" class="btn btn-warning"><i class='fa fa-arrow-circle-left'></i> &nbsp;Kembali</button>
       </div>

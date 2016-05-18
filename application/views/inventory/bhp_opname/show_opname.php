@@ -23,7 +23,7 @@
 			      		<?php //if($unlock==1){ ?>
 					<!-- 	<button type="button" class="btn btn-primary" onclick="add(0)"><i class='fa fa-plus-square-o'></i> &nbsp; Tambah Pengeluaran</button>-->
 						<?php //} ?>		 	
-					 	<button type="button" class="btn btn-primary" id="btn-add"><i class='fa fa-plus-square'></i> &nbsp; Stock Opname Baru</button>
+					 	<!--<button type="button" class="btn btn-primary" id="btn-add"><i class='fa fa-plus-square'></i> &nbsp; Stock Opname Baru</button>-->
 					 	<button type="button" class="btn btn-success" id="btn-refreshopname"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
 			          <button type="button" id="btn-export-opname" class="btn btn-warning"><i class='fa fa-save'></i> &nbsp; Export</button>
 			      	</div>

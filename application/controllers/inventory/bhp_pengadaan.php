@@ -309,11 +309,11 @@ class Bhp_pengadaan extends CI_Controller {
     	$kodepuskesmas = "P".$this->session->userdata("puskesmas");
 		$this->db->where("id_mst_inv_barang_habispakai","$id");
 		$this->db->select("mst_inv_barang_habispakai.*,
-			(SELECT harga AS hrg FROM inv_inventaris_habispakai_opname_item JOIN inv_inventaris_habispakai_opname ON (inv_inventaris_habispakai_opname_item.id_inv_inventaris_habispakai_opname = inv_inventaris_habispakai_opname.id_inv_inventaris_habispakai_opname)  WHERE code_cl_phc=".'"'.$kodepuskesmas.'"'." AND id_mst_inv_barang_habispakai=mst_inv_barang_habispakai.id_mst_inv_barang_habispakai ORDER BY tgl_opname DESC LIMIT 1) AS harga_opname,
+			(SELECT harga AS hrg FROM inv_inventaris_habispakai_opname_item JOIN inv_inventaris_habispakai_opname ON (inv_inventaris_habispakai_opname_item.id_inv_inventaris_habispakai_opname = inv_inventaris_habispakai_opname.id_inv_inventaris_habispakai_opname)  WHERE id_mst_inv_barang_habispakai=mst_inv_barang_habispakai.id_mst_inv_barang_habispakai ORDER BY tgl_opname DESC LIMIT 1) AS harga_opname,
 			(select harga as hargapembelian from inv_inventaris_habispakai_pembelian_item 
-            where code_cl_phc=".'"'.$kodepuskesmas.'"'." and id_mst_inv_barang_habispakai=mst_inv_barang_habispakai.id_mst_inv_barang_habispakai order by tgl_update desc limit 1 ) as harga_pembelian,
-            (SELECT tgl_opname AS tglopname FROM inv_inventaris_habispakai_opname_item JOIN inv_inventaris_habispakai_opname ON (inv_inventaris_habispakai_opname_item.id_inv_inventaris_habispakai_opname = inv_inventaris_habispakai_opname.id_inv_inventaris_habispakai_opname) WHERE id_mst_inv_barang_habispakai = mst_inv_barang_habispakai.id_mst_inv_barang_habispakai AND code_cl_phc=".'"'.$kodepuskesmas.'"'."ORDER BY tgl_opname DESC LIMIT 1) AS tgl_opname,
-            (select tgl_update  as tglpembelian from inv_inventaris_habispakai_pembelian_item where id_mst_inv_barang_habispakai = mst_inv_barang_habispakai.id_mst_inv_barang_habispakai and code_cl_phc=".'"'.$kodepuskesmas.'"'." order by tgl_update desc limit 1) as tgl_pembelian");
+            where  id_mst_inv_barang_habispakai=mst_inv_barang_habispakai.id_mst_inv_barang_habispakai order by tgl_update desc limit 1 ) as harga_pembelian,
+            (SELECT tgl_opname AS tglopname FROM inv_inventaris_habispakai_opname_item JOIN inv_inventaris_habispakai_opname ON (inv_inventaris_habispakai_opname_item.id_inv_inventaris_habispakai_opname = inv_inventaris_habispakai_opname.id_inv_inventaris_habispakai_opname) WHERE id_mst_inv_barang_habispakai = mst_inv_barang_habispakai.id_mst_inv_barang_habispakai ORDER BY tgl_opname DESC LIMIT 1) AS tgl_opname,
+            (select tgl_update  as tglpembelian from inv_inventaris_habispakai_pembelian_item where id_mst_inv_barang_habispakai = mst_inv_barang_habispakai.id_mst_inv_barang_habispakai  order by tgl_update desc limit 1) as tgl_pembelian");
 		$query= $this->db->get("mst_inv_barang_habispakai")->result();
 		foreach ($query as $q) {
 			if (($q->tgl_pembelian!=null)||($q->tgl_opname!=null)) {
@@ -439,7 +439,7 @@ class Bhp_pengadaan extends CI_Controller {
 				'value'							=> $act->value,
 				'keterangan'					=> $act->keterangan,
 				'detail'						=> 1,
-				'edit'							=> 1,//$unlock,
+				'edit'							=> ($act->pilihan_status_pembelian==2) ? 0 : 1,//1,//$unlock,
 				'delete'						=> ($act->pilihan_status_pembelian==2) ? 0 : 1
 			);
 		}
@@ -480,9 +480,9 @@ class Bhp_pengadaan extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('inv_inventaris_habispakai_pembelian_item.code_cl_phc','P'.$this->session->userdata('puskesmas'));
-		}
+		// if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
+		// 	$this->db->where('inv_inventaris_habispakai_pembelian_item.code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		// }
 		$this->db->where('inv_inventaris_habispakai_pembelian_item.id_inv_hasbispakai_pembelian',$id);
 		$rows_all_activity = $this->bhp_pengadaan_model->getItem();
 
@@ -508,9 +508,9 @@ class Bhp_pengadaan extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
-			$this->db->where('inv_inventaris_habispakai_pembelian_item.code_cl_phc','P'.$this->session->userdata('puskesmas'));
-		}
+		// if ($this->session->userdata('puskesmas')!='' or empty($this->session->userdata('puskesmas'))) {
+		// 	$this->db->where('inv_inventaris_habispakai_pembelian_item.code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		// }
 		$this->db->where('inv_inventaris_habispakai_pembelian_item.id_inv_hasbispakai_pembelian',$id);
 		$activity = $this->bhp_pengadaan_model->getItem($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
@@ -670,7 +670,7 @@ class Bhp_pengadaan extends CI_Controller {
 			$kodepuskesmas = $this->session->userdata('puskesmas');
 			//$this->db->where('code','P'.$kodepuskesmas);
 			$data['kodepuskesmas'] = $this->puskesmas_model->get_data();
-
+			$this->db->where("mst_inv_pilihan.code",'1');
 			$data['kodestatus'] = $this->bhp_pengadaan_model->get_data_status();
 			$data['kodejenis'] = $this->bhp_pengadaan_model->get_data_jenis();
 			$data['kodedana'] = $this->bhp_pengadaan_model->pilih_data_status('sumber_dana');
@@ -742,7 +742,7 @@ class Bhp_pengadaan extends CI_Controller {
 			$data['viewreadonly']	= "readonly=''";
 
 			
-			$data['unlock'] = 1;
+			$data['unlock'] = 0;
 			$data['bulan'] 			= array('01'=>'Januari', '02'=>'Februari', '03'=>'Maret', '04'=>'April', '05'=>'Mei', '06'=>'Juni', '07'=>'Juli', '08'=>'Agustus', '09'=>'September', '10'=>'Oktober', '11'=>'November', '12'=>'Desember');
 			$data['kodejenis'] = $this->bhp_pengadaan_model->get_data_jenis();
 			$data['kodedana'] = $this->bhp_pengadaan_model->pilih_data_status('sumber_dana');
@@ -812,7 +812,7 @@ class Bhp_pengadaan extends CI_Controller {
 			echo json_encode($totalpengadaan);
 	}*/
 
-	public function add_barang($kode=0,$obat=0)
+	public function add_barang($kode=0,$obat=0,$code_cl_phc='')
 	{	
 		$data['action']			= "add";
 		$data['kode']			= $kode;
@@ -833,9 +833,10 @@ class Bhp_pengadaan extends CI_Controller {
 			$data['notice']			= validation_errors();
 			$data['kode']			= $kode;
 			$data['obat']			= $obat;
+			$data['code_cl_phc']			= $code_cl_phc;
 			die($this->parser->parse('inventory/bhp_pengadaan/barang_form', $data));
 		}else{
-			if($this->bhp_pengadaan_model->insertdata($kode)!=0){
+			if($this->bhp_pengadaan_model->insertdata($kode,$code_cl_phc)!=0){
 				$dataupdate['terakhir_diubah']= date('Y-m-d H:i:s');
 				$dataupdate['jumlah_unit']=  $this->bhp_pengadaan_model->sum_jumlah_item( $kode,'jml');
 				$dataupdate['nilai_pembelian']= $this->bhp_pengadaan_model->sum_jumlah_item_jumlah( $kode,'harga');
@@ -879,11 +880,11 @@ class Bhp_pengadaan extends CI_Controller {
 				$tgl_kadaluarsa = explode("-", "00-00-0000");
 				$batch = "-";
 			}
+			//'code_cl_phc' => 'P'.$this->session->userdata('puskesmas'),
    			$values = array(
 					'jml' => $this->input->post('jumlah'),
 					'harga' => $this->input->post('harga'),
 					'tgl_update' => $this->bhp_pengadaan_model->tanggal($id_permohonan),
-					'code_cl_phc' => 'P'.$this->session->userdata('puskesmas'),
 					'batch' => $batch,
 					'jml_rusak' => $this->input->post('jml_rusak'),
 					'tgl_kadaluarsa' => $tgl_kadaluarsa[2]."-".$tgl_kadaluarsa[1]."-".$tgl_kadaluarsa[0],

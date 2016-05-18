@@ -24,7 +24,7 @@ class Bhp_pengadaan_model extends CI_Model {
             return 0;
         }
     }
-    function insertdata($kode=0)
+    function insertdata($kode=0,$code_cl_phc='')
     {
         
         $this->db->where("id_inv_hasbispakai_pembelian",$this->input->post('id_permohonan_barang'));
@@ -49,7 +49,7 @@ class Bhp_pengadaan_model extends CI_Model {
                         'tgl_kadaluarsa' => $tgl_kadaluarsa[2]."-".$tgl_kadaluarsa[1]."-".$tgl_kadaluarsa[0],
                         'harga' => $this->input->post('harga'),
                         'tgl_update' => $this->bhp_pengadaan_model->tanggal($kode),
-                        'code_cl_phc' => 'P'.$this->session->userdata('puskesmas'),
+                        'code_cl_phc' => $code_cl_phc,//'P'.$this->session->userdata('puskesmas'),
             );
             /*if ($this->cekdata($values['id_mst_inv_barang_habispakai'],$values['batch'],$values['tgl_update'],$values['code_cl_phc'])==1) {
                 return false;
@@ -130,6 +130,7 @@ class Bhp_pengadaan_model extends CI_Model {
         return $register;
     }
     function get_data_status()
+    
     {   
         $this->db->where("mst_inv_pilihan.tipe",'status_pembelian');
         $this->db->select('mst_inv_pilihan.*');     
@@ -397,7 +398,7 @@ class Bhp_pengadaan_model extends CI_Model {
         $namapus = "P".$this->session->userdata('puskesmas');
     	$this->db->select_sum($tipe);
     	$this->db->where('id_inv_hasbispakai_pembelian',$kode);
-        $this->db->where('code_cl_phc',$namapus);
+        //$this->db->where('code_cl_phc',$namapus);
 		$query=$this->db->get('inv_inventaris_habispakai_pembelian_item');
 		if($query->num_rows()>0)
         {
@@ -414,7 +415,8 @@ class Bhp_pengadaan_model extends CI_Model {
     }
     function sum_jumlah_item_jumlah($kode,$tipe){
         $namapus = "P".$this->session->userdata('puskesmas');
-        $query=$this->db->query("SELECT SUM(jml*harga) as totalharga FROM inv_inventaris_habispakai_pembelian_item WHERE id_inv_hasbispakai_pembelian = ".'"'.$kode.'"'." and code_cl_phc= ".'"'.$namapus.'"'."");
+        //and code_cl_phc= ".'"'.$namapus.'"'."
+        $query=$this->db->query("SELECT SUM(jml*harga) as totalharga FROM inv_inventaris_habispakai_pembelian_item WHERE id_inv_hasbispakai_pembelian = ".'"'.$kode.'"'." ");
         if($query->num_rows()>0)
         {
             foreach($query->result() as $k)

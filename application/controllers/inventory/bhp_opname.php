@@ -320,8 +320,8 @@ class Bhp_opname extends CI_Controller {
 				'catatan'				=> $act->catatan,
 				'nomor_opname'			=> $act->nomor_opname,
 				'last_opname' 			=> ($act->tgl_opname >= $act->last_tgl_opname) ? 1 :0,
-				'edit'					=> 1,
-				'delete'				=> 1,
+				'edit'					=> 0,
+				'delete'				=> 0,
 			);
 		}
 
@@ -1330,7 +1330,8 @@ class Bhp_opname extends CI_Controller {
 
 			//$this->db->where("mst_inv_barang_habispakai.id_mst_inv_barang_habispakai_jenis",$kode);
 		}
-		$rows = $this->bhp_opname_model->get_data_lap_opname($filbulan,$filtahun,$filterbhp,$filtername,$order);
+		$puskesmas = $this->input->post('puskesmas');
+		$rows = $this->bhp_opname_model->get_data_lap_opname($filbulan,$filtahun,$filterbhp,$filtername,$order,$puskesmas);
 		//die(print_r($rows));
 	//	$get_jumlahawal = $this->bhp_opname_model->get_jumlahawal();
 		$data = array();

@@ -581,8 +581,8 @@ class Bhp_retur extends CI_Controller {
 				'nama'										=> $act->nama,
 				'harga'										=> $act->harga,
 				'tgl_pembelian_terakhir'					=> date("d-m-Y",strtotime($act->tgl_pembelian_terakhir)),
-				'edit'		=> 1,
-				'delete'	=> 1
+				'edit'		=> 0,
+				'delete'	=> 0
 			);
 		}
 
@@ -863,7 +863,7 @@ class Bhp_retur extends CI_Controller {
 	function index(){
 		$this->authentication->verify('inventory','edit');
 		$data['title_group'] = "Barang Habis Pakai";
-
+		$this->session->set_userdata('filter_code_cl_phc','');
 		$data['title_form'] = "Retur";
 		$this->session->set_userdata('filter_jenisbarang','');
 		$this->session->set_userdata('filter_bulan','');

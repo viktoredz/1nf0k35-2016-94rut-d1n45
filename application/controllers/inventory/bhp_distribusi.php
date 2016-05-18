@@ -179,7 +179,7 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
 				# code...
 			}else{
@@ -210,7 +210,7 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
 				# code...
 			}else{
@@ -296,7 +296,7 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
 				# code...
 			}else{
@@ -327,7 +327,7 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
 				# code...
 			}else{
@@ -338,10 +338,10 @@ class Bhp_distribusi extends CI_Controller {
 		$data = array();
 
 		$kodepuskesmas = $this->session->userdata('puskesmas');
-		if(substr($kodepuskesmas, -2)=="01"){
-			$unlock = 1;
-		}else{
+		if(strlen($kodepuskesmas)=="4"){
 			$unlock = 0;
+		}else{
+			$unlock = 1;
 		}
 		
 		foreach($rows as $act) {
@@ -357,8 +357,8 @@ class Bhp_distribusi extends CI_Controller {
 				'bln_periode'					=> $act->bln_periode,
 				'jumlah'						=> ($act->jumlah==null ? 0:$act->jumlah),
 				'detail'						=> 1,
-				'edit'							=> 1,//$unlock,
-				'delete'						=> 1//$unlock
+				'edit'							=> $unlock,
+				'delete'						=> $unlock
 			);
 		}
 
@@ -398,7 +398,7 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
 				# code...
 			}else{
@@ -435,7 +435,7 @@ class Bhp_distribusi extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
 				# code...
 			}else{
@@ -595,6 +595,7 @@ class Bhp_distribusi extends CI_Controller {
 		$this->authentication->verify('inventory','edit');
 		$data['title_group'] = "Bahan Habis Pakai";
 		$data['title_form'] = "Distribusi";
+		$data['unlock'] = "0";
 		$this->session->set_userdata('filter_code_cl_phc','');
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		//$this->db->where('code','P'.$kodepuskesmas);
@@ -660,6 +661,7 @@ class Bhp_distribusi extends CI_Controller {
 			$data 	= $this->bhp_distribusi_model->get_data_row($id_distribusi);
 			$data['title_group'] 	= "Barang Habis Pakai";
 			$data['title_form']		= "Ubah Distribusi Barang";
+			$data['unlock']			= "1";
 			$data['action']			= "edit";
 			$data['kode']			= $id_distribusi;
 			$data['jenis_bhp']		= $jenis_bhp;
@@ -700,7 +702,7 @@ class Bhp_distribusi extends CI_Controller {
 			//$data['code_cl_phc']	= 'P'.$this->session->userdata('puskesmas');
 
 			$data['jenis_bhp']		= $jenis_bhp;
-			$data['unlock'] = 1;
+			$data['unlock'] = 0;
 			$data['bulan'] 			= array('01'=>'Januari', '02'=>'Februari', '03'=>'Maret', '04'=>'April', '05'=>'Mei', '06'=>'Juni', '07'=>'Juli', '08'=>'Agustus', '09'=>'September', '10'=>'Oktober', '11'=>'November', '12'=>'Desember');
 			$data['kodejenis'] = $this->bhp_distribusi_model->get_data_jenis();
 			$data['kodedana'] = $this->bhp_distribusi_model->pilih_data_status('sumber_dana');

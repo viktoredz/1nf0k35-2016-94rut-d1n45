@@ -364,14 +364,14 @@ class Bhp_opname_model extends CI_Model {
         return $query->result();
     }
 
-    function get_data_lap_opname($bulan,$tahun,$jenisbhp,$filtername,$ord)
+    function get_data_lap_opname($bulan,$tahun,$jenisbhp,$filtername,$ord,$puskesmas)
     {
         $a_date = "$tahun-$bulan-01";
         $last= date("Y-m-t", strtotime($a_date));
           $data = array();
         for($i=1; $i<=31;$i++){
             $tanggal = date("Y-m-d",mktime(0, 0, 0, $bulan, $i, $tahun));
-            $pusksmas = "P".$this->session->userdata('puskesmas');
+            $pusksmas = $puskesmas;//"P".$this->session->userdata('puskesmas');
             $query =  $this->db->query("
                     SELECT ((Ifnull( 
                    ( 

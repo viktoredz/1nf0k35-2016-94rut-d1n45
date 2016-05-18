@@ -169,7 +169,7 @@
 			columns: [
 				{ text: 'Retur', align: 'center', filtertype: 'none', sortable: false, width: '5%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgridRetur").jqxGrid('getrowdata', row)
-				    if((dataRecord.id_mst_inv_barang_habispakai!=null)&&(dataRecord.tgl_opname!="<?php echo date('Y-m-d');?>")){
+				    if((dataRecord.edit==1)&&(dataRecord.tgl_opname!="<?php echo date('Y-m-d');?>")){
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/return.png' onclick='add(\""+dataRecord.id_mst_inv_barang_habispakai_jenis+"\",\""+dataRecord.id_mst_inv_barang_habispakai+"\",\""+dataRecord.batch+"\");'></a></div>";
 					}else{
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";

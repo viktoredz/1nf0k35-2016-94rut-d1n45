@@ -491,8 +491,8 @@ class Bhp_pemusnahan extends CI_Controller {
 				'catatan'				=> $act->catatan,
 				'nomor_opname'			=> $act->nomor_opname,
 				'last_opname' 			=> ($act->tgl_opname >= $act->last_tgl_opname) ? 1 :0,
-				'edit'					=> 1,
-				'delete'				=> 1
+				'edit'					=> 0,
+				'delete'				=> 0
 			);
 		}
 

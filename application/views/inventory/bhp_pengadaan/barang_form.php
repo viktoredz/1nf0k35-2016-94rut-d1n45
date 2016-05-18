@@ -72,7 +72,7 @@ if(isset($disable)){if($disable='disable'){?>
               contentType : false,
               processData : false,
               type : 'POST',
-              url : '<?php echo base_url()."inventory/bhp_pengadaan/".$action."_barang/".$kode."/".$obat."/" ?>',
+              url : '<?php echo base_url()."inventory/bhp_pengadaan/".$action."_barang/".$kode."/".$obat."/".$code_cl_phc ?>',
               data : data,
               success : function(response){
                 var res  = response.split("|");

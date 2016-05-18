@@ -44,7 +44,7 @@
         </div>
         <div class="form-group">
           <label>Puskesmas Pemohon</label>
-          <select  name="codepus" id="puskesmas" class="form-control">
+          <select  name="codepus" id="puskesmas" class="form-control" >
               <?php foreach($kodepuskesmas as $pus) : ?>
                 <option value="<?php echo $pus->code ?>" ><?php echo $pus->value ?></option>
               <?php endforeach ?>

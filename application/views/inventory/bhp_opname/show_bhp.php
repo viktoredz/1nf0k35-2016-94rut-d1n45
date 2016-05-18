@@ -219,15 +219,18 @@
 	}
 
 	$("#btn-export").click(function(){
-		
-		var post = "";
-		post = post+'&jenisbarang='+$("#jenisbarang option:selected").text()+'&nama_puskesmas='+$("#puskesmas option:selected").text()+'&bulan='+$("#bulan option:selected").text()+'&tahun='+$("#tahun option:selected").text();
-		//alert(post);
-		
-		$.post("<?php echo base_url()?>inventory/bhp_opname/laporan_opname",post,function(response	){
-			//alert(response);
-			window.location.href=response;
-		});
+		if ($("#puskesmas").val()=='all') {
+			alert('silahkan pilih puskesmas terlebih dahulu');
+		}else{
+			var post = "";
+			post = post+'&jenisbarang='+$("#jenisbarang option:selected").text()+'&nama_puskesmas='+$("#puskesmas option:selected").text()+'&bulan='+$("#bulan option:selected").text()+'&tahun='+$("#tahun option:selected").text()+'&puskesmas='+$("#puskesmas").val();
+			//alert(post);
+			
+			$.post("<?php echo base_url()?>inventory/bhp_opname/laporan_opname",post,function(response	){
+				alert(response);
+				// window.location.href=response;
+			});
+		}
 	});
 	$("select[name='code_cl_phc']").change(function(){
 		$.post("<?php echo base_url().'inventory/bhp_opname/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){

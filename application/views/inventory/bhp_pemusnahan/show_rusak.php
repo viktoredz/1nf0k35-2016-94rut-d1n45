@@ -20,7 +20,7 @@
 	      	<div class="box-footer">
 		      	<div class="row"> 
 			      	<div class="col-md-12">
-					 	<button type="button" class="btn btn-primary" id="btn-add-rusak"><i class='fa fa-plus-square'></i> &nbsp; Pemusnahan Baru</button>
+					 	<!--<button type="button" class="btn btn-primary" id="btn-add-rusak"><i class='fa fa-plus-square'></i> &nbsp; Pemusnahan Baru</button>-->
 					 	<button type="button" class="btn btn-success" id="btn-refreshrusak"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
 			          <button type="button" id="btn-export-rusak" class="btn btn-warning"><i class='fa fa-save'></i> &nbsp; Export</button>
 			      	</div>

@@ -329,7 +329,7 @@ class Bhp_distribusi_model extends CI_Model {
         $namapus = "P".$this->session->userdata('puskesmas');
     	$this->db->select_sum($tipe);
     	$this->db->where('id_inv_hasbispakai_pembelian',$kode);
-        $this->db->where('code_cl_phc',$namapus);
+        //$this->db->where('code_cl_phc',$namapus);
 		$query=$this->db->get('inv_inventaris_habispakai_pembelian_item');
 		if($query->num_rows()>0)
         {
@@ -431,8 +431,7 @@ class Bhp_distribusi_model extends CI_Model {
                 JOIN inv_inventaris_habispakai_opname 
                     ON inv_inventaris_habispakai_opname.id_mst_inv_barang_habispakai = inv_inventaris_habispakai_pembelian_item.id_mst_inv_barang_habispakai
                     AND inv_inventaris_habispakai_opname.code_cl_phc = inv_inventaris_habispakai_pembelian_item.code_cl_phc
-                WHERE inv_inventaris_habispakai_pembelian_item.code_cl_phc=".'"'.$nmpuskes.'"'."
-                AND inv_inventaris_habispakai_pembelian_item.id_inv_hasbispakai_pembelian = ".'"'.$id.'"'."
+                WHERE inv_inventaris_habispakai_pembelian_item.id_inv_hasbispakai_pembelian = ".'"'.$id.'"'."
                 ORDER BY inv_inventaris_habispakai_opname.tgl_update DESC
                 LIMIT 1";
                 /*  JOIN inv_inventaris_habispakai_pembelian 

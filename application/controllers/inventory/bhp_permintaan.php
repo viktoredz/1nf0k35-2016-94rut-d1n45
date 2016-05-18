@@ -183,8 +183,8 @@ class Bhp_permintaan extends CI_Controller {
 				'value'							=> $act->value,
 				'keterangan'					=> $act->keterangan,
 				'detail'						=> 1,
-				'edit'							=> 1,
-				'delete'						=> ($act->status_permintaan=='diterima') ? 0 : 1
+				'edit'							=> 0,
+				'delete'						=> ($act->status_permintaan=='diterima') ? 0 : 0
 			);
 		}
 
@@ -377,7 +377,7 @@ class Bhp_permintaan extends CI_Controller {
 			$data['viewreadonly']	= "readonly=''";
 
 			
-			$data['unlock'] = 1;
+			$data['unlock'] = 0;
 			$data['bulan'] 			= array('01'=>'Januari', '02'=>'Februari', '03'=>'Maret', '04'=>'April', '05'=>'Mei', '06'=>'Juni', '07'=>'Juli', '08'=>'Agustus', '09'=>'September', '10'=>'Oktober', '11'=>'November', '12'=>'Desember');
 			$data['kodejenis'] = $this->bhp_permintaan_model->get_data_jenis();
 			$data['kodedana'] = $this->bhp_permintaan_model->pilih_data_status('sumber_dana');
