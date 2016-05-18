@@ -820,7 +820,7 @@ class Bhp_pemusnahan extends CI_Controller {
 
 		echo json_encode(array($json));
 	}
-	function json_barang($id=0,$tgl_opname='0000-00-00'){
+	function json_barang($id=0,$tgl_opname='0000-00-00',$code_cl_phc=''){
 		$this->authentication->verify('inventory','show');
 
 
@@ -847,11 +847,13 @@ class Bhp_pemusnahan extends CI_Controller {
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
-				# code...
+				$this->db->where('code_cl_phc',$code_cl_phc);	
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
 			}
 			
+		}else{
+			$this->db->where('code_cl_phc',$code_cl_phc);	
 		}
 		if ($id=='8') {
 			$this->db->where('id_mst_inv_barang_habispakai_jenis',$id);
@@ -889,11 +891,13 @@ class Bhp_pemusnahan extends CI_Controller {
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
-				# code...
+				$this->db->where('code_cl_phc',$code_cl_phc);	
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
 			}
 			
+		}else{
+			$this->db->where('code_cl_phc',$code_cl_phc);	
 		}
 		if ($id=='8') {
 			$this->db->where('id_mst_inv_barang_habispakai_jenis',$id);
@@ -1365,7 +1369,7 @@ class Bhp_pemusnahan extends CI_Controller {
 
 		echo json_encode(array($json));
 	}
-	function json_rusakkanan($id=0,$tgl_opname='0000-00-00'){
+	function json_rusakkanan($id=0,$tgl_opname='0000-00-00',$code_cl_phc=''){
 		$this->authentication->verify('inventory','show');
 
 
@@ -1392,11 +1396,13 @@ class Bhp_pemusnahan extends CI_Controller {
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
-				# code...
+				$this->db->where('code_cl_phc',$code_cl_phc);	
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
 			}
 			
+		}else{
+			$this->db->where('code_cl_phc',$code_cl_phc);	
 		}
 		if ($tgl_opname!='0000-00-00' or empty($tgl_opname)) {
 			$this->db->query("set @tglrusak =".'"'.$tgl_opname.'"'."");
@@ -1427,11 +1433,13 @@ class Bhp_pemusnahan extends CI_Controller {
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
-				# code...
+				$this->db->where('code_cl_phc',$code_cl_phc);	
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
 			}
 			
+		}else{
+			$this->db->where('code_cl_phc',$code_cl_phc);	
 		}
 		if ($tgl_opname!='0000-00-00' or empty($tgl_opname)) {
 			$this->db->query("set @tglrusak =".'"'.$tgl_opname.'"'."");
@@ -1582,7 +1590,7 @@ class Bhp_pemusnahan extends CI_Controller {
 
 		echo json_encode(array($json));
 	}
-	function json_opnamekanan($id=0,$tgl_opname='0000-00-00'){
+	function json_opnamekanan($id=0,$tgl_opname='0000-00-00',$code_cl_phc=''){
 		$this->authentication->verify('inventory','show');
 
 
@@ -1609,11 +1617,13 @@ class Bhp_pemusnahan extends CI_Controller {
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
-				# code...
+				$this->db->where('code_cl_phc',$code_cl_phc);	
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
 			}
 			
+		}else{
+			$this->db->where('code_cl_phc',$code_cl_phc);	
 		}
 		if ($tgl_opname!='0000-00-00' or empty($tgl_opname)) {
 			$this->db->query("set @tglkondisi =".'"'.$tgl_opname.'"'."");
@@ -1644,11 +1654,13 @@ class Bhp_pemusnahan extends CI_Controller {
 		}
 		if ($this->session->userdata('filter_code_cl_phc')!='' or !empty($this->session->userdata('filter_code_cl_phc'))) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all') {
-				# code...
+				$this->db->where('code_cl_phc',$code_cl_phc);	
 			}else{
 				$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));	
 			}
 			
+		}else{
+			$this->db->where('code_cl_phc',$code_cl_phc);	
 		}
 		if ($tgl_opname!='0000-00-00' or empty($tgl_opname)) {
 			$this->db->query("set @tglkondisi =".'"'.$tgl_opname.'"'."");

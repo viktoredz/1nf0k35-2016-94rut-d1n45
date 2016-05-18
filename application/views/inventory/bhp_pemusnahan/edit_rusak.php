@@ -50,7 +50,7 @@
           <div class="col-md-4" style="padding: 5px">puskesmas_rusak</div>
           <div class="col-md-8">
           <?php if($action!="view") {?>
-            <select id="puskesmas_rusak" name="puskesmas_rusak" class="form-control">
+            <select id="puskesmas_rusak" name="puskesmas_rusak" class="form-control" disabled='disabled'>
               <?php foreach($kodepuskesmas_rusak as $pus) : ?>
                 <?php $select = $pus->code == $code_cl_phc ? 'selected' : '' ?>
                 <option value="<?php echo $pus->code ?>" <?php echo $select ?>><?php echo $pus->value ?></option>

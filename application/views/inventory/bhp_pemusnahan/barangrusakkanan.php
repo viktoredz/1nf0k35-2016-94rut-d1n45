@@ -16,7 +16,7 @@
 			{ name: 'edit', type: 'number' },
 			{ name: 'delete', type: 'number' },
         ],
-		url: "<?php echo site_url('inventory/bhp_pemusnahan/json_rusakkanan/'.$kode_rusak.'/'.$tgl_opname); ?>",
+		url: "<?php echo site_url('inventory/bhp_pemusnahan/json_rusakkanan/'.$kode_rusak.'/'.$tgl_opname.'/'.$code_cl_phc); ?>",
 		cache: false,
 		updateRow: function (rowID, rowData, commit) {
          },
