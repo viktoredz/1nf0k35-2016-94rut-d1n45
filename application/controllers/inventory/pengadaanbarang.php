@@ -48,7 +48,7 @@ class Pengadaanbarang extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+		if ($this->session->userdata('filter_code_cl_phc')!='' ) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all' || $this->session->userdata('filter_code_cl_phc')=='') {
 				# code...
 			}else{
@@ -80,7 +80,7 @@ class Pengadaanbarang extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+		if ($this->session->userdata('filter_code_cl_phc')!='' ) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all' || $this->session->userdata('filter_code_cl_phc')=='') {
 				# code...
 			}else{
@@ -275,7 +275,7 @@ class Pengadaanbarang extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+		if ($this->session->userdata('filter_code_cl_phc')!='' ) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all' || $this->session->userdata('filter_code_cl_phc')=='') {
 				# code...
 			}else{
@@ -307,7 +307,7 @@ class Pengadaanbarang extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='' or empty($this->session->userdata('filter_code_cl_phc'))) {
+		if ($this->session->userdata('filter_code_cl_phc')!='' ) {
 			if ($this->session->userdata('filter_code_cl_phc')=='all' || $this->session->userdata('filter_code_cl_phc')=='') {
 				# code...
 			}else{
