@@ -1,21 +1,31 @@
 <script>
   $(function() {
         $('#jqxTabsdppp').jqxTabs({ width: '100%', height: '1000'});
+        // $('#btn-skjabatan-tambah').click(function(){
+        //     $.get('<?php echo base_url()?>kepegawaian/penilaiandppp/add/{id}', function (data) {
+        //         $("#tambahjqxgrid").show();
+        //         $("#tambahjqxgrid").html(data);
+        //         $("#jqxgrid").hide();
+        //         $("#btn_back_dppp").show();
+        //         $("#btn_add_dppp").hide();
+        //     }0)
+        // });
+
         var loadPage = function (url, tabIndex) {
             $.get(url, function (data) {
                 $('#tabadddppp' + tabIndex).html(data);
             });
         }
 
-        loadPage('<?php echo base_url()?>kepegawaian/drh_dp3/form_tab_dpp/1/{id}', 1);
+        loadPage('<?php echo base_url()?>kepegawaian/penilaiandppp/form_tab_dpp/1/{id_pegawai}/{tahun}/{id_mst_peg_struktur_org}/0', 1);
         $('#jqxTabsdppp').on('selected', function (event) {
             var pageIndex = event.args.item + 1;
-            loadPage('<?php echo base_url()?>kepegawaian/drh_dp3/form_tab_dpp/'+pageIndex+'/{id}', pageIndex);
+            loadPage('<?php echo base_url()?>kepegawaian/penilaiandppp/form_tab_dpp/'+pageIndex+'/{id_pegawai}/{tahun}/{id_mst_peg_struktur_org}/0', pageIndex);
         });
 
   });
 </script>
-<section class="content">
+
 
 <div id='jqxWidgetJabatan'>
     <div id='jqxTabsdppp'>
@@ -46,4 +56,3 @@
     </div>
 </div>
 
-</section>
