@@ -20,22 +20,13 @@ if (set_value('username_pengukuran')=='' && isset($username_pengukuran)) {
   $username_pengukuran = set_value('username_pengukuran');
 }
 $userdataname = $this->session->userdata('username_pengukuran');
-// if ($username_pengukuran == $userdataname) {
-if (($statusanakbuah == 'diasendiri') || ($statusanakbuah == 'atasan')) {
+
   $funshowhidden = 'disabled=disabled';
   $showhidetgl = ',disabled: true';
-  $showtanggapan = '';
-  $showtanggapantgl = '';
   $showkeputsan = 'disabled=disabled';
   $showkeputsantgl = ',disabled: true';
-}else{
-  $funshowhidden='';
-  $showhidetgl = '';
   $showtanggapan = 'disabled=disabled';
   $showtanggapantgl = ',disabled: true';
-  $showkeputsan = '';
-  $showkeputsantgl = '';
-}
 
 ?>
 <script type="text/javascript">
@@ -272,7 +263,7 @@ if (($statusanakbuah == 'diasendiri') || ($statusanakbuah == 'atasan')) {
               
             }else{
             ?>
-            <button type="submit" class="btn btn-primary"><i class='fa fa-save'></i> &nbsp; Simpan</button>
+           <!-- <button type="submit" class="btn btn-primary"><i class='fa fa-save'></i> &nbsp; Simpan</button>-->
             <?php } ?>
             <!-- <button type="button" id="btn_back_pengukuran" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button> -->
         </div>

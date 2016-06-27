@@ -195,7 +195,7 @@
       if (($username != $userdataname)) {
       if ($statusanakbuah=='anakbuah')  {
     ?>
-			<button class="btn btn-success" id='btn_add_dppp' type='button'><i class='fa fa-plus-square'></i> Tambah DP3</button>
+			<!--<button class="btn btn-success" id='btn_add_dppp' type='button'><i class='fa fa-plus-square'></i> Tambah DP3</button>-->
     <?php
       }
       }

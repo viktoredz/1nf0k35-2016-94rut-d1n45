@@ -166,7 +166,7 @@
       if (($username != $userdataname)) {
       if ($statusanakbuah=='anakbuah')  {
     ?>
-			<button class="btn btn-success" id='btn_add_pengukuran' type='button'><i class='fa fa-plus-square'></i> Tambah Pengukuran</button>
+		<!--	<button class="btn btn-success" id='btn_add_pengukuran' type='button'><i class='fa fa-plus-square'></i> Tambah Pengukuran</button>-->
     <?php
       }
       }

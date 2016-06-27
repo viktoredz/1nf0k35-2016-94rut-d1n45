@@ -12,6 +12,8 @@ if(isset($disable)){if($disable='disable'){?>
   
 
     $(function(){
+      $('input').prop('disabled',true);
+      $('select').prop('disabled',true);
       $('#btn-close').click(function(){
           popup_close();
       }); 
@@ -127,7 +129,7 @@ if(isset($disable)){if($disable='disable'){?>
             </div>
         <div class="box-footer" style="float:right;">
           
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <!-- <button type="submit" class="btn btn-primary">Simpan</button> -->
             <button type="button" id="btn-close" class="btn btn-warning">Batal</button>
         </div>
     </div>
