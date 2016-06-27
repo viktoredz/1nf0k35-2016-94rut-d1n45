@@ -20,23 +20,12 @@ if (set_value('username')=='' && isset($username)) {
   $username = set_value('username');
 }
 $userdataname = $this->session->userdata('username');
-// if ($username == $userdataname) {
-if (($statusanakbuah == 'diasendiri') || ($statusanakbuah == 'atasan')) {
   $funshowhidden = 'disabled=disabled';
   $showhidetgl = ',disabled: true';
-  $showtanggapan = '';
-  $showtanggapantgl = '';
   $showkeputsan = 'disabled=disabled';
   $showkeputsantgl = ',disabled: true';
-}else{
-  $funshowhidden='';
-  $showhidetgl = '';
   $showtanggapan = 'disabled=disabled';
   $showtanggapantgl = ',disabled: true';
-  $showkeputsan = '';
-  $showkeputsantgl = '';
-}
-
 ?>
 <script type="text/javascript">
     

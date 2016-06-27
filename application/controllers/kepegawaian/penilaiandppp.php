@@ -410,12 +410,13 @@ class Penilaiandppp extends CI_Controller {
 		}
 	}
 
-	function form_tab_dpp($pageIndex,$id_pegawai=0,$tahun=0,$id_mst_peg_struktur_org=0,$id_mst_peg_struktur_skp=0){
+	function form_tab_dpp($pageIndex,$id_pegawai=0,$tahun=0,$id_mst_peg_struktur_org=0,$id_mst_peg_struktur_skp=0,$code_cl_phc=0){
 		$data = array();
-		$data['id_pegawai']=$id_pegawai;
+		$data['id_pegawai']				=$id_pegawai;
 		$data['id_mst_peg_struktur_org']=$id_mst_peg_struktur_org;
 		$data['id_mst_peg_struktur_skp']=$id_mst_peg_struktur_skp;
-		$data['tahun']=$tahun;
+		$data['code_cl_phc']			=$code_cl_phc;
+		$data['tahun']					=$tahun;
 		$data['idlogin']		= $this->penilaiandppp_model->idlogin();
 
 		$daftaranakbuah			= $this->penilaiandppp_model->getanakbuah($data['idlogin']);
@@ -430,18 +431,11 @@ class Penilaiandppp extends CI_Controller {
 		switch ($pageIndex) {
 			case 1:
 				die($this->parser->parse("kepegawaian/penilaiandppp/pengukuran_show",$data));
-				// $this->pengukuran($id_pegawai,$tahun,$id_mst_peg_struktur_org,$id_mst_peg_struktur_skp);
 				break;
 			case 2:
-				// if ($action=='edit') {
-				// 	$this->edit_dppp($id_pegawai,$tahun,$id_mst_peg_struktur_org,$id_mst_peg_struktur_skp);
-				// }else{
-				// 	$this->add_dppp($id_pegawai,$tahun,$id_mst_peg_struktur_org,$id_mst_peg_struktur_skp);	
-				// }
 				die($this->parser->parse("kepegawaian/penilaiandppp/penilaian",$data));
 				break;
 			default:
-				// $this->pengukuran($id_pegawai,$tahun,$id_mst_peg_struktur_org,$id_mst_peg_struktur_skp);
 			die($this->parser->parse("kepegawaian/penilaiandppp/pengukuran_show",$data));
 				break;
 		}
@@ -773,7 +767,7 @@ class Penilaiandppp extends CI_Controller {
 		}
 		return $data;
 	}
-	function json_dppp($id=""){
+	function json_dppp($id="",$code_cl_phc=0){
 		$this->authentication->verify('kepegawaian','show');
 
 
@@ -798,8 +792,8 @@ class Penilaiandppp extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='') {
-			$this->db->where('pegawai.code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($code_cl_phc!='') {
+			$this->db->where('pegawai.code_cl_phc',$code_cl_phc);
 		}
 		
 
@@ -827,8 +821,8 @@ class Penilaiandppp extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='') {
-			$this->db->where('pegawai.code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($code_cl_phc!='') {
+			$this->db->where('pegawai.code_cl_phc',$code_cl_phc);
 		}
 		$rows = $this->penilaiandppp_model->get_data_detail($id,$this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
@@ -876,7 +870,7 @@ class Penilaiandppp extends CI_Controller {
 
 		echo json_encode(array($json));
 	}
-	function json_pengukuran($id=""){
+	function json_pengukuran($id="",$code_cl_phc){
 		$this->authentication->verify('kepegawaian','show');
 
 
@@ -901,8 +895,8 @@ class Penilaiandppp extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='') {
-			$this->db->where('pegawai.code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($code_cl_phc!='') {
+			$this->db->where('pegawai.code_cl_phc',$code_cl_phc);
 		}
 		
 
@@ -930,8 +924,8 @@ class Penilaiandppp extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('puskesmas')!='') {
-			$this->db->where('pegawai.code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		if ($code_cl_phc!='') {
+			$this->db->where('pegawai.code_cl_phc',$code_cl_phc);
 		}
 		$rows = $this->penilaiandppp_model->get_data_detail_pengukuran($id,$this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();

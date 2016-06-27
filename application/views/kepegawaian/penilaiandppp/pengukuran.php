@@ -1,9 +1,5 @@
 <?php 
-if (($statusanakbuah == 'diasendiri') || ($statusanakbuah == 'atasan')) {
   $gridshowedit = ', editable:false ';
-}else{
-  $gridshowedit = '';
-}
 
 ?>
 

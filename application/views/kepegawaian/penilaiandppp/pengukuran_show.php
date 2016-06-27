@@ -22,7 +22,7 @@
       { name: 'edit', type: 'number'},
       { name: 'delete', type: 'number'}
         ],
-    url: "<?php echo site_url('kepegawaian/penilaiandppp/json_pengukuran/{id_pegawai}'); ?>",
+    url: "<?php echo site_url('kepegawaian/penilaiandppp/json_pengukuran/{id_pegawai}/{code_cl_phc}'); ?>",
     cache: false,
       updateRow: function (rowID, rowData, commit) {
              
@@ -63,29 +63,29 @@
       },
       columns: [
        
-        { text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '5%', cellsrenderer: function (row) {
+        { text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '5%', cellsrenderer: function (row) {
             var dataRecord = $("#jqxgridPengukuran").jqxGrid('getrowdata', row);
             if(dataRecord.edit==1){
-            return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_pengukuran(\""+dataRecord.id_pegawai+"\",\""+dataRecord.tahun+"\",\""+dataRecord.id_mst_peg_struktur_org+"\",\""+dataRecord.periode+"\");'></a></div>";
+            return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_pengukuran(\""+dataRecord.id_pegawai+"\",\""+dataRecord.tahun+"\",\""+dataRecord.id_mst_peg_struktur_org+"\",\""+dataRecord.periode+"\");'></a></div>";
           }else{
             return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
           }
                  }
                 },
-        { text: 'Del', align: 'center', filtertype: 'none', sortable: false, width: '5%', cellsrenderer: function (row) {
-            var dataRecord = $("#jqxgridPengukuran").jqxGrid('getrowdata', row);
-            if(dataRecord.delete==1){
-            return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif' onclick='del_pengukuran(\""+dataRecord.id_pegawai+"\",\""+dataRecord.tahun+"\",\""+dataRecord.id_mst_peg_struktur_org+"\",\""+dataRecord.periode+"\");'></a></div>";
-          }else{
-            return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
-          }
-                 }
-                },
-        { text: 'Tanggal dibuat', editable:false ,align: 'center', cellsalign: 'center', datafield: 'tgl_dibuat', cellsformat: 'dd-MM-yyyy',columntype: 'date', filtertype: 'date', width: '10%' },
-        { text: 'Tahun', editable:false ,align: 'center', cellsalign: 'center', datafield: 'tahun', columntype: 'textbox', filtertype: 'textbox', width: '10%' },
-        { text: 'Periode', editable:false ,align: 'center', cellsalign: 'center', datafield: 'periode', columntype: 'textbox', filtertype: 'textbox', width: '10%' },
-        { text: 'Penilai', editable:false ,datafield: 'nama_penilai', columntype: 'textbox', filtertype: 'textbox', width: '30%' },
-        { text: 'Jumlah', editable:false ,align: 'center', cellsalign: 'right', datafield: 'jumlah', columntype: 'textbox', filtertype: 'textbox', width: '15%' },
+        // { text: 'Del', align: 'center', filtertype: 'none', sortable: false, width: '5%', cellsrenderer: function (row) {
+        //     var dataRecord = $("#jqxgridPengukuran").jqxGrid('getrowdata', row);
+        //     if(dataRecord.delete==1){
+        //     return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif' onclick='del_pengukuran(\""+dataRecord.id_pegawai+"\",\""+dataRecord.tahun+"\",\""+dataRecord.id_mst_peg_struktur_org+"\",\""+dataRecord.periode+"\");'></a></div>";
+        //   }else{
+        //     return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
+        //   }
+        //          }
+        //         },
+        { text: 'Tanggal dibuat', editable:false ,align: 'center', cellsalign: 'center', datafield: 'tgl_dibuat', cellsformat: 'dd-MM-yyyy',columntype: 'date', filtertype: 'date', width: '11%' },
+        { text: 'Tahun', editable:false ,align: 'center', cellsalign: 'center', datafield: 'tahun', columntype: 'textbox', filtertype: 'textbox', width: '11%' },
+        { text: 'Periode', editable:false ,align: 'center', cellsalign: 'center', datafield: 'periode', columntype: 'textbox', filtertype: 'textbox', width: '11%' },
+        { text: 'Penilai', editable:false ,datafield: 'nama_penilai', columntype: 'textbox', filtertype: 'textbox', width: '31%' },
+        { text: 'Jumlah', editable:false ,align: 'center', cellsalign: 'right', datafield: 'jumlah', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
         { text: 'SKP', editable:false ,align: 'center', cellsalign: 'right', datafield: 'ratarata', columntype: 'textbox', filtertype: 'textbox', width: '15%' },
             ]
     });
@@ -124,13 +124,6 @@
 	}
 
 	function edit_pengukuran(id_pegawai,tahun,id_mst_peg_struktur_org,periode){
-		// $.get("<?php //echo base_url().'kepegawaian/penilaiandppp/edit_pengukuran/'; ?>"+id_pegawai+'/'+tahun+'/'+"<?php echo $id_mst_peg_struktur_org; ?>" , function(data) {
-  //     $("#tambahjqxgridPengukuran").show();
-  //     $("#tambahjqxgridPengukuran").html(data);
-  //     $("#jqxgridPengukuran").hide();
-  //     $("#btn_back_pengukuran").show();
-  //     $("#btn_add_pengukuran").hide();
-  //   });
         $.get("<?php echo base_url()."kepegawaian/penilaiandppp/pengukuran/"?>"+id_pegawai+"/"+tahun+'/'+id_mst_peg_struktur_org+'/'+periode,function(data){
               $("#tambahjqxgridPengukuran").show();
               $("#tambahjqxgridPengukuran").html(data);

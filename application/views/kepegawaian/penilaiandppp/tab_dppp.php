@@ -17,10 +17,10 @@
             });
         }
 
-        loadPage('<?php echo base_url()?>kepegawaian/penilaiandppp/form_tab_dpp/1/{id_pegawai}/{tahun}/{id_mst_peg_struktur_org}/0', 1);
+        loadPage('<?php echo base_url()?>kepegawaian/penilaiandppp/form_tab_dpp/1/{id_pegawai}/{tahun}/{id_mst_peg_struktur_org}/0/{code_cl_phc}', 1);
         $('#jqxTabsdppp').on('selected', function (event) {
             var pageIndex = event.args.item + 1;
-            loadPage('<?php echo base_url()?>kepegawaian/penilaiandppp/form_tab_dpp/'+pageIndex+'/{id_pegawai}/{tahun}/{id_mst_peg_struktur_org}/0', pageIndex);
+            loadPage('<?php echo base_url()?>kepegawaian/penilaiandppp/form_tab_dpp/'+pageIndex+'/{id_pegawai}/{tahun}/{id_mst_peg_struktur_org}/0/{code_cl_phc}', pageIndex);
         });
 
   });

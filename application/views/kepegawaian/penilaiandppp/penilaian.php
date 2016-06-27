@@ -40,7 +40,7 @@
       { name: 'edit', type: 'number'},
       { name: 'delete', type: 'number'}
         ],
-    url: "<?php echo site_url('kepegawaian/penilaiandppp/json_dppp/{id_pegawai}'); ?>",
+    url: "<?php echo site_url('kepegawaian/penilaiandppp/json_dppp/{id_pegawai}/{code_cl_phc}'); ?>",
     cache: false,
       updateRow: function (rowID, rowData, commit) {
              
@@ -81,24 +81,24 @@
       },
       columns: [
        
-        { text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
+        { text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
             if(dataRecord.edit==1){
-            return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit_dppp(\""+dataRecord.id_pegawai+"\",\""+dataRecord.tahun+"\");'></a></div>";
+            return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit_dppp(\""+dataRecord.id_pegawai+"\",\""+dataRecord.tahun+"\");'></a></div>";
           }else{
             return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
           }
                  }
                 },
-        { text: 'Del', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
-            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-            if(dataRecord.delete==1){
-            return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif' onclick='del_dppp(\""+dataRecord.id_pegawai+"\",\""+dataRecord.tahun+"\");'></a></div>";
-          }else{
-            return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
-          }
-                 }
-                },
+        // { text: 'Del', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
+        //     var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+        //     if(dataRecord.delete==1){
+        //     return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif' onclick='del_dppp(\""+dataRecord.id_pegawai+"\",\""+dataRecord.tahun+"\");'></a></div>";
+        //   }else{
+        //     return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
+        //   }
+        //          }
+        //         },
         { text: 'Tanggal dibuat', editable:false ,align: 'center', cellsalign: 'right', datafield: 'tgl_dibuat', cellsformat: 'dd-MM-yyyy',columntype: 'date', filtertype: 'date', width: '9%' },
         { text: 'Penilai', editable:false ,datafield: 'nama_penilai', columntype: 'textbox', filtertype: 'textbox', width: '15%' },
         { text: 'Atasan Penilai',editable:false , align: 'center',  datafield: 'namaatasanpenilai', columntype: 'textbox', filtertype: 'textbox',  width: '15%' },
