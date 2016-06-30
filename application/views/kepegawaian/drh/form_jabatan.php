@@ -25,7 +25,7 @@
 <section class="content">
   <div class="row" style="margin-bottom:15px">
     <div class="col-md-12" style="text-align: right">
-      <button type="button" class="btn btn-success" id="btn-skjabatan-tambah"><i class='fa fa-plus-circle'></i> &nbsp; Tambah SK Jabatan</button>
+      <!-- <button type="button" class="btn btn-success" id="btn-skjabatan-tambah"><i class='fa fa-plus-circle'></i> &nbsp; Tambah SK Jabatan</button> -->
     </div>
   </div>
 <div id='jqxWidgetJabatan'>

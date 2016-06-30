@@ -241,6 +241,10 @@ class Drh extends CI_Controller {
 				die($this->parser->parse("kepegawaian/drh/form_penghargaan",$data));
 
 				break;
+			case 8:
+				die($this->parser->parse("kepegawaian/drh/form_gaji",$data));
+
+				break;
 			default:
 
 				die($this->parser->parse("kepegawaian/drh/form_status",$data));
